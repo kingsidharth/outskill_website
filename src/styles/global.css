@@ -24,9 +24,9 @@ h1, h2, .font-display { font-family: var(--font-display); font-weight: 400; lett
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
 
-.btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-colors; }
-.btn-accent { @apply btn bg-accent text-accent-ink hover:bg-accent-hover; }
-.btn-ghost { @apply btn border border-line text-fg hover:border-fg; }
+.btn, .btn-accent, .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-colors; }
+.btn-accent { @apply bg-accent text-accent-ink hover:bg-accent-hover; }
+.btn-ghost { @apply border border-line text-fg hover:border-fg; }
 .card { @apply bg-surface border border-line rounded-xl; }
 .eyebrow { @apply font-label text-accent; }
 

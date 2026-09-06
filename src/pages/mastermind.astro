@@ -1,0 +1,174 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Stat from '../components/Stat.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+import StickyBar from '../components/StickyBar.astro';
+import AgentTerminal from '../components/islands/AgentTerminal';
+import TrapQuiz from '../components/islands/TrapQuiz';
+import { mastermind } from '../data/mastermind';
+import { quiz } from '../data/quiz';
+---
+
+<Base title={mastermind.seo.title} description={mastermind.seo.description} image="/gen/hero-mastermind.webp">
+  <header class="relative overflow-hidden border-b border-line">
+    <div class="absolute inset-0 bg-gradient-to-b from-surface-2 via-bg to-bg" aria-hidden="true"></div>
+    <img
+      src="/gen/hero-mastermind.webp"
+      alt=""
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 size-full object-cover opacity-40"
+      onerror="this.remove()"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-bg/50 via-bg/60 to-bg" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-36">
+      <p class="eyebrow">{mastermind.eyebrow}</p>
+      <h1 class="mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">{mastermind.headline}</h1>
+      <p class="mt-6 max-w-2xl text-base text-muted sm:text-lg">{mastermind.subhead}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <a href={mastermind.ctaHref} class="btn-accent">{mastermind.ctaLabel}</a>
+        <p class="text-lg">
+          {mastermind.price.original && <span class="mr-2 text-muted line-through">{mastermind.price.original}</span>}
+          <span class="font-medium text-accent">{mastermind.price.current}</span>
+          {mastermind.price.note && <span class="ml-2 text-sm text-muted">{mastermind.price.note}</span>}
+        </p>
+      </div>
+      <div class="mt-14 grid grid-cols-2 gap-8 border-t border-line/70 pt-8 sm:grid-cols-4">
+        {mastermind.stats.map((s) => <Stat stat={s} />)}
+      </div>
+    </div>
+  </header>
+
+  <Section
+    eyebrow="What we'll cover"
+    title="Five things you'll actually use."
+    lead="Every topic ends with something running — not a slide deck."
+  >
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        mastermind.features.map((f) => (
+          <li class="card p-6">
+            <h3 class="text-lg font-medium">{f.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section
+    eyebrow="Show, don't tell"
+    title="Watch an agent ship a ticket"
+    lead="Ticket in, pull request out. This loop is what you'll take apart and rebuild across the weekend."
+    class="border-y border-line bg-surface/30"
+  >
+    <AgentTerminal client:visible />
+  </Section>
+
+  <Section
+    eyebrow="The schedule"
+    title="Three live sessions. Twelve hours."
+    lead="Live expert sessions across the weekend, each one hands-on."
+  >
+    <ol>
+      {
+        mastermind.sessions?.map((s) => (
+          <li class="grid gap-3 border-t border-line py-6 first:border-t-0 first:pt-0 md:grid-cols-[180px_1fr] md:gap-10 md:py-8">
+            <div class="md:pt-1 md:text-right">
+              <p class="font-label text-accent">{s.when}</p>
+              <p class="font-label mt-1 text-muted">Session {s.n}</p>
+            </div>
+            <div class="card p-5 sm:p-6">
+              <h3 class="font-display text-xl sm:text-2xl">{s.title}</h3>
+              <p class="mt-2 text-sm text-muted sm:text-base">{s.summary}</p>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {s.bullets.map((b) => (
+                  <li class="rounded-full border border-line px-3 py-1 text-xs text-muted">{b}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <Section
+    eyebrow="Trap quiz"
+    title="Think you already get LLMs? Four questions."
+    lead="Four questions engineers get wrong. Answer honestly — the explanations are hidden until you submit."
+    class="border-y border-line bg-surface/30"
+  >
+    <TrapQuiz client:visible questions={quiz} registerHref={mastermind.ctaHref} registerLabel={mastermind.ctaLabel} />
+  </Section>
+
+  <Section
+    id="register"
+    eyebrow="Register"
+    title="Save your seat."
+    lead="Free, live, and seat-limited. Leave your email and we'll send the schedule and joining links."
+  >
+    <form id="register-form" data-program={mastermind.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
+      <label for="register-email" class="sr-only">Email address</label>
+      <input
+        id="register-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder="you@company.com"
+        class="w-full flex-1 rounded-full border border-line bg-surface px-5 py-3 text-fg placeholder:text-muted focus:border-accent"
+      />
+      <button type="submit" class="btn-accent shrink-0">{mastermind.ctaLabel}</button>
+    </form>
+    <p id="register-msg" role="status" class="mt-4 min-h-5 text-sm text-accent"></p>
+  </Section>
+
+  <Section eyebrow="FAQ" title="Straight answers.">
+    <FAQ items={mastermind.faq} />
+  </Section>
+
+  <CTA
+    eyebrow={mastermind.eyebrow}
+    title={mastermind.headline}
+    body={mastermind.price.note}
+    ctaLabel={mastermind.ctaLabel}
+    ctaHref={mastermind.ctaHref}
+  />
+
+  <StickyBar program={mastermind} />
+</Base>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('register-form');
+    if (!(form instanceof HTMLFormElement)) return;
+    const msg = document.getElementById('register-msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = new FormData(form).get('email');
+      const button = form.querySelector('button[type="submit"]');
+      if (button instanceof HTMLButtonElement) button.disabled = true;
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, program: form.dataset.program }),
+        });
+        if (!res.ok) throw new Error('register failed');
+        if (msg) msg.textContent = "You're in — check your inbox for the schedule and joining links.";
+        form.reset();
+      } catch {
+        if (msg) msg.textContent = 'Something went wrong. Please try again.';
+      } finally {
+        if (button instanceof HTMLButtonElement) button.disabled = false;
+      }
+    });
+  });
+</script>
