@@ -1,15 +1,9 @@
 ---
-import { readdirSync } from 'node:fs';
-
-let files: string[] = [];
-try {
-  const refDir = new URL('../../public/ref/', import.meta.url);
-  files = readdirSync(refDir)
-    .filter((f) => /^(cl[^/]+|cs[^/]+|co)\.(svg|webp)$/.test(f))
-    .sort();
-} catch {
-  files = [];
-}
+// Vite resolves this at build time; safe for prerender + SSR.
+const modules = import.meta.glob('/public/ref/{cl,cs,co}*.{svg,webp,png}', { eager: true, query: '?url', import: 'default' });
+const files: string[] = Object.keys(modules)
+  .map((k) => k.split('/').pop() as string)
+  .sort();
 ---
 
 {

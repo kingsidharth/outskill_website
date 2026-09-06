@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 const VALID_PROGRAMS = ['mastermind', 'bootcamp', 'accelerator', 'fellowship'] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const DATA_DIR = new URL('../../data/', import.meta.url).pathname;
+const DATA_DIR = join(process.env.OUTSKILL_DATA_DIR ?? process.cwd(), 'data');
 const DATA_FILE = join(DATA_DIR, 'registrations.jsonl');
 
 export const POST: APIRoute = async ({ request }) => {

@@ -23,5 +23,5 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# registration data
-data/registrations.jsonl
+# registration data (written by /api/register)
+data/

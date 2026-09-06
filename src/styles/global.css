@@ -34,3 +34,6 @@ h1, h2, .font-display { font-family: var(--font-display); font-weight: 400; lett
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   html { scroll-behavior: auto; }
 }
+
+/* Aliases so `var(--bg)` etc. (used in inline styles) resolve to theme tokens */
+:root { --bg: var(--color-bg); --surface: var(--color-surface); --line: var(--color-line); --fg: var(--color-fg); --muted: var(--color-muted); --accent: var(--color-accent); }
