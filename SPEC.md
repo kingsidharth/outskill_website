@@ -86,3 +86,17 @@ Every page: `export const prerender = true;` at the top of frontmatter (SSR serv
 - GLM 5.3 flash: `src/layouts/*`, `src/components/*.astro`, `src/pages/mastermind.astro`, `src/components/islands/TrapQuiz.tsx`, `AgentTerminal.tsx`
 - Kimi K3: `src/pages/bootcamp.astro`, `src/pages/fellowship.astro`, `islands/AgentLoopExplorer.tsx`, `islands/CurriculumExplorer.tsx`
 - DeepSeek v4 flash: `src/pages/index.astro`, `src/pages/accelerator.astro`, `src/pages/api/*`, `islands/ProgramPicker.tsx`, `islands/SprintTimeline.tsx`, `scripts/*`, `README.md`
+
+## Data export contract (exact names — pages import these)
+
+```ts
+import { mastermind } from '../data/mastermind';   // export const mastermind: Program
+import { bootcamp } from '../data/bootcamp';       // export const bootcamp: Program
+import { accelerator } from '../data/accelerator'; // export const accelerator: Program
+import { fellowship } from '../data/fellowship';   // export const fellowship: Program
+import { quiz } from '../data/quiz';               // export const quiz: QuizQuestion[]
+import { site } from '../data/site';               // export const site: Site
+import { programs } from '../data/site';           // export const programs: Program[] (all four, in order)
+```
+
+Hero images (generated, 1600x900 PNG→ optimize later): `/gen/hero-hub.png`, `/gen/hero-mastermind.png`, `/gen/hero-bootcamp.png`, `/gen/hero-accelerator.png`, `/gen/hero-fellowship.png`. Use as a dimmed background (`opacity-40`, gradient fade to `--bg` at bottom) behind hero text. If a file is missing at build time, fall back gracefully (CSS gradient), do not fail.
