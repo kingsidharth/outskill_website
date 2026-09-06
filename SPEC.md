@@ -99,4 +99,4 @@ import { site } from '../data/site';               // export const site: Site
 import { programs } from '../data/site';           // export const programs: Program[] (all four, in order)
 ```
 
-Hero images (generated, 1600x900 PNG→ optimize later): `/gen/hero-hub.png`, `/gen/hero-mastermind.png`, `/gen/hero-bootcamp.png`, `/gen/hero-accelerator.png`, `/gen/hero-fellowship.png`. Use as a dimmed background (`opacity-40`, gradient fade to `--bg` at bottom) behind hero text. If a file is missing at build time, fall back gracefully (CSS gradient), do not fail.
+Hero images (generated, 1600x900 WebP): `/gen/hero-hub.webp`, `/gen/hero-mastermind.webp`, `/gen/hero-bootcamp.webp`, `/gen/hero-accelerator.webp`, `/gen/hero-fellowship.webp`. Use as a dimmed background (`opacity-40`, gradient fade to `--bg` at bottom) behind hero text. If a file is missing at build time, fall back gracefully (CSS gradient), do not fail.
