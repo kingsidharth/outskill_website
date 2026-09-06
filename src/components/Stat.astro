@@ -1,0 +1,23 @@
+---
+import type { Stat } from '../data/types';
+
+interface Props {
+  stat?: Stat;
+  value?: string;
+  label?: string;
+  class?: string;
+}
+
+const { stat, value, label, class: className } = Astro.props;
+const v = stat?.value ?? value;
+const l = stat?.label ?? label;
+---
+
+{
+  v && l && (
+    <div class={className}>
+      <p class="font-display text-3xl sm:text-4xl">{v}</p>
+      <p class="font-label mt-1.5 text-muted">{l}</p>
+    </div>
+  )
+}

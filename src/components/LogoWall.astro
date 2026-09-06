@@ -1,0 +1,38 @@
+---
+import { readdirSync } from 'node:fs';
+
+let files: string[] = [];
+try {
+  const refDir = new URL('../../public/ref/', import.meta.url);
+  files = readdirSync(refDir)
+    .filter((f) => /^(cl[^/]+|cs[^/]+|co)\.(svg|webp)$/.test(f))
+    .sort();
+} catch {
+  files = [];
+}
+---
+
+{
+  files.length > 0 && (
+    <section aria-label="Companies where our alumni work" class="border-y border-line">
+      <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
+        <p class="font-label text-center text-muted">Alumni work at</p>
+        <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+          {files.map((file, i) => (
+            <li>
+              <img
+                src={`/ref/${file}`}
+                alt={`Alumni company logo ${i + 1}`}
+                width="120"
+                height="32"
+                loading="lazy"
+                decoding="async"
+                class="h-7 w-auto opacity-50 transition-opacity hover:opacity-90"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

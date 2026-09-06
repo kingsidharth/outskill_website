@@ -1,0 +1,27 @@
+---
+import type { Program } from '../data/types';
+
+interface Props {
+  program: Program;
+}
+
+const { program } = Astro.props;
+---
+
+<aside class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 backdrop-blur-md md:hidden" aria-label={`${program.name} — enroll`}>
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+    <div class="min-w-0">
+      <p class="truncate text-sm font-medium">{program.name}</p>
+      <p class="mt-0.5 text-sm">
+        {program.price.original && <span class="mr-1.5 text-muted line-through">{program.price.original}</span>}
+        <span class="font-medium text-accent">{program.price.current}</span>
+      </p>
+    </div>
+    <a
+      href={program.ctaHref}
+      class="inline-flex shrink-0 items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-accent-ink transition-colors hover:bg-accent-hover"
+    >
+      {program.ctaLabel}
+    </a>
+  </div>
+</aside>

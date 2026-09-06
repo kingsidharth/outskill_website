@@ -1,0 +1,29 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  id?: string;
+  class?: string;
+}
+
+const { eyebrow, title, lead, id, class: className } = Astro.props;
+const hasHeader = Boolean(eyebrow || title || lead);
+---
+
+<section id={id} class:list={['py-16 sm:py-24', className]}>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    {
+      hasHeader && (
+        <header class="max-w-3xl">
+          {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+          {title && <h2 class:list={['text-3xl leading-tight sm:text-5xl', eyebrow && 'mt-3']}>{title}</h2>}
+          {lead && <p class="mt-4 max-w-2xl text-base text-muted sm:text-lg">{lead}</p>}
+        </header>
+      )
+    }
+    <div class:list={[hasHeader && 'mt-10 sm:mt-14']}>
+      <slot />
+    </div>
+  </div>
+</section>

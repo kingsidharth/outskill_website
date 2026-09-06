@@ -1,0 +1,33 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  eyebrow = 'Get started',
+  title = 'Pick a program. Start shipping.',
+  body,
+  ctaLabel = 'Register free',
+  ctaHref = '/mastermind',
+} = Astro.props;
+---
+
+<section class="border-y border-line bg-surface/40">
+  <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-24">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 class="mx-auto max-w-3xl text-3xl leading-tight sm:text-5xl" class:list={[eyebrow && 'mt-3']}>{title}</h2>
+    {body && <p class="mx-auto mt-4 max-w-xl text-base text-muted sm:text-lg">{body}</p>}
+    <div class="mt-8">
+      <a
+        href={ctaHref}
+        class="inline-flex items-center justify-center rounded-full bg-accent px-8 py-3.5 font-medium text-accent-ink transition-colors hover:bg-accent-hover"
+      >
+        {ctaLabel}
+      </a>
+    </div>
+  </div>
+</section>

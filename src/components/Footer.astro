@@ -1,0 +1,39 @@
+---
+import { site } from '../data/site';
+
+const { name, tagline, footer } = site;
+---
+
+<footer class="border-t border-line">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="sm:col-span-2 lg:col-span-1">
+        <a href="/" class="flex items-center gap-1.5 text-lg font-semibold tracking-tight">
+          {name}<span class="mt-1 inline-block size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+        </a>
+        <p class="mt-3 max-w-xs text-sm text-muted">{tagline}</p>
+      </div>
+
+      {
+        footer.map((col) => (
+          <nav aria-label={col.heading}>
+            <h2 class="font-label text-muted">{col.heading}</h2>
+            <ul class="mt-4 space-y-3">
+              {col.links.map((link) => (
+                <li>
+                  <a href={link.href} class="text-sm text-fg/80 transition-colors hover:text-fg">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <div class="mt-14 border-t border-line pt-6">
+      <p class="text-sm text-muted">© 2026 Sisinty Pvt. Ltd.</p>
+    </div>
+  </div>
+</footer>

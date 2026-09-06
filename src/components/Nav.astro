@@ -1,0 +1,108 @@
+---
+import { site } from '../data/site';
+
+const { name, nav, primaryCta } = site;
+const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const linkClass = (href: string) =>
+  `text-sm transition-colors ${current === href ? 'text-fg' : 'text-muted hover:text-fg'}`;
+---
+
+<header class="sticky top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-md">
+  <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6" aria-label="Main">
+    <a href="/" class="flex shrink-0 items-center gap-1.5 text-lg font-semibold tracking-tight">
+      {name}<span class="mt-1 inline-block size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+    </a>
+
+    <ul class="hidden items-center gap-8 md:flex">
+      {
+        nav.map((link) => (
+          <li>
+            <a href={link.href} class={linkClass(link.href)} aria-current={current === link.href ? 'page' : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="hidden items-center gap-6 md:flex">
+      <a href="https://outskill.com" class="text-sm text-muted transition-colors hover:text-fg">Log in</a>
+      <a
+        href={primaryCta.href}
+        class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2 text-sm font-medium text-accent-ink transition-colors hover:bg-accent-hover"
+      >
+        {primaryCta.label}
+      </a>
+    </div>
+
+    <button
+      id="nav-toggle"
+      type="button"
+      class="inline-flex size-10 items-center justify-center rounded-full border border-line text-fg md:hidden"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+      aria-label="Toggle menu"
+    >
+      <svg class="size-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path class="icon-open" d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+        <path class="icon-close hidden" d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <div id="nav-menu" hidden class="border-t border-line bg-bg md:hidden">
+    <ul class="px-4">
+      {
+        nav.map((link) => (
+          <li class="border-b border-line last:border-0">
+            <a href={link.href} class="block py-3.5 text-base text-fg" aria-current={current === link.href ? 'page' : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex items-center gap-3 px-4 pt-4 pb-5">
+      <a href="https://outskill.com" class="btn-ghost flex-1 text-sm">Log in</a>
+      <a href={primaryCta.href} class="btn-accent flex-1 text-sm">{primaryCta.label}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  function setupNav() {
+    const btn = document.getElementById('nav-toggle');
+    const menu = document.getElementById('nav-menu');
+    if (!btn || !menu || btn.dataset.navBound) return;
+    btn.dataset.navBound = '1';
+
+    const setOpen = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      menu.toggleAttribute('hidden', !open);
+      btn.querySelector('.icon-open')?.classList.toggle('hidden', open);
+      btn.querySelector('.icon-close')?.classList.toggle('hidden', !open);
+    };
+
+    btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      const b = document.getElementById('nav-toggle');
+      const m = document.getElementById('nav-menu');
+      if (b && m && b.getAttribute('aria-expanded') === 'true') {
+        b.setAttribute('aria-expanded', 'false');
+        m.setAttribute('hidden', '');
+        b.querySelector('.icon-open')?.classList.remove('hidden');
+        b.querySelector('.icon-close')?.classList.add('hidden');
+        b.focus();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupNav);
+  if (document.readyState !== 'loading') setupNav();
+  else document.addEventListener('DOMContentLoaded', setupNav);
+</script>

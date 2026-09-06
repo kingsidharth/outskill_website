@@ -1,0 +1,54 @@
+---
+import type { Program } from '../data/types';
+
+interface Props {
+  program: Program;
+}
+
+const { program } = Astro.props;
+const stats = program.stats.slice(0, 3);
+---
+
+<a
+  href={`/${program.slug}`}
+  class="card group flex flex-col p-6 transition-colors hover:border-fg/25 sm:p-8"
+>
+  <p class="eyebrow">{program.eyebrow}</p>
+  <h3 class="mt-3 text-2xl leading-tight sm:text-3xl">{program.name}</h3>
+  <p class="mt-2 text-sm text-muted sm:text-base">{program.headline}</p>
+
+  <div class="mt-6 grid grid-cols-3 gap-3 border-t border-line pt-5">
+    {
+      stats.map((stat) => (
+        <div>
+          <p class="font-display text-xl sm:text-2xl">{stat.value}</p>
+          <p class="font-label mt-1 text-muted">{stat.label}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="flex-1" aria-hidden="true"></div>
+
+  <div class="mt-6 flex items-end justify-between gap-4 border-t border-line pt-5">
+    <p>
+      {
+        program.price.original && (
+          <span class="mr-2 text-sm text-muted line-through">{program.price.original}</span>
+        )
+      }
+      <span class="text-lg font-medium">{program.price.current}</span>
+    </p>
+    <span class="inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+      {program.ctaLabel}
+      <svg
+        class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
+</a>
