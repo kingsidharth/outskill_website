@@ -1,0 +1,134 @@
+import { useState, useRef, useCallback, useEffect } from 'react';
+import type { Sprint } from '../../data/types';
+
+interface Props {
+  sprints: Sprint[];
+}
+
+export default function SprintTimeline({ sprints }: Props) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const scrollTo = useCallback((index: number) => {
+    if (!listRef.current) return;
+    const children = listRef.current.children;
+    if (children[index]) {
+      children[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+  }, []);
+
+  const select = useCallback((n: number) => {
+    setSelected((prev) => (prev === n ? null : n));
+    scrollTo(n - 1);
+  }, [scrollTo]);
+
+  const handleKey = useCallback((e: React.KeyboardEvent) => {
+    if (selected === null) return;
+    const idx = sprints.findIndex((s) => s.n === selected);
+    if (idx < 0) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = sprints[Math.min(idx + 1, sprints.length - 1)];
+      setSelected(next.n);
+      scrollTo(idx + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = sprints[Math.max(idx - 1, 0)];
+      setSelected(prev.n);
+      scrollTo(idx - 1);
+    }
+  }, [selected, sprints, scrollTo]);
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    const handler = (e: KeyboardEvent) => {
+      if (selected === null) return;
+      const idx = sprints.findIndex((s) => s.n === selected);
+      if (idx < 0) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = sprints[Math.min(idx + 1, sprints.length - 1)];
+        setSelected(next.n);
+        scrollTo(idx + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = sprints[Math.max(idx - 1, 0)];
+        setSelected(prev.n);
+        scrollTo(idx - 1);
+      }
+    };
+    el.addEventListener('keydown', handler);
+    return () => el.removeEventListener('keydown', handler);
+  }, [selected, sprints, scrollTo]);
+
+  return (
+    <div
+      ref={listRef}
+      class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:flex-col md:snap-none md:overflow-x-visible"
+      role="listbox"
+      aria-label="Sprint timeline"
+      tabIndex={0}
+    >
+      {sprints.map((sprint) => {
+        const isOpen = selected === sprint.n;
+        return (
+          <div
+            key={sprint.n}
+            role="option"
+            aria-selected={isOpen}
+            class={`snap-start shrink-0 w-[85vw] md:w-full card p-4 sm:p-5 transition-colors cursor-pointer ${
+              isOpen ? 'border-accent' : 'hover:border-fg/25'
+            }`}
+            onClick={() => select(sprint.n)}
+            onKeyDown={handleKey}
+          >
+            <div class="flex items-center gap-3">
+              <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs font-medium text-muted">
+                {sprint.n}
+              </span>
+              <div class="min-w-0">
+                <p class="font-medium truncate">{sprint.title}</p>
+                <p class="font-label text-xs text-muted">{sprint.days}</p>
+              </div>
+              <svg
+                class={`ml-auto size-4 shrink-0 text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+
+            {isOpen && (
+              <div class="mt-4 space-y-3 border-t border-line pt-4">
+                <div>
+                  <p class="font-label text-xs text-accent">Focus</p>
+                  <p class="mt-1 text-sm">{sprint.focus}</p>
+                </div>
+                <div>
+                  <p class="font-label text-xs text-accent">Learn</p>
+                  <ul class="mt-1 space-y-0.5">
+                    {sprint.learn.map((item, i) => (
+                      <li key={i} class="text-sm text-muted before:mr-2 before:text-accent before:content-['▸']">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-label text-xs text-accent">Ship</p>
+                  <p class="mt-1 text-sm">{sprint.ship}</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  {sprint.tools.map((tool, i) => (
+                    <span key={i} class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{tool}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}

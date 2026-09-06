@@ -1,6 +1,15 @@
-# NOTES
-Cross-file requests go here (owner → file → change).
+# Build notes
 
-- GLM → Orchestrator → `src/styles/global.css`: `pnpm build` fails with `Cannot apply unknown utility class 'btn'`. In Tailwind v4, `@apply` can't reference plain custom classes; `.btn-accent`/`.btn-ghost` (lines 28–29) apply `.btn`. Fix: convert `.btn` to `@utility btn { ... }` or inline its classes into both button utilities. Pre-existing failure (reproduces with mastermind.astro removed); blocks all page builds.
-- GLM → DeepSeek → `src/pages/api/register.ts`: endpoint doesn't exist yet; mastermind.astro + bootcamp.astro register forms POST to `/api/register` and need it at runtime.
-- Kimi → Orchestrator → `src/styles/global.css`: confirming GLM's entry above — the same `Cannot apply unknown utility class 'btn'` failure is the only thing blocking `pnpm build` for my pages. Verified in isolation: with `.btn` converted to `@utility btn`, the build completes and `/bootcamp` + `/fellowship` prerender cleanly. Both register forms (bootcamp + fellowship) also depend on DeepSeek's `/api/register` at runtime.
+## Warnings in other owners' files
+
+The following images referenced in Astro components/pages did not resolve at build time. These are not in DeepSeek-owned files:
+
+- `/engacc/engaccm.webp` — likely in a component/page owned by GLM or Kimi
+- `/mastermind/engmm.webp` — likely in mastermind.astro (GLM)
+- `/engacc/engacc.webp` — likely in bootcamp or fellowship (Kimi)
+- `/mastermind/ebtnbg.webp` — likely in mastermind.astro (GLM)
+- `/mastermind/engmbg.webp` — likely in mastermind.astro (GLM)
+- `/mastermind/engmd.webp` — likely in mastermind.astro (GLM)
+- `/accelerator/btnmobile.webp` — likely in accelerator-related component (GLM)
+
+These need either the image files placed in `public/` or the references corrected.

@@ -1,43 +1,51 @@
-# Astro Starter Kit: Minimal
+# Outskill Engineering
 
-```sh
-pnpm create astro@latest -- --template minimal
+Static-first SSR marketing site for Outskill's four AI Engineering programs.
+
+## Quick start
+
+```zsh
+pnpm dev           # dev server on http://localhost:4321
+pnpm build         # production build → dist/
+scripts/serve.sh   # build + serve on http://0.0.0.0:80
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Local domain
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```zsh
+sudo sh -c 'echo "127.0.0.1 outskill.local" >> /etc/hosts'
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Then http://outskill.local resolves to your local server.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Tailscale (remote access)
 
-Any static assets, like images, can be placed in the `public/` directory.
+The server binds `0.0.0.0:80`, so it's reachable via your Tailscale IP:
 
-## 🧞 Commands
+- http://100.111.80.16
+- http://kings-macbook-pro.tail540e1.ts.net
 
-All commands are run from the root of the project, from a terminal:
+For HTTPS via Tailscale Funnel:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+```zsh
+tailscale serve --bg --https=443 http://127.0.0.1:80
+```
 
-## 👀 Want to learn more?
+## Architecture
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Astro 7** with SSR (Node standalone adapter)
+- **React 19** islands for interactive components
+- **Tailwind v4** for styling
+- Marketing pages are prerendered (`export const prerender = true`)
+- `/api/*` routes remain dynamic (SSR)
+- Forms submit to `/api/register` via `fetch` with inline success (no page reload)
+
+## Ownership
+
+| Owner | Files |
+|---|---|
+| Orchestrator | `SPEC.md`, `astro.config.mjs`, `src/styles/global.css`, `src/data/types.ts`, `package.json` |
+| Codex | `src/data/*.ts` (except types.ts) |
+| GLM | `src/layouts/*`, `src/components/*.astro`, `src/pages/mastermind.astro`, `TrapQuiz.tsx`, `AgentTerminal.tsx` |
+| Kimi | `src/pages/bootcamp.astro`, `src/pages/fellowship.astro`, `AgentLoopExplorer.tsx`, `CurriculumExplorer.tsx` |
+| DeepSeek | `src/pages/index.astro`, `src/pages/accelerator.astro`, `src/pages/api/*`, `ProgramPicker.tsx`, `SprintTimeline.tsx`, `scripts/*`, `README.md` |
