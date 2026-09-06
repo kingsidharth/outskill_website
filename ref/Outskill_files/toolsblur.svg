@@ -1,0 +1,22 @@
+<svg width="1439" height="249" viewBox="0 0 1439 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1266_11807)">
+<foreignObject x="-60" y="-60" width="1559" height="369"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(30px);clip-path:url(#bgblur_1_1266_11807_clip_path);height:100%;width:100%"></div></foreignObject><g filter="url(#filter0_f_1266_11807)" data-figma-bg-blur-radius="60">
+<rect width="1439" height="249" transform="matrix(1 0 0 -1 0 249)" fill="url(#paint0_linear_1266_11807)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_1266_11807" x="-60" y="-60" width="1559" height="369" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur_1266_11807"/>
+</filter>
+<clipPath id="bgblur_1_1266_11807_clip_path" transform="translate(60 60)"><rect width="1439" height="249" transform="matrix(1 0 0 -1 0 249)"/>
+</clipPath><linearGradient id="paint0_linear_1266_11807" x1="688" y1="-33.799" x2="692.76" y2="232.023" gradientUnits="userSpaceOnUse">
+<stop offset="0.224979" stop-color="white"/>
+<stop offset="0.739112" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_1266_11807">
+<rect width="1439" height="249" fill="white"/>
+</clipPath>
+</defs>
+</svg>
