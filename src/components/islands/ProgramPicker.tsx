@@ -87,32 +87,32 @@ export default function ProgramPicker({ questions, programs }: Props) {
 
   return (
     <div
-      class="card p-6 sm:p-8"
+      className="card p-6 sm:p-8"
       role="region"
       aria-label="Program recommendation quiz"
       aria-live="polite"
     >
       {/* Progress dots */}
-      <div class="flex items-center gap-2" role="progressbar" aria-valuenow={answeredCount} aria-valuemin={0} aria-valuemax={questions.length}>
+      <div className="flex items-center gap-2" role="progressbar" aria-valuenow={answeredCount} aria-valuemin={0} aria-valuemax={questions.length}>
         {questions.map((_, i) => (
           <div
             key={i}
-            class={`h-1.5 flex-1 rounded-full transition-colors ${i < answeredCount ? 'bg-accent' : 'bg-line'}`}
+            className={`h-1.5 flex-1 rounded-full transition-colors ${i < answeredCount ? 'bg-accent' : 'bg-line'}`}
             aria-hidden="true"
           />
         ))}
-        <span class="font-label ml-2 text-xs text-muted">{answeredCount}/{questions.length}</span>
+        <span className="font-label ml-2 text-xs text-muted">{answeredCount}/{questions.length}</span>
       </div>
 
       {!done && currentQ && (
-        <div class="mt-6">
+        <div className="mt-6">
           <fieldset>
-            <legend class="text-lg font-medium">{currentQ.question}</legend>
-            <div class="mt-4 space-y-2">
+            <legend className="text-lg font-medium">{currentQ.question}</legend>
+            <div className="mt-4 space-y-2">
               {currentQ.options.map((opt, i) => (
                 <label
                   key={i}
-                  class={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition-colors ${
+                  className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition-colors ${
                     answers[step] === i
                       ? 'border-accent bg-accent/10'
                       : 'border-line hover:border-fg/25'
@@ -124,16 +124,16 @@ export default function ProgramPicker({ questions, programs }: Props) {
                     value={i}
                     checked={answers[step] === i}
                     onChange={() => select(i)}
-                    class="size-4 accent-accent"
+                    className="size-4 accent-accent"
                   />
-                  <span class="text-sm sm:text-base">{opt.label}</span>
+                  <span className="text-sm sm:text-base">{opt.label}</span>
                 </label>
               ))}
             </div>
           </fieldset>
-          <div class="mt-4 flex items-center gap-3">
+          <div className="mt-4 flex items-center gap-3">
             {step > 0 && (
-              <button type="button" onClick={prevStep} class="btn-ghost text-sm">
+              <button type="button" onClick={prevStep} className="btn-ghost text-sm">
                 Back
               </button>
             )}
@@ -142,29 +142,29 @@ export default function ProgramPicker({ questions, programs }: Props) {
       )}
 
       {done && (
-        <div class="mt-6">
+        <div className="mt-6">
           {recommended ? (
             <div>
-              <p class="eyebrow text-accent">Recommended for you</p>
-              <p class="mt-2 text-2xl font-display">{recommended.name}</p>
-              <p class="mt-1 text-sm text-muted">{recommended.headline}</p>
-              <p class="mt-2 text-sm">
+              <p className="eyebrow text-accent">Recommended for you</p>
+              <p className="mt-2 text-2xl font-display">{recommended.name}</p>
+              <p className="mt-1 text-sm text-muted">{recommended.headline}</p>
+              <p className="mt-2 text-sm">
                 {recommended.price.original && (
-                  <span class="mr-1.5 text-muted line-through">{recommended.price.original}</span>
+                  <span className="mr-1.5 text-muted line-through">{recommended.price.original}</span>
                 )}
-                <span class="font-medium text-accent">{recommended.price.current}</span>
+                <span className="font-medium text-accent">{recommended.price.current}</span>
               </p>
               <a
                 href={`/${recommended.slug}`}
-                class="btn-accent mt-4 inline-flex"
+                className="btn-accent mt-4 inline-flex"
               >
                 View {recommended.name}
               </a>
             </div>
           ) : (
-            <p class="text-muted">Could not determine a recommendation. Try again.</p>
+            <p className="text-muted">Could not determine a recommendation. Try again.</p>
           )}
-          <button type="button" onClick={startOver} class="btn-ghost mt-4 text-sm">
+          <button type="button" onClick={startOver} className="btn-ghost mt-4 text-sm">
             Start over
           </button>
         </div>

@@ -8,7 +8,7 @@
   <array>
     <string>/bin/zsh</string>
     <string>-c</string>
-    <string>cd /Users/kingsidharth/Sites/gs-engg && exec scripts/serve.sh</string>
+    <string>cd /Users/kingsidharth/Sites/gs-engg &amp;&amp; exec scripts/serve.sh</string>
   </array>
   <key>KeepAlive</key>
   <true/>
@@ -23,7 +23,7 @@
     <key>PORT</key>
     <string>80</string>
     <key>PATH</key>
-    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <string>/Users/kingsidharth/Library/pnpm:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
   </dict>
 </dict>
 </plist>

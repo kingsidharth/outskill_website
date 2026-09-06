@@ -65,7 +65,7 @@ export default function SprintTimeline({ sprints }: Props) {
   return (
     <div
       ref={listRef}
-      class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:flex-col md:snap-none md:overflow-x-visible"
+      className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:flex-col md:snap-none md:overflow-x-visible"
       role="listbox"
       aria-label="Sprint timeline"
       tabIndex={0}
@@ -77,22 +77,22 @@ export default function SprintTimeline({ sprints }: Props) {
             key={sprint.n}
             role="option"
             aria-selected={isOpen}
-            class={`snap-start shrink-0 w-[85vw] md:w-full card p-4 sm:p-5 transition-colors cursor-pointer ${
+            className={`snap-start shrink-0 w-[85vw] md:w-full card p-4 sm:p-5 transition-colors cursor-pointer ${
               isOpen ? 'border-accent' : 'hover:border-fg/25'
             }`}
             onClick={() => select(sprint.n)}
             onKeyDown={handleKey}
           >
-            <div class="flex items-center gap-3">
-              <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs font-medium text-muted">
+            <div className="flex items-center gap-3">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs font-medium text-muted">
                 {sprint.n}
               </span>
-              <div class="min-w-0">
-                <p class="font-medium truncate">{sprint.title}</p>
-                <p class="font-label text-xs text-muted">{sprint.days}</p>
+              <div className="min-w-0">
+                <p className="font-medium truncate">{sprint.title}</p>
+                <p className="font-label text-xs text-muted">{sprint.days}</p>
               </div>
               <svg
-                class={`ml-auto size-4 shrink-0 text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                className={`ml-auto size-4 shrink-0 text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
                 viewBox="0 0 16 16"
                 fill="none"
                 aria-hidden="true"
@@ -102,26 +102,26 @@ export default function SprintTimeline({ sprints }: Props) {
             </div>
 
             {isOpen && (
-              <div class="mt-4 space-y-3 border-t border-line pt-4">
+              <div className="mt-4 space-y-3 border-t border-line pt-4">
                 <div>
-                  <p class="font-label text-xs text-accent">Focus</p>
-                  <p class="mt-1 text-sm">{sprint.focus}</p>
+                  <p className="font-label text-xs text-accent">Focus</p>
+                  <p className="mt-1 text-sm">{sprint.focus}</p>
                 </div>
                 <div>
-                  <p class="font-label text-xs text-accent">Learn</p>
-                  <ul class="mt-1 space-y-0.5">
+                  <p className="font-label text-xs text-accent">Learn</p>
+                  <ul className="mt-1 space-y-0.5">
                     {sprint.learn.map((item, i) => (
-                      <li key={i} class="text-sm text-muted before:mr-2 before:text-accent before:content-['▸']">{item}</li>
+                      <li key={i} className="text-sm text-muted before:mr-2 before:text-accent before:content-['▸']">{item}</li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <p class="font-label text-xs text-accent">Ship</p>
-                  <p class="mt-1 text-sm">{sprint.ship}</p>
+                  <p className="font-label text-xs text-accent">Ship</p>
+                  <p className="mt-1 text-sm">{sprint.ship}</p>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5">
                   {sprint.tools.map((tool, i) => (
-                    <span key={i} class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{tool}</span>
+                    <span key={i} className="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{tool}</span>
                   ))}
                 </div>
               </div>
