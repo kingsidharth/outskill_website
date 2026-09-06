@@ -13,7 +13,7 @@ export const site: Site = {
     { label: 'Accelerator', href: '/accelerator' },
     { label: 'Fellowship', href: '/fellowship' },
   ],
-  primaryCta: { label: 'Register free', href: '#register' },
+  primaryCta: { label: 'Register free', href: '/mastermind#register' },
   footer: [
     { heading: 'Programs', links: [{ label: 'Mastermind', href: '/mastermind' }, { label: 'Bootcamp', href: '/bootcamp' }, { label: 'Accelerator', href: '/accelerator' }, { label: 'Fellowship', href: '/fellowship' }] },
     { heading: 'Company', links: [{ label: 'Contact Us', href: '/contact' }, { label: 'Apply as Mentor', href: '/mentor' }, { label: 'Log in', href: 'https://outskill.com' }] },
