@@ -1,0 +1,40 @@
+import type { Program } from './types';
+
+export const fellowship: Program = {
+  slug: 'fellowship',
+  name: 'AI Engineering Fellowship (GEF)',
+  eyebrow: '6-MONTH HYBRID FELLOWSHIP',
+  headline: 'The foundations, theory, and field skills to engineer AI systems.',
+  subhead: 'Six levels move from ML fundamentals through LLM theory, customer-facing delivery, implementation, and later-stage fine-tuning and architecture.',
+  ctaLabel: 'Apply now',
+  ctaHref: '#register',
+  stats: [{ label: 'Duration', value: '6 months' }, { label: 'Levels', value: '6' }, { label: 'Format', value: 'Hybrid' }, { label: 'Focus', value: 'AI engineering' }],
+  price: { current: 'Apply for pricing', note: '6-month, hybrid' },
+  features: [
+    { title: 'ML fundamentals', body: 'Build the mathematical and conceptual base needed to reason about models.' },
+    { title: 'LLM theory', body: 'Understand tokenization, transformers, attention, and scaling laws.' },
+    { title: 'Forward-deployed skills', body: 'Scope useful work, design evaluations, and ship with customers.' },
+    { title: 'Implementation', body: 'Build RAG systems, agents, and the infrastructure around them.' },
+    { title: 'Fine-tuning', body: 'A later level covers when and how to adapt models with fine-tuning.' },
+    { title: 'Architecture', body: 'A later level covers the systems design needed for dependable AI products.' },
+  ],
+  levels: [
+    { n: 0, title: 'ML fundamentals & math', theory: ['Vectors, matrices, probability', 'Optimization and loss', 'Training and generalization'], skills: ['Read model behavior', 'Reason about data and errors', 'Use evaluation language precisely'], build: ['A small supervised learning system', 'A measurement notebook'] },
+    { n: 1, title: 'LLM theory', theory: ['Tokenization', 'Transformers and attention', 'Scaling laws and inference'], skills: ['Trace an LLM request', 'Compare model capabilities', 'Connect theory to product limits'], build: ['A tokenizer and attention walkthrough', 'A measured LLM application'] },
+    { n: 2, title: 'Forward-deployed skills', theory: ['Problem framing', 'Evaluation design', 'Customer feedback loops'], skills: ['Scope with customers', 'Define success metrics', 'Ship and iterate in the field'], build: ['A scoped customer brief', 'An eval plan and pilot'] },
+    { n: 3, title: 'Implementation', theory: ['Retrieval patterns', 'Agent architectures', 'AI infrastructure'], skills: ['Build RAG', 'Build tool-using agents', 'Operate data and model pipelines'], build: ['A grounded assistant', 'A production-shaped agent system'] },
+    { n: 4, title: 'Fine-tuning', later: true, theory: ['Adaptation objectives', 'Data quality and curation', 'Training and serving trade-offs'], skills: ['Choose fine-tuning vs prompting or RAG', 'Prepare a training set', 'Evaluate an adapted model'], build: ['A fine-tuned model experiment', 'A comparison against a baseline'] },
+    { n: 5, title: 'Architecture & systems design', later: true, theory: ['Distributed system boundaries', 'Reliability and observability', 'Cost, latency, and scale'], skills: ['Design end-to-end AI systems', 'Make explicit trade-offs', 'Lead technical reviews'], build: ['An architecture proposal', 'A production readiness review'] },
+  ],
+  outcomes: ['Explain the foundations behind modern ML and LLM systems', 'Design evaluations tied to real customer outcomes', 'Build RAG, agent, and AI infrastructure systems', 'Ship with users through a forward-deployed workflow', 'Make sound model, cost, latency, and architecture trade-offs'],
+  audience: ['Engineers building a durable AI career', 'ML practitioners expanding into product delivery', 'Developers who want theory with implementation', 'Technical professionals ready for customer-facing work'],
+  faq: [
+    { q: 'What does GEF stand for?', a: 'GEF is the AI Engineering Fellowship: a six-month hybrid program across six levels.' },
+    { q: 'Do I need an ML background?', a: 'No. Level 0 establishes the ML and math foundations, while programming experience is expected.' },
+    { q: 'What does forward-deployed engineering mean here?', a: 'It means scoping problems with customers, designing useful evals, and shipping systems in their real environment.' },
+    { q: 'When do fine-tuning and architecture appear?', a: 'They are later levels, after the fundamentals, theory, field skills, and implementation layers.' },
+    { q: 'What is the hybrid format?', a: 'The fellowship combines structured remote learning with live interaction and in-person elements.' },
+    { q: 'How do I apply?', a: 'Use the application CTA and the team will share fit, schedule, and pricing details.' },
+  ],
+  seo: { title: 'AI Engineering Fellowship (GEF)', description: 'A 6-month hybrid AI Engineering Fellowship covering ML, LLM theory, customer delivery, RAG, agents, and later architecture.' },
+};

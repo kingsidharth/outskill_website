@@ -1,0 +1,43 @@
+import type { Program } from './types';
+
+export const accelerator: Program = {
+  slug: 'accelerator',
+  name: 'AI Engineering Accelerator',
+  eyebrow: 'FULL-SPECTRUM AI ENGINEERING',
+  headline: 'From LLM apps to production systems.',
+  subhead: 'A self-paced and live program covering LLM applications, RAG, automation, agents, multi-agent systems, deployment, and the work around engineering.',
+  ctaLabel: 'Join the Accelerator',
+  ctaHref: '#register',
+  stats: [{ label: 'Training', value: '70+ hours' }, { label: 'Applications', value: '7+ built' }, { label: 'Updates', value: '1 year live' }, { label: 'Format', value: 'Self-paced + live' }],
+  price: { current: '₹49,999', note: '$999 international' },
+  features: [
+    { title: 'LLM applications', body: 'Build provider-aware chat and multimodal applications with production concerns in view.' },
+    { title: 'Automation', body: 'Turn repetitive work into end-to-end workflows with useful interfaces.' },
+    { title: 'RAG', body: 'Make applications answer from your documents, media, and other private data.' },
+    { title: 'Open-source AI', body: 'Run and evaluate open models, then choose the right deployment trade-off.' },
+    { title: 'Agents', body: 'Build tool-enabled systems that can plan, act, and report what they did.' },
+    { title: 'Multi-agent systems', body: 'Coordinate specialist agents around complex engineering workflows.' },
+    { title: 'Production', body: 'Deploy with monitoring, security, cost controls, and a path to maintenance.' },
+  ],
+  sprints: [
+    { n: 0, title: 'Python Basecamp Foundation Setup', days: 'Foundation setup', focus: 'Engineering base', learn: ['Python environment', 'Data structures and algorithms', 'NumPy, Pandas, threading, multiprocessing'], ship: 'A Python foundation ready for advanced AI development.', tools: ['Python', 'NumPy', 'Pandas'] },
+    { n: 1, title: 'Building ChatGPT-Level Applications', days: 'Days 1–3', focus: 'Advanced LLM integration', learn: ['Multi-provider chat', 'XML and JSON prompts', 'Gradio and local models'], ship: 'A production-ready chatbot.', tools: ['OpenAI', 'Gradio', 'Local models'] },
+    { n: 2, title: 'AI-Powered Automation Systems', days: 'Days 4–5', focus: 'Workflow engineering', learn: ['Job-search automation', 'Resume and cover-letter pipeline', 'Full-stack interfaces'], ship: 'A complete job-application automation app.', tools: ['APIs', 'HeyGen', 'Web UI'] },
+    { n: 3, title: 'Custom AI with Your Data (RAG Systems)', days: 'Days 6–7', focus: 'Advanced AI customization', learn: ['Document RAG', 'A personal AI second brain', 'Text, image, and voice inputs'], ship: 'A personal assistant grounded in your media.', tools: ['Embeddings', 'Vector search', 'Multimodal models'] },
+    { n: 4, title: 'Open Source AI & Production Deployment', days: 'Days 8–9', focus: 'Enterprise-grade systems', learn: ['Vision, audio, and text systems', 'Cost optimization', 'Security and deployment'], ship: 'A monitored, secure production AI system.', tools: ['Open models', 'Docker', 'Monitoring'] },
+    { n: 5, title: 'AI Agents & Autonomous Systems', days: 'Days 10–11', focus: 'Agentic architecture', learn: ['Code-generating agents', 'MCP tools', 'Sequential workflows'], ship: 'An AI coding assistant that writes and deploys code.', tools: ['MCP', 'Tool APIs', 'Workflow runtimes'] },
+    { n: 6, title: 'Multi-Agent AI Systems', days: 'Days 12–13', focus: 'Advanced agentic architecture', learn: ['Engineering agents', 'Project bots', 'Memory-enabled teams'], ship: 'A team of agents for a development workflow.', tools: ['Discord', 'Queues', 'Agent memory'] },
+    { n: 7, title: 'Capstone Hackathon', days: 'Days 13–14', focus: 'Portfolio project', learn: ['Original product scope', 'Production deployment', 'Technical presentation'], ship: 'A real AI product that demonstrates your engineering.', tools: ['Your stack', 'CI/CD', 'Cloud deployment'] },
+  ],
+  outcomes: ['Build and deploy 7+ real AI applications', 'Choose models using task, cost, latency, and evaluation evidence', 'Ground applications in private data with RAG', 'Design agents and multi-agent workflows', 'Operate production systems with security and monitoring', 'Stay current through a year of live AI updates'],
+  audience: ['Engineers who want the full AI application stack', 'Developers moving from experiments to deployed systems', 'Technical founders building a portfolio of products', 'Professionals who want self-paced work plus live support'],
+  faq: [
+    { q: 'What is the AI Engineering Accelerator Program?', a: 'It is a full-spectrum program covering applications, automation, RAG, agents, multi-agent systems, and production deployment.' },
+    { q: 'Is coding background needed?', a: 'Yes. The program is built for engineers and assumes basic programming comfort.' },
+    { q: 'How much time do I need to dedicate?', a: 'Plan for the 70+ hours of core training plus build time; the self-paced format lets you set the weekly pace.' },
+    { q: 'Will I receive a certificate upon completion?', a: 'Completion details and any certificate process are shared with enrolled participants.' },
+    { q: 'What is the format of the learning?', a: 'You get self-paced engineering lessons alongside live sessions, projects, and one year of AI updates.' },
+    { q: 'What are the add-on libraries?', a: 'The wider program includes tool and workflow deep dives, business foundations, monetization modules, and weekly AI updates.' },
+  ],
+  seo: { title: 'AI Engineering Accelerator | Full Spectrum', description: 'Build 7+ AI applications in 70+ hours: LLM apps, RAG, automation, agents, multi-agent systems, and production deployment.' },
+};

@@ -1,0 +1,43 @@
+import type { Program } from './types';
+
+export const bootcamp: Program = {
+  slug: 'bootcamp',
+  name: 'AI Engineering Bootcamp',
+  eyebrow: '14-DAY SPRINT-BASED PROGRAM',
+  headline: 'Build the Cursors and Claude Codes of the world.',
+  subhead: 'We teach engineers to build coding agents: agent loops, tool calling, context and memory management, sandboxed execution, evals, and multi-agent orchestration.',
+  ctaLabel: 'Register now',
+  ctaHref: '#register',
+  stats: [{ label: 'Duration', value: '14 days' }, { label: 'Format', value: 'Live sprints' }, { label: 'Focus', value: 'Coding agents' }, { label: 'Output', value: 'Working systems' }],
+  price: { current: '₹24,999', note: 'Intro price' },
+  features: [
+    { title: 'Agent loop', body: 'Turn a task into a repeatable cycle of context, model calls, tools, memory, and review.' },
+    { title: 'Tool calling', body: 'Give coding agents safe, typed access to files, shells, APIs, and source control.' },
+    { title: 'Context management', body: 'Select, compress, and refresh the context an agent needs at each step.' },
+    { title: 'Memory', body: 'Separate short-term working state from durable project knowledge.' },
+    { title: 'Sandboxed execution', body: 'Run generated code with boundaries, permissions, and failure handling.' },
+    { title: 'Evals', body: 'Measure agent behavior with task suites instead of trusting one impressive demo.' },
+    { title: 'Multi-agent orchestration', body: 'Coordinate specialist agents without losing control of the workflow.' },
+  ],
+  sprints: [
+    { n: 0, title: 'Agent foundations', days: 'Days 1–2', focus: 'The loop', learn: ['Model calls and state', 'Context and memory', 'Tool schemas'], ship: 'A coding-agent loop that plans and acts.', tools: ['TypeScript', 'LLM APIs', 'Git'] },
+    { n: 1, title: 'Context and tools', days: 'Days 3–4', focus: 'Useful actions', learn: ['Tool calling', 'File and shell tools', 'Permission boundaries'], ship: 'An agent that reads and changes a real repository.', tools: ['Node.js', 'Shell', 'MCP'] },
+    { n: 2, title: 'Memory and review', days: 'Days 5–6', focus: 'Reliable state', learn: ['Working memory', 'Durable memory', 'Human review gates'], ship: 'A coding agent that resumes work and asks for review.', tools: ['SQLite', 'Git', 'Test runners'] },
+    { n: 3, title: 'Sandboxed execution', days: 'Days 7–8', focus: 'Safe execution', learn: ['Isolation', 'Resource limits', 'Failure recovery'], ship: 'A bounded runner for generated code.', tools: ['Containers', 'Queues', 'Observability'] },
+    { n: 4, title: 'Agent evals', days: 'Days 9–10', focus: 'Measurement', learn: ['Task suites', 'Traces and graders', 'Regression checks'], ship: 'An eval set that catches agent regressions.', tools: ['JSONL', 'Test runners', 'Tracing'] },
+    { n: 5, title: 'Orchestration', days: 'Days 11–12', focus: 'Multiple agents', learn: ['Roles', 'Handoffs', 'Parallel work'], ship: 'A small team of agents that completes a feature.', tools: ['Queues', 'Workers', 'Webhooks'] },
+    { n: 6, title: 'Production loop', days: 'Day 13', focus: 'Operations', learn: ['Retries', 'Cost controls', 'Audit logs'], ship: 'A monitored agent service with explicit limits.', tools: ['Docker', 'Logs', 'Metrics'] },
+    { n: 7, title: 'Capstone', days: 'Day 14', focus: 'Ship', learn: ['Scope a real workflow', 'Run evals', 'Demo the system'], ship: 'A portfolio-ready coding agent.', tools: ['Your stack', 'CI', 'Deployment'] },
+  ],
+  outcomes: ['Build a coding agent from first principles', 'Connect tools without losing safety or control', 'Manage context and memory across tasks', 'Run generated code in a sandbox', 'Evaluate and improve agent behavior', 'Orchestrate agents for a real engineering workflow'],
+  audience: ['Software engineers ready to move beyond autocomplete', 'Technical leads building internal developer tools', 'Founders prototyping AI-native products', 'Developers who learn by shipping'],
+  faq: [
+    { q: 'What will I build?', a: 'You build a coding agent that can inspect a repository, use tools, run tests, and complete scoped work.' },
+    { q: 'Do I need to know machine learning?', a: 'No. You need programming experience and comfort reading and changing code.' },
+    { q: 'Why is the program split into sprints?', a: 'Each sprint adds one system layer and ends with something runnable, so the final agent has a clear history.' },
+    { q: 'How are agents made safe?', a: 'The curriculum covers sandboxing, permissions, review gates, retries, logs, and evals.' },
+    { q: 'Is this about using existing coding tools?', a: 'You may use them as references, but the core work is building the underlying agent patterns yourself.' },
+    { q: 'What is included in the intro price?', a: 'The ₹24,999 intro price includes the 14-day sprint-based program and its build material.' },
+  ],
+  seo: { title: 'AI Engineering Bootcamp | Build Coding Agents', description: 'A 14-day engineering bootcamp for building coding agents with tool loops, context, memory, sandboxing, evals, and orchestration.' },
+};
