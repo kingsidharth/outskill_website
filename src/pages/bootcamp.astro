@@ -1,0 +1,203 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Stat from '../components/Stat.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+import StickyBar from '../components/StickyBar.astro';
+import AgentLoopExplorer from '../components/islands/AgentLoopExplorer';
+import { bootcamp } from '../data/bootcamp';
+---
+
+<Base title={bootcamp.seo.title} description={bootcamp.seo.description} image="/gen/hero-bootcamp.webp">
+  <!-- Hero -->
+  <header class="relative overflow-hidden border-b border-line">
+    <div class="absolute inset-0 bg-gradient-to-b from-surface-2 via-bg to-bg" aria-hidden="true"></div>
+    <img
+      src="/gen/hero-bootcamp.webp"
+      alt=""
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 size-full object-cover opacity-40"
+      onerror="this.remove()"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-bg/50 via-bg/60 to-bg" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-36">
+      <p class="eyebrow">{bootcamp.eyebrow}</p>
+      <h1 class="mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">{bootcamp.headline}</h1>
+      <p class="mt-6 max-w-2xl text-base text-muted sm:text-lg">{bootcamp.subhead}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <a href={bootcamp.ctaHref} class="btn-accent">{bootcamp.ctaLabel}</a>
+        <p class="text-lg">
+          <span class="font-medium text-accent">{bootcamp.price.current}</span>
+          {bootcamp.price.note && <span class="ml-2 text-sm text-muted">{bootcamp.price.note}</span>}
+        </p>
+      </div>
+      <div class="mt-14 grid grid-cols-2 gap-8 border-t border-line/70 pt-8 sm:grid-cols-4">
+        {bootcamp.stats.map((s) => <Stat stat={s} />)}
+      </div>
+    </div>
+  </header>
+
+  <!-- What you'll actually build -->
+  <Section
+    eyebrow="What you'll actually build"
+    title="Every layer of a real coding agent."
+    lead="Not a demo that falls apart on the second prompt — the full system, built sprint by sprint."
+  >
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        bootcamp.features.map((f) => (
+          <li class="card p-6">
+            <h3 class="text-lg font-medium">{f.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- AgentLoopExplorer island -->
+  <Section
+    eyebrow="Show, don't tell"
+    title="The agent loop, live."
+    lead="Click through the loop your agent will run on every task — and see the state it carries with it."
+    class="border-y border-line bg-surface/30"
+  >
+    <AgentLoopExplorer client:visible />
+  </Section>
+
+  <!-- 14-day sprint list -->
+  <Section
+    eyebrow="The 14 days"
+    title="One system layer per sprint."
+    lead="Each sprint ends with something runnable, so the final agent has a clear history — and you can explain every line of it."
+  >
+    <ol>
+      {
+        bootcamp.sprints?.map((s) => (
+          <li class="grid gap-3 border-t border-line py-6 first:border-t-0 first:pt-0 md:grid-cols-[180px_1fr] md:gap-10 md:py-8">
+            <div class="md:pt-1 md:text-right">
+              <p class="font-label text-accent">{s.days}</p>
+              <p class="font-label mt-1 text-muted">Sprint {s.n}</p>
+            </div>
+            <div class="card p-5 sm:p-6">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <h3 class="font-display text-xl sm:text-2xl">{s.title}</h3>
+                <p class="font-label text-muted">{s.focus}</p>
+              </div>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {s.learn.map((item) => (
+                  <li class="rounded-full border border-line px-3 py-1 text-xs text-muted">{item}</li>
+                ))}
+              </ul>
+              <p class="mt-4 text-sm sm:text-base">
+                <span class="font-medium text-accent">You ship: </span>
+                {s.ship}
+              </p>
+              <p class="mt-2 text-xs text-muted">Tools: {s.tools.join(' · ')}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <!-- Outcomes + audience -->
+  <Section
+    eyebrow="Outcomes"
+    title="What changes after 14 days."
+    class="border-y border-line bg-surface/30"
+  >
+    <div class="grid gap-12 md:grid-cols-2">
+      <ul class="space-y-4">
+        {
+          bootcamp.outcomes.map((o) => (
+            <li class="flex items-start gap-3 text-base">
+              <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
+                <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {o}
+            </li>
+          ))
+        }
+      </ul>
+      <div>
+        <h3 class="font-label text-muted">Who it's for</h3>
+        <ul class="mt-5 space-y-3">
+          {
+            bootcamp.audience.map((a) => (
+              <li class="card px-5 py-4 text-sm text-fg/90">{a}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Register -->
+  <Section
+    id="register"
+    eyebrow="Register"
+    title="Save your seat."
+    lead="Leave your email and we'll send the schedule, prerequisites, and payment link."
+  >
+    <form id="register-form" data-program={bootcamp.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
+      <label for="register-email" class="sr-only">Email address</label>
+      <input
+        id="register-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder="you@company.com"
+        class="w-full flex-1 rounded-full border border-line bg-surface px-5 py-3 text-fg placeholder:text-muted focus:border-accent"
+      />
+      <button type="submit" class="btn-accent shrink-0">{bootcamp.ctaLabel}</button>
+    </form>
+    <p id="register-msg" role="status" class="mt-4 min-h-5 text-sm text-accent"></p>
+  </Section>
+
+  <!-- FAQ -->
+  <Section eyebrow="FAQ" title="Straight answers.">
+    <FAQ items={bootcamp.faq} />
+  </Section>
+
+  <CTA
+    eyebrow={bootcamp.eyebrow}
+    title="Fourteen days. One working coding agent."
+    body={bootcamp.subhead}
+    ctaLabel={bootcamp.ctaLabel}
+    ctaHref={bootcamp.ctaHref}
+  />
+
+  <StickyBar program={bootcamp} />
+</Base>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('register-form');
+    if (!(form instanceof HTMLFormElement)) return;
+    const msg = document.getElementById('register-msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = new FormData(form).get('email');
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, program: form.dataset.program }),
+        });
+        if (!res.ok) throw new Error('register failed');
+        if (msg) msg.textContent = "You're in — check your inbox for the next steps.";
+        form.reset();
+      } catch {
+        if (msg) msg.textContent = 'Something went wrong. Please try again.';
+      }
+    });
+  });
+</script>

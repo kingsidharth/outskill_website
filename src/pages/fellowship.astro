@@ -1,0 +1,187 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import Stat from '../components/Stat.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+import CurriculumExplorer from '../components/islands/CurriculumExplorer';
+import { fellowship } from '../data/fellowship';
+
+const pillars = fellowship.features.slice(0, 4);
+const laterFeatures = fellowship.features.slice(4);
+---
+
+<Base title={fellowship.seo.title} description={fellowship.seo.description} image="/gen/hero-fellowship.webp">
+  <!-- Hero -->
+  <header class="relative overflow-hidden border-b border-line">
+    <div class="absolute inset-0 bg-gradient-to-b from-surface-2 via-bg to-bg" aria-hidden="true"></div>
+    <img
+      src="/gen/hero-fellowship.webp"
+      alt=""
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 size-full object-cover opacity-40"
+      onerror="this.remove()"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-bg/50 via-bg/60 to-bg" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-36">
+      <p class="eyebrow">{fellowship.eyebrow}</p>
+      <h1 class="mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">{fellowship.headline}</h1>
+      <p class="mt-6 max-w-2xl text-base text-muted sm:text-lg">{fellowship.subhead}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <a href={fellowship.ctaHref} class="btn-accent">{fellowship.ctaLabel}</a>
+        <p class="text-lg">
+          <span class="font-medium text-accent">{fellowship.price.current}</span>
+          {fellowship.price.note && <span class="ml-2 text-sm text-muted">{fellowship.price.note}</span>}
+        </p>
+      </div>
+      <div class="mt-14 grid grid-cols-2 gap-8 border-t border-line/70 pt-8 sm:grid-cols-4">
+        {fellowship.stats.map((s) => <Stat stat={s} />)}
+      </div>
+    </div>
+  </header>
+
+  <!-- Four pillars -->
+  <Section
+    eyebrow="The four pillars"
+    title="Foundations first, then the field."
+    lead="Six months structured around the four things an AI engineer actually needs."
+  >
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        pillars.map((f, i) => (
+          <li class="card p-6">
+            <p class="font-label text-muted">Pillar {i + 1}</p>
+            <h3 class="mt-3 text-lg font-medium">{f.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- CurriculumExplorer island -->
+  <Section
+    eyebrow="Curriculum"
+    title="Six levels, explored."
+    lead="Tab through the levels to see the theory, skills, and build work in each."
+    class="border-y border-line bg-surface/30"
+  >
+    <CurriculumExplorer client:visible levels={fellowship.levels ?? []} />
+  </Section>
+
+  <!-- Later levels -->
+  <Section
+    eyebrow="Later levels"
+    title="Fine-tuning & architecture."
+    lead="These arrive after you've shipped the fundamentals — when the earlier levels give them somewhere to land."
+  >
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {
+        laterFeatures.map((f) => (
+          <li class="card p-6 sm:p-8">
+            <span class="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-ink">Later levels</span>
+            <h3 class="mt-4 font-display text-2xl">{f.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted sm:text-base">{f.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- Outcomes + audience -->
+  <Section
+    eyebrow="Outcomes"
+    title="What a fellow walks away with."
+    class="border-y border-line bg-surface/30"
+  >
+    <div class="grid gap-12 md:grid-cols-2">
+      <ul class="space-y-4">
+        {
+          fellowship.outcomes.map((o) => (
+            <li class="flex items-start gap-3 text-base">
+              <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
+                <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {o}
+            </li>
+          ))
+        }
+      </ul>
+      <div>
+        <h3 class="font-label text-muted">Who it's for</h3>
+        <ul class="mt-5 space-y-3">
+          {
+            fellowship.audience.map((a) => (
+              <li class="card px-5 py-4 text-sm text-fg/90">{a}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Apply -->
+  <Section
+    id="register"
+    eyebrow="Apply"
+    title="Start your application."
+    lead="Leave your email and the team will share fit, schedule, and pricing details."
+  >
+    <form id="register-form" data-program={fellowship.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
+      <label for="register-email" class="sr-only">Email address</label>
+      <input
+        id="register-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder="you@company.com"
+        class="w-full flex-1 rounded-full border border-line bg-surface px-5 py-3 text-fg placeholder:text-muted focus:border-accent"
+      />
+      <button type="submit" class="btn-accent shrink-0">{fellowship.ctaLabel}</button>
+    </form>
+    <p id="register-msg" role="status" class="mt-4 min-h-5 text-sm text-accent"></p>
+  </Section>
+
+  <!-- FAQ -->
+  <Section eyebrow="FAQ" title="Straight answers.">
+    <FAQ items={fellowship.faq} />
+  </Section>
+
+  <CTA
+    eyebrow={fellowship.eyebrow}
+    title="Six months. Six levels. One durable career."
+    body={fellowship.subhead}
+    ctaLabel={fellowship.ctaLabel}
+    ctaHref={fellowship.ctaHref}
+  />
+</Base>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('register-form');
+    if (!(form instanceof HTMLFormElement)) return;
+    const msg = document.getElementById('register-msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = new FormData(form).get('email');
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, program: form.dataset.program }),
+        });
+        if (!res.ok) throw new Error('register failed');
+        if (msg) msg.textContent = "Application started — we'll be in touch with the details.";
+        form.reset();
+      } catch {
+        if (msg) msg.textContent = 'Something went wrong. Please try again.';
+      }
+    });
+  });
+</script>
