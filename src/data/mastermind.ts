@@ -7,7 +7,7 @@ import type { Program } from './types';
 export const couponCode = 'WEEKEND-FREE';
 
 /**
- * The cohort runs "almost every weekend" — Saturday 19:00 IST. Computed in UTC
+ * The cohort runs "almost every weekend" — Friday 19:00 IST (session 1 Friday evening, sessions 2–3 Saturday). Computed in UTC
  * and shifted by +05:30 so the build machine's timezone never matters, exactly
  * like nextWorkshopSession() in workshops.ts.
  *
@@ -20,8 +20,8 @@ export function nextCohortAfter(from: Date = new Date()): Date {
   const IST = 5.5 * 60 * 60 * 1000;
   const ist = new Date(from.getTime() + IST);
   const slot = new Date(Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate(), 13, 30, 0));
-  // 6 = Saturday. Advance to the coming Saturday.
-  const days = (6 - slot.getUTCDay() + 7) % 7;
+  // 5 = Friday. Advance to the coming Friday.
+  const days = (5 - slot.getUTCDay() + 7) % 7;
   slot.setUTCDate(slot.getUTCDate() + days);
   if (slot.getTime() <= from.getTime()) slot.setUTCDate(slot.getUTCDate() + 7);
   return slot;
@@ -30,7 +30,7 @@ export function nextCohortAfter(from: Date = new Date()): Date {
 /**
  * "Sat, 12 Sep 2026" — the human label beside the countdown. Assembled from
  * parts rather than a format string because en-IN's short form comes back as
- * "Sat, 12 Sept, 2026", and that second comma reads badly mid-sentence.
+ * "Fri, 11 Sept, 2026", and that second comma reads badly mid-sentence.
  */
 export function formatCohortDate(d: Date): string {
   const parts = new Intl.DateTimeFormat('en-GB', {
@@ -44,8 +44,8 @@ export function formatCohortDate(d: Date): string {
   return `${get('weekday')}, ${get('day')} ${get('month')} ${get('year')}`;
 }
 
-/** Next Saturday 19:00 IST from today. Stored so the founder can pin it. */
-const COHORT_START = '2026-09-12T19:00:00+05:30';
+/** Next Friday 19:00 IST from today (matches outskill.com: 11 Sept 2026, 7 PM IST). Stored so the founder can pin it. */
+const COHORT_START = '2026-09-11T19:00:00+05:30';
 
 export const mastermind: Program = {
   slug: 'mastermind',
@@ -59,7 +59,7 @@ export const mastermind: Program = {
   /** Simplest honest rule: the coupon dies the moment the cohort starts. */
   couponExpiresAt: COHORT_START,
   stats: [
-    { label: 'Start date', value: '12 Sept 2026' },
+    { label: 'Start date', value: '11 Sept 2026' },
     { label: 'Start time', value: '7 PM IST' },
     { label: 'Duration', value: '2 days · 12 hrs' },
     { label: 'Format', value: 'Live online' },

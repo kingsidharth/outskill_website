@@ -40,16 +40,16 @@ export const site: Site = {
       links: [
         { label: 'For Businesses', href: 'https://outskill.com/business' },
         { label: 'Newsletter', href: 'https://outskill.com/#newsletter' },
-        { label: 'Contact Us', href: 'https://outskill.com/contact' },
-        { label: 'Apply as Mentor', href: 'https://outskill.com/mentor' },
+        { label: 'Contact Us', href: 'https://outskill.com/contact-us' },
+        { label: 'Creator Partnerships', href: 'https://outskill.com/creator-partnerships' },
       ],
     },
     {
       heading: 'Legal',
       links: [
-        { label: 'Terms & Conditions', href: 'https://outskill.com/terms' },
-        { label: 'Privacy Policy', href: 'https://outskill.com/privacy' },
-        { label: 'Refund Policy', href: 'https://outskill.com/refunds' },
+        { label: 'Terms & Conditions', href: 'https://outskill.com/terms-and-conditions' },
+        { label: 'Privacy Policy', href: 'https://outskill.com/privacy-policy' },
+        { label: 'Refund Policy', href: 'https://outskill.com/refund-policy' },
       ],
     },
   ],
@@ -99,7 +99,7 @@ export const hero = {
   secondary: { label: 'See every option', href: '/#ladder' },
   /** The info blocks that sit next to the CTA. This pattern is load-bearing. */
   info: [
-    { label: 'Start date', value: '12 Sept 2026' },
+    { label: 'Start date', value: '11 Sept 2026' },
     { label: 'Start time', value: '7 PM IST' },
     { label: 'Duration', value: '2 days · 12 hrs' },
     { label: 'Format', value: 'Live online' },

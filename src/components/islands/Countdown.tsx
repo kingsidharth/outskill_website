@@ -7,7 +7,7 @@ interface Props {
   expiresAt: string;
   /** The coupon code that makes the listed price free. */
   code: string;
-  /** Date string the server already rendered, e.g. "Sat, 12 Sep 2026". */
+  /** Date string the server already rendered, e.g. "Fri, 11 Sep 2026". */
   fallbackDate: string;
 }
 
@@ -44,7 +44,7 @@ function Cell({ value, label }: { value: string; label: string }) {
  * SSR-safe. The server renders the stored date and no digits; `now` starts as
  * null and is only set in an effect, so the first client render matches the
  * server's HTML exactly (no hydration mismatch). When the deadline passes the
- * island rolls to the following Saturday 19:00 IST using the same helper the
+ * island rolls to the following Friday 19:00 IST using the same helper the
  * page used at build time.
  */
 export default function Countdown({ expiresAt, code, fallbackDate }: Props) {

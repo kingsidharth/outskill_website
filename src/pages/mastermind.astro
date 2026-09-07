@@ -14,14 +14,14 @@ import { mastermind, couponCode, formatCohortDate, nextCohortAfter } from '../da
 import { quiz } from '../data/quiz';
 
 // The stored date wins while it is still ahead of us; once that weekend has
-// passed, a rebuild rolls to the next Saturday 19:00 IST using the same helper
+// passed, a rebuild rolls to the next Friday 19:00 IST using the same helper
 // Countdown uses on the client. Every date on this page comes from `start`, so
 // the hero blocks, the schedule lead, the CTA and the clock cannot disagree.
 const stored = mastermind.nextCohortStart ? new Date(mastermind.nextCohortStart) : null;
 const start = stored && stored.getTime() > Date.now() ? stored : nextCohortAfter();
 const cohortStart = start.toISOString();
 const cohortDate = formatCohortDate(start);
-// "Sat, 12 Sept 2026" -> "12 Sept 2026" for the compact info block.
+// "Fri, 11 Sept 2026" -> "11 Sept 2026" for the compact info block.
 const startDateShort = cohortDate.replace(/^[A-Za-z]+,\s*/, '');
 const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, value: startDateShort } : s));
 ---

@@ -20,12 +20,13 @@
       </div>
 
       <form
-        action="https://outskill.com/"
-        method="get"
+        action="/api/register"
+        method="post"
         class="w-full"
         aria-label="Subscribe to the newsletter"
+        data-newsletter
       >
-        <input type="hidden" name="from" value="engineering" />
+        <input type="hidden" name="program" value="newsletter" />
         <label for="nl-email" class="label text-paper-muted">Email address</label>
         <div class="mt-2 flex flex-col gap-3 sm:flex-row">
           <input
@@ -39,10 +40,41 @@
           />
           <button type="submit" class="btn shrink-0 bg-paper-ink text-paper hover:bg-black">Subscribe</button>
         </div>
-        <p class="mt-3 text-[0.8125rem] text-paper-muted">
-          Continues on outskill.com. Unsubscribe in one click, any time.
+        <p class="mt-3 text-[0.8125rem] text-paper-muted" data-newsletter-status aria-live="polite">
+          Unsubscribe in one click, any time.
         </p>
       </form>
     </div>
   </div>
 </section>
+
+<script>
+  function bindNewsletter() {
+    document.querySelectorAll<HTMLFormElement>('form[data-newsletter]').forEach((form) => {
+      if (form.dataset.bound) return;
+      form.dataset.bound = '1';
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const status = form.querySelector<HTMLElement>('[data-newsletter-status]');
+        const email = (form.querySelector<HTMLInputElement>('input[type=email]')?.value ?? '').trim();
+        const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+        if (btn) btn.disabled = true;
+        try {
+          const res = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ email, program: 'newsletter' }),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          if (status) status.textContent = "You're on the list. The next letter lands within the week.";
+          form.reset();
+        } catch {
+          if (status) status.textContent = 'That did not go through. Check the address and try again.';
+          if (btn) btn.disabled = false;
+        }
+      });
+    });
+  }
+  bindNewsletter();
+  document.addEventListener('astro:page-load', bindNewsletter);
+</script>

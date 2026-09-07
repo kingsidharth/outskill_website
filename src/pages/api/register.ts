@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { mkdirSync, appendFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const VALID_PROGRAMS = ['mastermind', 'bootcamp', 'accelerator', 'fellowship'] as const;
+const VALID_PROGRAMS = ['mastermind', 'bootcamp', 'accelerator', 'fellowship', 'workshop', 'newsletter'] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DATA_DIR = join(process.env.OUTSKILL_DATA_DIR ?? process.cwd(), 'data');
 const DATA_FILE = join(DATA_DIR, 'registrations.jsonl');

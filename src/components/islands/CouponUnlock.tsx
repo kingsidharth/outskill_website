@@ -3,7 +3,7 @@ import { useState } from 'react';
 interface Props {
   /** The code that takes the listed price to zero. */
   code: string;
-  /** Human date the coupon stops working, e.g. "Sat, 12 Sep 2026". */
+  /** Human date the coupon stops working, e.g. "Fri, 11 Sep 2026". */
   validUntil: string;
 }
 

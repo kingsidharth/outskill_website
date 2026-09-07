@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # registration data (written by /api/register)
 data/
+
+# reference material (large; local only)
+ref/screens/
