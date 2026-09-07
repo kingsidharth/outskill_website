@@ -1,0 +1,42 @@
+---
+/**
+ * Persistent CTA. Mobile: fixed bottom bar (label / price / button).
+ * Desktop: the header button already carries it, so the bar hides at >=768px.
+ *
+ * Renders its own in-flow spacer so the bar never covers the footer.
+ * Props-driven — every page passes its own program, price, and action.
+ */
+interface Props {
+  /** Small line above the price, e.g. "2-Day Mastermind". */
+  label: string;
+  /** What you pay today, e.g. "Free" or "₹2,499". */
+  price?: string;
+  /** Struck-through list price. */
+  listPrice?: string;
+  /** Optional micro-note replacing the price line, e.g. "Applications open". */
+  note?: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+const { label, price, listPrice, note, ctaLabel, ctaHref } = Astro.props;
+---
+
+<div class="h-[4.75rem] md:hidden" aria-hidden="true"></div>
+
+<aside
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/95 backdrop-blur-md md:hidden"
+  aria-label={`${label} — take the next step`}
+>
+  <div class="wrap flex items-center justify-between gap-3 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
+    <div class="min-w-0">
+      <p class="truncate text-[0.8125rem] text-muted">{label}</p>
+      <p class="mt-0.5 truncate text-[0.9375rem] leading-tight">
+        {listPrice && <span class="mr-1.5 text-faint line-through">{listPrice}</span>}
+        {price && <span class="font-semibold text-accent">{price}</span>}
+        {!price && note && <span class="text-fg">{note}</span>}
+      </p>
+    </div>
+    <a href={ctaHref} class="btn btn-accent btn-sm shrink-0">{ctaLabel}</a>
+  </div>
+</aside>

@@ -1,39 +1,225 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Outskill V2 design system
+   Tokens live in @theme -> Tailwind exposes them as --color-*, --font-*, etc.
+   Bare aliases (--bg, --accent...) are re-declared on :root for inline styles.
+   ========================================================================== */
+
 @theme {
+  /* ---- ground ---- */
   --color-bg: #0A0A0A;
-  --color-surface: #141414;
-  --color-surface-2: #1C1C1C;
-  --color-line: #262626;
-  --color-fg: #F5F5F5;
-  --color-muted: #A3A3A3;
+  --color-bg-deep: #050505;
+  --color-surface: #131313;
+  --color-surface-2: #1B1B1B;
+  --color-line: #292929;
+  --color-line-strong: #3A3A3A;
+
+  /* ---- ink ---- */
+  --color-fg: #F4F2ED;          /* warm off-white, 17.5:1 on bg */
+  --color-muted: #A6A29A;       /* warm grey,      7.4:1 on bg  */
+  --color-faint: #6F6C66;       /* decorative only, never body */
+
+  /* ---- accent ---- */
   --color-accent: #B8EF43;
-  --color-accent-hover: #C8F563;
+  --color-accent-hover: #C9F565;
   --color-accent-ink: #0A0A0A;
-  --font-sans: "Fira Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Instrument Serif", Georgia, serif;
-  --font-label: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --radius-xl: 12px;
+  --color-accent-dim: #2C3A14;  /* accent at 15% over bg, for fills */
+
+  /* ---- inverted / paper surfaces ---- */
+  --color-paper: #F2EFE9;
+  --color-paper-ink: #121110;
+  --color-paper-muted: #57534C;
+  --color-paper-line: #DCD7CC;
+
+  /* ---- type ---- */
+  --font-sans: "Fira Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Fira Sans Condensed", "Fira Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---- radii ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 }
 
+/* Aliases so inline `style="... var(--bg) ..."` resolves. Keep in sync. */
+:root {
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --line: var(--color-line);
+  --fg: var(--color-fg);
+  --muted: var(--color-muted);
+  --accent: var(--color-accent);
+  --paper: var(--color-paper);
+}
+
+/* ==========================================================================
+   Base
+   Brief: 15px mobile / 16px >=768px, every size in rem.
+   ========================================================================== */
+
 :root { color-scheme: dark; }
-html { scroll-behavior: smooth; }
-body { @apply bg-bg text-fg font-sans antialiased; }
-h1, h2, .font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
-.font-label { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; }
-:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+html { font-size: 15px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (min-width: 768px) { html { font-size: 16px; } }
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings inherit the sans stack by default; display classes opt in to
+   Condensed. NO letter-spacing anywhere here — see the display scale below. */
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.15; }
+p { text-wrap: pretty; }
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 2px; }
 ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
 
-.btn, .btn-accent, .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-colors; }
-.btn-accent { @apply bg-accent text-accent-ink hover:bg-accent-hover; }
-.btn-ghost { @apply border border-line text-fg hover:border-fg; }
-.card { @apply bg-surface border border-line rounded-xl; }
-.eyebrow { @apply font-label text-accent; }
+/* ==========================================================================
+   Type scale
+   Letter-spacing rule: tracking ONLY on .display-* classes, all of which are
+   guaranteed to render > 25px at every breakpoint (min 1.75rem @ 15px base
+   = 26.25px). Nothing else in this file sets letter-spacing.
+   ========================================================================== */
+
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.75rem;            /* 41px mobile */
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+@media (min-width: 768px) { .display-xl { font-size: 4rem; } }
+@media (min-width: 1280px) { .display-xl { font-size: 4.75rem; } }
+
+.display-lg {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.25rem;            /* 34px mobile */
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+@media (min-width: 768px) { .display-lg { font-size: 3.25rem; } }
+
+.display-md {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;            /* 26.25px mobile — still > 25px */
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+@media (min-width: 768px) { .display-md { font-size: 2.25rem; } }
+
+/* Sub-display headings: regular width, NO tracking (they can render <= 25px). */
+.heading-sm { font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
+.heading-xs { font-size: 1.0625rem; font-weight: 600; line-height: 1.3; }
+
+.lead { font-size: 1.125rem; line-height: 1.55; color: var(--color-muted); }
+@media (min-width: 768px) { .lead { font-size: 1.25rem; } }
+
+/* Uppercase micro-label. No tracking (renders ~12px) — weight and colour do
+   the work instead. */
+.label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+.label-accent { color: var(--color-accent); }
+.eyebrow { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; color: var(--color-accent); }
+
+/* Numerals & code accents (engineering surfaces only). */
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.8125rem 1.375rem;
+  border-radius: var(--radius-md);
+  font-size: 1rem; font-weight: 600; line-height: 1.2;
+  text-align: center;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-accent { background: var(--color-accent); color: var(--color-accent-ink); }
+.btn-accent:hover { background: var(--color-accent-hover); }
+.btn-ghost { border: 1px solid var(--color-line-strong); color: var(--color-fg); }
+.btn-ghost:hover { border-color: var(--color-fg); background: var(--color-surface); }
+.btn-paper { background: var(--color-paper); color: var(--color-paper-ink); }
+.btn-paper:hover { background: #fff; }
+.btn-sm { padding: 0.5rem 0.9375rem; font-size: 0.875rem; }
+.btn-block { display: flex; width: 100%; }
+
+/* ==========================================================================
+   Surfaces
+   ========================================================================== */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+}
+.card-hover { transition: border-color .15s ease, background-color .15s ease; }
+.card-hover:hover { border-color: var(--color-line-strong); background: var(--color-surface-2); }
+
+.rule { border-top: 1px solid var(--color-line); }
+
+/* Textured ground: a cheap CSS grain + vignette, layered over hero art. */
+.grain::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.20;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* Hairline grid columns, echoing the reference site's ruled layout. */
+.ruled {
+  background-image:
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to left, var(--color-line) 1px, transparent 1px);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+.wrap { width: 100%; max-width: 75rem; margin-inline: auto; padding-inline: 1.25rem; }
+@media (min-width: 768px) { .wrap { padding-inline: 2rem; } }
+
+.wrap-narrow { width: 100%; max-width: 48rem; margin-inline: auto; padding-inline: 1.25rem; }
+@media (min-width: 768px) { .wrap-narrow { padding-inline: 2rem; } }
+
+/* Room for the mobile sticky CTA bar. */
+.has-sticky-cta { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+@media (min-width: 768px) { .has-sticky-cta { padding-bottom: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   html { scroll-behavior: auto; }
 }
 
-/* Aliases so `var(--bg)` etc. (used in inline styles) resolve to theme tokens */
-:root { --bg: var(--color-bg); --surface: var(--color-surface); --line: var(--color-line); --fg: var(--color-fg); --muted: var(--color-muted); --accent: var(--color-accent); }
+/* ==========================================================================
+   Compat shims for V1 pages not yet restyled (mastermind/bootcamp/
+   accelerator/fellowship). Remove once those pages move to the V2 classes.
+   ========================================================================== */
+.font-label { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; color: var(--color-muted); }
+.font-display { font-family: var(--font-display); font-weight: 700; }

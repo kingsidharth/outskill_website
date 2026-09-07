@@ -1,0 +1,42 @@
+---
+/** Two big cards: For Coders vs For Vibe Coders. */
+import { paths } from '../data/site';
+---
+
+<div class="grid gap-4 md:grid-cols-2 md:gap-6">
+  {
+    paths.map((p, i) => (
+      <a
+        href={p.href}
+        class="card card-hover group relative flex flex-col overflow-hidden p-5 md:p-8"
+      >
+        <span
+          class="pointer-events-none absolute inset-x-0 top-0 h-px"
+          style={`background: linear-gradient(90deg, var(--color-accent) 0%, transparent ${i === 0 ? '70%' : '40%'})`}
+          aria-hidden="true"
+        />
+        <p class="label label-accent">{p.kicker}</p>
+        <h3 class="display-md mt-2">{p.title}</h3>
+        <p class="mt-3 text-[1.0625rem] leading-snug text-muted">{p.body}</p>
+
+        <ul class="mt-5 space-y-2">
+          {p.points.map((pt) => (
+            <li class="flex gap-2.5 text-[0.9375rem]">
+              <span class="mt-[0.55em] size-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              {pt}
+            </li>
+          ))}
+        </ul>
+
+        <div class="flex-1" aria-hidden="true" />
+
+        <span class="mt-7 inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-accent">
+          {p.cta}
+          <svg class="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </a>
+    ))
+  }
+</div>

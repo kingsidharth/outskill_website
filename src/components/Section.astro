@@ -4,25 +4,33 @@ interface Props {
   title?: string;
   lead?: string;
   id?: string;
+  /** 'dark' (default), 'surface' (raised panel), 'paper' (inverted, warm). */
+  tone?: 'dark' | 'surface' | 'paper';
+  /** Draw a hairline above the section. */
+  rule?: boolean;
   class?: string;
 }
 
-const { eyebrow, title, lead, id, class: className } = Astro.props;
+const { eyebrow, title, lead, id, tone = 'dark', rule = false, class: className } = Astro.props;
 const hasHeader = Boolean(eyebrow || title || lead);
+const toneClass =
+  tone === 'paper' ? 'bg-paper text-paper-ink' : tone === 'surface' ? 'bg-surface/40' : '';
+const leadClass = tone === 'paper' ? 'text-paper-muted' : 'text-muted';
+const eyebrowClass = tone === 'paper' ? 'label text-paper-muted' : 'eyebrow';
 ---
 
-<section id={id} class:list={['py-16 sm:py-24', className]}>
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+<section id={id} class:list={['py-14 md:py-24', toneClass, rule && 'border-t border-line', className]}>
+  <div class="wrap">
     {
       hasHeader && (
         <header class="max-w-3xl">
-          {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-          {title && <h2 class:list={['text-3xl leading-tight sm:text-5xl', eyebrow && 'mt-3']}>{title}</h2>}
-          {lead && <p class="mt-4 max-w-2xl text-base text-muted sm:text-lg">{lead}</p>}
+          {eyebrow && <p class={eyebrowClass}>{eyebrow}</p>}
+          {title && <h2 class:list={['display-lg', eyebrow && 'mt-3']}>{title}</h2>}
+          {lead && <p class:list={['mt-4 max-w-2xl text-[1.0625rem] md:text-[1.125rem]', leadClass]}>{lead}</p>}
         </header>
       )
     }
-    <div class:list={[hasHeader && 'mt-10 sm:mt-14']}>
+    <div class:list={[hasHeader && 'mt-9 md:mt-12']}>
       <slot />
     </div>
   </div>

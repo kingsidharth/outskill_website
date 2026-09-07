@@ -1,0 +1,37 @@
+---
+/**
+ * The Start date / Start time / Duration / Format blocks that sit beside the
+ * primary CTA. Retained from outskill.com because they answer the three
+ * questions a buyer has before clicking: when, how long, what shape.
+ *
+ * Mobile: 2-up grid above the button.  Desktop: a row after a vertical rule.
+ */
+import type { InfoBlock } from '../data/types';
+
+interface Props {
+  items: InfoBlock[];
+  /** 'row' adds the leading vertical rule used next to a hero CTA. */
+  variant?: 'grid' | 'row';
+  class?: string;
+}
+
+const { items, variant = 'grid', class: className } = Astro.props;
+---
+
+<dl
+  class:list={[
+    variant === 'row'
+      ? 'flex flex-wrap gap-x-8 gap-y-4 border-l border-line-strong pl-5'
+      : 'grid grid-cols-2 gap-x-6 gap-y-4 sm:flex sm:flex-wrap sm:gap-x-8',
+    className,
+  ]}
+>
+  {
+    items.map((item) => (
+      <div>
+        <dt class="text-[0.8125rem] text-muted">{item.label}</dt>
+        <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">{item.value}</dd>
+      </div>
+    ))
+  }
+</dl>

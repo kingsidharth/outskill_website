@@ -1,0 +1,70 @@
+---
+/**
+ * Value-ladder card. Reading order is fixed and non-negotiable:
+ *   1. TIME   (display size, the first thing scanned)
+ *   2. COST   (accent, with list price struck through)
+ *   3. OUTCOME (one sentence, what you walk away with)
+ *   4. name   (small, muted, last — customers do not shop by brand name)
+ */
+import type { LadderRung } from '../data/types';
+
+interface Props {
+  rung: LadderRung;
+  /** Pull the card forward — used for the free rungs. */
+  featured?: boolean;
+}
+
+const { rung, featured = false } = Astro.props;
+const kindLabel = rung.cta.kind === 'apply' ? 'Application only' : rung.cta.kind === 'free' ? 'Free' : 'Buy now';
+---
+
+<article
+  class:list={[
+    'card card-hover relative flex flex-col p-5 md:p-7',
+    featured && 'border-accent/45 bg-accent-dim/25',
+  ]}
+>
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <p class="label">Step {rung.rung}</p>
+      <h3 class="display-md mt-1.5">{rung.time}</h3>
+      <p class="mt-1 text-[0.9375rem] text-muted">{rung.format}</p>
+    </div>
+    <p class="shrink-0 text-right">
+      {rung.price.list && <span class="block text-[0.875rem] text-faint line-through">{rung.price.list}</span>}
+      <span class="num text-[1.375rem] text-accent">{rung.price.current}</span>
+    </p>
+  </div>
+
+  {rung.price.note && <p class="mt-2 text-[0.8125rem] text-muted">{rung.price.note}</p>}
+
+  <p class="mt-5 text-[1.0625rem] leading-snug text-fg">{rung.outcome}</p>
+
+  {
+    rung.proof && (
+      <ul class="mt-4 space-y-1.5">
+        {rung.proof.map((p) => (
+          <li class="flex gap-2.5 text-[0.9375rem] text-muted">
+            <span class="mt-[0.55em] size-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            {p}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <div class="flex-1" aria-hidden="true"></div>
+
+  <div class="mt-6 flex items-center justify-between gap-4 border-t border-line pt-5">
+    <div class="min-w-0">
+      <p class="truncate text-[0.875rem] text-faint">{rung.name}</p>
+      <p class="text-[0.8125rem] text-muted">{kindLabel}</p>
+    </div>
+    <a
+      href={rung.cta.href}
+      class:list={['btn btn-sm shrink-0', rung.cta.kind === 'apply' ? 'btn-ghost' : 'btn-accent']}
+    >
+      {rung.cta.label}
+    </a>
+  </div>
+</article>

@@ -24,6 +24,10 @@ export type Program = {
   audience: string[];
   faq: FAQItem[];
   seo: { title: string; description: string };
+  /** ISO 8601 with the +05:30 offset, e.g. "2026-09-11T19:00:00+05:30". */
+  nextCohortStart?: string;
+  /** ISO 8601 with the +05:30 offset. Simplest honest rule: equals nextCohortStart. */
+  couponExpiresAt?: string;
 };
 
 export type QuizQuestion = {
@@ -44,3 +48,53 @@ export type Site = {
   footer: { heading: string; links: NavLink[] }[];
   hub: { headline: string; subhead: string; picker: { question: string; options: { label: string; weights: Partial<Record<Program['slug'], number>> }[] }[] };
 };
+
+/* ==========================================================================
+   V2 additions. Purely additive — the V1 `Program` type above is unchanged.
+   ========================================================================== */
+
+export type CtaKind = 'buy' | 'apply' | 'free';
+export type AudienceTag = 'coders' | 'vibe-coders' | 'everyone';
+
+export type LadderPrice = {
+  /** Struck-through list price, e.g. "₹19,999". Omit when there is none. */
+  list?: string;
+  /** What the buyer pays today, e.g. "Free" or "₹2,499". */
+  current: string;
+  /** One short qualifier, e.g. "with coupon, until the cohort starts". */
+  note?: string;
+};
+
+export type LadderCta = { label: string; href: string; kind: CtaKind };
+
+export type LadderRung = {
+  /** 0 = workshops … 4 = fellowship. Sort key and the visible step number. */
+  rung: number;
+  /** Program name — deliberately SECONDARY in every card. */
+  name: string;
+  slug: string;
+  audience: AudienceTag[];
+  /** Lead line 1: commitment. "90 minutes", "2 days, one weekend". */
+  time: string;
+  /** Lead line 2 detail: "Live, online", "14 days back-to-back". */
+  format: string;
+  price: LadderPrice;
+  /** Lead line 3: what you walk away with. One sentence, outcome-first. */
+  outcome: string;
+  /** Up to 3 supporting proof points. */
+  proof?: string[];
+  cta: LadderCta;
+  href: string;
+};
+
+export type Workshop = {
+  slug: string;
+  /** Tool the 90 minutes is taught in. */
+  tool: string;
+  audience: AudienceTag[];
+  /** Outcome-first line, no tech-list headlines. */
+  outcome: string;
+  href: string;
+};
+
+export type InfoBlock = { label: string; value: string };

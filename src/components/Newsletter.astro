@@ -1,0 +1,48 @@
+---
+/**
+ * No API was invented for this. The form is a plain GET to outskill.com's
+ * existing newsletter surface, carrying the address the visitor typed so the
+ * real signup form can prefill it. Swap `action`/`method` for a POST endpoint
+ * the day one exists — the markup does not need to change.
+ */
+---
+
+<section id="newsletter" class="border-t border-line bg-paper text-paper-ink">
+  <div class="wrap py-14 md:py-20">
+    <div class="grid gap-8 md:grid-cols-2 md:items-end md:gap-16">
+      <div>
+        <p class="label text-paper-muted">Every other week</p>
+        <h2 class="display-lg mt-2">What actually shipped, and what broke.</h2>
+        <p class="mt-4 max-w-lg text-[1.0625rem] text-paper-muted">
+          One short letter on AI engineering in practice: the agent setups that held up in production, the ones
+          that did not, and the next free session date. No launch noise.
+        </p>
+      </div>
+
+      <form
+        action="https://outskill.com/"
+        method="get"
+        class="w-full"
+        aria-label="Subscribe to the newsletter"
+      >
+        <input type="hidden" name="from" value="engineering" />
+        <label for="nl-email" class="label text-paper-muted">Email address</label>
+        <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+          <input
+            id="nl-email"
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="you@company.com"
+            class="w-full rounded-md border border-paper-line bg-white px-4 py-3 text-[1rem] text-paper-ink placeholder:text-paper-muted/70 focus:border-paper-ink focus:outline-none"
+          />
+          <button type="submit" class="btn shrink-0 bg-paper-ink text-paper hover:bg-black">Subscribe</button>
+        </div>
+        <p class="mt-3 text-[0.8125rem] text-paper-muted">
+          Continues on outskill.com. Unsubscribe in one click, any time.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

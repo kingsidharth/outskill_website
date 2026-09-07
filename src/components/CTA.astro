@@ -1,33 +1,45 @@
 ---
+import InfoBlocks from './InfoBlocks.astro';
+import type { InfoBlock } from '../data/types';
+
 interface Props {
   eyebrow?: string;
   title?: string;
   body?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  info?: InfoBlock[];
 }
 
 const {
-  eyebrow = 'Get started',
-  title = 'Pick a program. Start shipping.',
+  eyebrow,
+  title = 'Start with the free weekend.',
   body,
-  ctaLabel = 'Register free',
-  ctaHref = '/mastermind',
+  ctaLabel = 'Claim your free seat',
+  ctaHref = '/mastermind#register',
+  secondaryLabel,
+  secondaryHref,
+  info,
 } = Astro.props;
 ---
 
-<section class="border-y border-line bg-surface/40">
-  <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-24">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    <h2 class="mx-auto max-w-3xl text-3xl leading-tight sm:text-5xl" class:list={[eyebrow && 'mt-3']}>{title}</h2>
-    {body && <p class="mx-auto mt-4 max-w-xl text-base text-muted sm:text-lg">{body}</p>}
-    <div class="mt-8">
-      <a
-        href={ctaHref}
-        class="inline-flex items-center justify-center rounded-full bg-accent px-8 py-3.5 font-medium text-accent-ink transition-colors hover:bg-accent-hover"
-      >
-        {ctaLabel}
-      </a>
+<section class="relative overflow-hidden border-y border-line bg-surface/40">
+  <div class="wrap py-14 md:py-24">
+    <div class="max-w-3xl">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 class:list={['display-lg', eyebrow && 'mt-3']}>{title}</h2>
+      {body && <p class="mt-4 max-w-xl text-[1.0625rem] text-muted md:text-[1.125rem]">{body}</p>}
+
+      <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <a href={ctaHref} class="btn btn-accent btn-block sm:w-auto">{ctaLabel}</a>
+        {secondaryLabel && secondaryHref && (
+          <a href={secondaryHref} class="btn btn-ghost btn-block sm:w-auto">{secondaryLabel}</a>
+        )}
+      </div>
+
+      {info && info.length > 0 && <div class="mt-8"><InfoBlocks items={info} /></div>}
     </div>
   </div>
 </section>

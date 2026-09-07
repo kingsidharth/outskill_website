@@ -5,10 +5,12 @@ interface Props {
   stat?: Stat;
   value?: string;
   label?: string;
+  /** 'lg' for hero stat rows, 'sm' inside cards. */
+  size?: 'lg' | 'sm';
   class?: string;
 }
 
-const { stat, value, label, class: className } = Astro.props;
+const { stat, value, label, size = 'lg', class: className } = Astro.props;
 const v = stat?.value ?? value;
 const l = stat?.label ?? label;
 ---
@@ -16,8 +18,8 @@ const l = stat?.label ?? label;
 {
   v && l && (
     <div class={className}>
-      <p class="font-display text-3xl sm:text-4xl">{v}</p>
-      <p class="font-label mt-1.5 text-muted">{l}</p>
+      <p class:list={['num text-fg', size === 'lg' ? 'text-[1.75rem] md:text-[2rem]' : 'text-[1.25rem]']}>{v}</p>
+      <p class="mt-1 text-[0.8125rem] text-muted">{l}</p>
     </div>
   )
 }
