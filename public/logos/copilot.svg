@@ -1,0 +1,27 @@
+<!--
+  Neutral placeholder lettermark for GitHub Copilot — deliberately NOT the
+  GitHub Copilot logo.
+
+  The asset set in public/ref only contains the *Microsoft* Copilot swirl
+  (public/ref/co.svg), which is a different product, so it is not used here.
+  Drawn in the site's paper ink (#121110) on the light chip that
+  ToolLogos.astro provides.
+
+  TODO(founder): drop the official SVG here (same 155x78 viewBox, transparent
+  background, no white card — ToolLogos.astro draws the chip).
+-->
+<svg width="114.50" height="29.50" viewBox="20.50 23.00 114.50 29.50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+  <g fill="none" stroke="#121110" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="21.5" y="30" width="30" height="18" rx="9" />
+    <path d="M36.5 30v-6" />
+    <path d="M30.5 39h3M39.5 39h3" />
+  </g>
+  <text
+    x="60"
+    y="46.5"
+    fill="#121110"
+    font-family="'Fira Sans Condensed', 'Fira Sans', system-ui, sans-serif"
+    font-size="22"
+    font-weight="700"
+  >Copilot</text>
+</svg>

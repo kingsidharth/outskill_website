@@ -1,0 +1,70 @@
+---
+/**
+ * The row of tools a 90 min Workshop can run in.
+ *
+ * Deliberately **not links**. Every flavour books through the same "Reserve a
+ * seat" flow, so a logo here is a fact about the session, not a navigation
+ * choice. The per-tool landing pages are reachable from the footer only.
+ *
+ * Marks ship on a transparent background (`public/logos/*.svg`); the light
+ * chip is drawn here, once, so real marks and placeholder lettermarks line up.
+ * A tool with no mark (`logo: ''`) renders as a text badge in the same chip.
+ *
+ * Accessibility: the list has a name, each chip carries the tool name — as
+ * `alt` on the image, or as visible text.
+ */
+import { workshops } from '../data/workshops';
+
+interface Props {
+  /** Restrict to these slugs, in this order. Default: every enabled workshop. */
+  slugs?: string[];
+  /** Accessible name for the list. */
+  label?: string;
+  /** Chip height. 'md' in page bodies, 'sm' in dense strips. */
+  size?: 'sm' | 'md';
+  /** The hero variant loads eagerly; everywhere else is lazy. */
+  eager?: boolean;
+  class?: string;
+}
+
+const { slugs, label = 'Tools the workshop runs in', size = 'md', eager = false, class: className } =
+  Astro.props;
+
+const items = slugs
+  ? slugs.map((s) => workshops.find((w) => w.slug === s)).filter((w) => w !== undefined)
+  : workshops;
+
+const chip =
+  size === 'sm'
+    ? 'h-11 px-3 min-w-[6.5rem]'
+    : 'h-14 px-4 min-w-[8rem] md:h-16 md:px-5 md:min-w-[9.5rem]';
+// Each mark's SVG is cropped to its own artwork, so a shared height is the
+// only thing needed to make the row optically even.
+const mark = size === 'sm' ? 'h-[1.125rem]' : 'h-5 md:h-6';
+const word = size === 'sm' ? 'text-[0.8125rem]' : 'text-[0.875rem] md:text-[0.9375rem]';
+---
+
+<ul aria-label={label} class:list={['flex flex-wrap items-center gap-2.5 md:gap-3', className]}>
+  {
+    items.map((w) => (
+      <li
+        class:list={[
+          'flex items-center justify-center rounded-md bg-paper ring-1 ring-paper-line/70',
+          chip,
+        ]}
+      >
+        {w.logo ? (
+          <img
+            src={w.logo}
+            alt={w.tool}
+            loading={eager ? 'eager' : 'lazy'}
+            decoding="async"
+            class:list={['w-auto max-w-full', mark]}
+          />
+        ) : (
+          <span class:list={['font-semibold text-paper-ink', word]}>{w.tool}</span>
+        )}
+      </li>
+    ))
+  }
+</ul>

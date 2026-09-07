@@ -5,8 +5,12 @@ import { formatCohortDate, nextCohortAfter } from '../../data/mastermind';
 interface Props {
   /** ISO 8601 with the +05:30 offset. Coupon expiry == cohort start. */
   expiresAt: string;
-  /** The coupon code that makes the listed price free. */
-  code: string;
+  /**
+   * The coupon code, when this page is allowed to show it. Omitted on
+   * /mastermind since V4 — the code only exists on the quiz result page, and
+   * an island prop would put the string in the HTML either way.
+   */
+  code?: string;
   /** Date string the server already rendered, e.g. "Fri, 11 Sep 2026". */
   fallbackDate: string;
 }
@@ -96,9 +100,11 @@ export default function Countdown({ expiresAt, code, fallbackDate }: Props) {
         </p>
       )}
 
-      <div className="mt-5 border-t border-line pt-5">
-        <CouponUnlock code={code} validUntil={dateLabel} />
-      </div>
+      {code && (
+        <div className="mt-5 border-t border-line pt-5">
+          <CouponUnlock code={code} validUntil={dateLabel} />
+        </div>
+      )}
     </div>
   );
 }

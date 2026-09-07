@@ -32,7 +32,7 @@ export type AcceleratorExtras = {
 
 export const accelerator: Program & AcceleratorExtras = {
   slug: 'accelerator',
-  name: 'AI Engineering Accelerator',
+  name: '14 days Accelerator',
   eyebrow: '14 days · daily · live',
   headline: 'Fourteen days. Seven apps. One in production.',
   subhead: 'Build AI software end to end, then run one of them for real.',

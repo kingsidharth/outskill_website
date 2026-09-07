@@ -22,17 +22,17 @@ export const site: Site = {
     {
       heading: 'Start here',
       links: [
-        { label: 'Free 90-minute workshop', href: '/#workshops' },
-        { label: 'Free weekend Mastermind', href: '/mastermind' },
+        { label: '90 min Workshop — free', href: '/#workshops' },
+        { label: 'Weekend Mastermind — free', href: '/mastermind' },
         { label: 'Compare by time and cost', href: '/#ladder' },
       ],
     },
     {
       heading: 'Go deeper',
       links: [
-        { label: '14 days — Bootcamp', href: '/bootcamp' },
-        { label: '14 days daily — Accelerator', href: '/accelerator' },
-        { label: '6 months — Fellowship', href: '/fellowship' },
+        { label: '2-Day Bootcamp', href: '/bootcamp' },
+        { label: '14 days Accelerator', href: '/accelerator' },
+        { label: '6M Fellowship', href: '/fellowship' },
       ],
     },
     {
@@ -158,7 +158,7 @@ export const outcomes = [
 export const homeFaq: FAQItem[] = [
   {
     q: 'What does it cost to start?',
-    a: 'Nothing. The 90-minute workshops are free and the 2-day Mastermind is free with the coupon that unlocks on its page. You only pay when you move up to the Bootcamp or beyond.',
+    a: 'Nothing. The 90-minute workshops are free and the Weekend Mastermind is free with the coupon that unlocks on its page. You only pay when you move up to the Bootcamp or beyond.',
   },
   {
     q: 'I cannot write code. Is this for me?',
@@ -166,7 +166,7 @@ export const homeFaq: FAQItem[] = [
   },
   {
     q: 'I write code professionally. Will this be too basic?',
-    a: 'Start at the Claude Code, Codex, or Copilot workshop, then the Bootcamp. Those assume you already ship software and spend the time on agent architecture, evals, and review instead of syntax.',
+    a: 'Start at the Claude Code, Codex, or Copilot workshop, then the 2-Day Bootcamp. Those assume you already ship software and spend the time on agent architecture, evals, and review instead of syntax.',
   },
   {
     q: 'Is everything live, or can I watch recordings?',
@@ -174,7 +174,7 @@ export const homeFaq: FAQItem[] = [
   },
   {
     q: 'How much time do I actually need each week?',
-    a: '90 minutes for a workshop. One weekend for the Mastermind. The Bootcamp runs 14 days of evening sprints. The Fellowship is weekends only for six months, so you can keep your job.',
+    a: '90 minutes for a workshop. One weekend for the Mastermind. The 2-Day Bootcamp is two days, four live sessions. The Fellowship is weekends only for six months, so you can keep your job.',
   },
   {
     q: 'What is the difference between the Accelerator and the Fellowship?',

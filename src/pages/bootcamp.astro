@@ -21,24 +21,24 @@ const after = ladderBySlug['accelerator'];
 
 /* No amounts outside the pricing section (BRIEF-V3 §2) — Price becomes a tier. */
 const info: InfoBlock[] = [
-  { label: 'Duration', value: '14 days' },
-  { label: 'Format', value: 'Live sprints, evenings' },
+  { label: 'Duration', value: '2 days' },
+  { label: 'Format', value: 'Live, 4 sessions' },
   { label: 'Next start', value: 'At enrolment' },
   { label: 'Price', value: 'Paid' },
 ];
 
-/* Three outcome cards. Metrics are programme facts drawn from the sprint list
-   below — nothing here is invented. */
+/* Three outcome cards. Metrics are programme facts drawn from the session
+   list below — nothing here is invented. */
 const outcomeCards = [
   {
     metric: '1 agent',
     title: 'That opens a pull request',
-    body: 'By day fourteen it plans a task, edits a real repo, runs tests, opens a PR.',
+    body: 'By the end of day two it plans a task, edits a real repo, runs tests, opens a PR.',
   },
   {
-    metric: '8 sprints',
+    metric: '4 sessions',
     title: 'Each ending in something runnable',
-    body: 'One system layer per sprint — loop, tools, memory, sandbox, evals, orchestration, operations, capstone. Nothing is left as a diagram.',
+    body: 'One system layer per session — the loop, tools on a real repo, memory and review, then shipping with evals. Nothing is left as a diagram.',
   },
   {
     metric: 'Your repo',
@@ -68,7 +68,7 @@ const outcomeCards = [
         <div class="mt-7 md:hidden">
           <InfoBlocks items={info} />
           <a href="#register" class="btn btn-accent btn-block mt-5">Enrol</a>
-          <a href="#sprints" class="btn btn-ghost btn-block mt-2.5">See the 14 days</a>
+          <a href="#sessions" class="btn btn-ghost btn-block mt-2.5">See the two days</a>
         </div>
 
         <div class="mt-9 hidden items-center gap-6 md:flex">
@@ -78,14 +78,14 @@ const outcomeCards = [
 
         <p class="mt-5 hidden text-[0.9375rem] text-muted md:block">
           <span>Intro price for this cohort — see pricing below.</span>
-          <a href="#sprints" class="ml-2 underline-offset-4 hover:text-fg hover:underline">See the 14 days →</a>
+          <a href="#sessions" class="ml-2 underline-offset-4 hover:text-fg hover:underline">See the two days →</a>
         </p>
 
         <dl class="mt-10 flex gap-6 border-t border-line pt-6 md:mt-12 md:gap-10">
           {
             [
-              { value: '14', label: 'Days, evenings' },
-              { value: '8', label: 'Sprints, each ships' },
+              { value: '2', label: 'Days, live' },
+              { value: '4', label: 'Sessions, each ships' },
               { value: '1', label: 'Coding agent, yours' },
             ].map((s) => (
               <div>
@@ -105,8 +105,8 @@ const outcomeCards = [
   <!-- ==================== OUTCOMES ==================== -->
   <Section
     eyebrow="What you leave with"
-    title="Fourteen days later, something of yours is running."
-    lead="Not notes on agent architecture. An agent you can start, hand a ticket, and watch work."
+    title="Two days later, something of yours is running."
+    lead="An agent you can start, hand a ticket, and watch work."
   >
     <div class="grid gap-4 md:grid-cols-3 md:gap-5">
       {
@@ -135,10 +135,10 @@ const outcomeCards = [
   <!-- ==================== SPRINTS ==================== -->
   <Section
     rule
-    id="sprints"
-    eyebrow="The 14 days"
-    title="One system layer per sprint."
-    lead="Each sprint ends with something runnable. The agent has a history you can explain."
+    id="sessions"
+    eyebrow="Two days, four sessions"
+    title="One system layer per session."
+    lead="Each session ends with something runnable."
   >
     <ol class="border-t border-line">
       {
@@ -146,7 +146,7 @@ const outcomeCards = [
           <li class="grid gap-4 border-b border-line py-6 md:grid-cols-[11rem_1fr] md:gap-10 md:py-8">
             <div>
               <p class="label label-accent">{s.days}</p>
-              <p class="label mt-1">Sprint {s.n}</p>
+              <p class="label mt-1">Session {s.n}</p>
             </div>
             <div>
               <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -199,7 +199,7 @@ const outcomeCards = [
     rule
     eyebrow="Not sure this is the right step"
     title="One step down is free. One step up is longer."
-    lead="Trade down to test the water, or up for two full weeks of production practice."
+    lead="Trade down to test the water, or up to fourteen days of production practice."
   >
     <div class="grid gap-4 md:grid-cols-2 md:gap-5">
       <LadderCard rung={before} featured />
@@ -245,7 +245,7 @@ const outcomeCards = [
     rule
     eyebrow="Scope"
     title="What we cover. What we don't."
-    lead="Fourteen evenings buy depth in one place, not coverage everywhere."
+    lead="Two days buy depth in one place, not coverage everywhere."
   >
     <div class="grid gap-8 md:grid-cols-2 md:gap-12">
       <div>
@@ -292,7 +292,7 @@ const outcomeCards = [
   </Section>
 
   <!-- ==================== PRICING (the only amounts on this page) ========= -->
-  <PricingSection pricing={bootcamp.pricing!} programLabel="14 days · Bootcamp" />
+  <PricingSection pricing={bootcamp.pricing!} programLabel="2-Day Bootcamp" />
 
   <!-- ==================== ENROL ==================== -->
   <Section
@@ -330,7 +330,7 @@ const outcomeCards = [
 
   <Newsletter />
 
-  <StickyCTA label="14 days · Bootcamp" note="Intro price this cohort" ctaLabel="Enrol" ctaHref="#register" />
+  <StickyCTA label="2-Day Bootcamp" note="Intro price this cohort" ctaLabel="Enrol" ctaHref="#register" />
 </Base>
 
 <style>

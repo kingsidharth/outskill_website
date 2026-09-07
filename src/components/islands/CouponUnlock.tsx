@@ -5,25 +5,49 @@ interface Props {
   code: string;
   /** Human date the coupon stops working, e.g. "Fri, 11 Sep 2026". */
   validUntil: string;
+  /**
+   * Show the code straight away. The quiz result page passes this: the four
+   * questions were the gate, so a second "Reveal" click would be theatre.
+   */
+  revealed?: boolean;
+}
+
+/** Clipboard API first; a throwaway textarea for browsers that refuse it. */
+async function writeClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    /* fall through */
+  }
+  try {
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.setAttribute('readonly', '');
+    el.style.position = 'fixed';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+    el.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(el);
+    return ok;
+  } catch {
+    return false;
+  }
 }
 
 /**
- * "Reveal coupon" -> the code, with copy-to-clipboard.
+ * The coupon code, with copy-to-clipboard.
  *
- * Not an island on its own: it is rendered inside Countdown so the two share
- * one expiry instant and one hydration boundary.
+ * Used two ways: inside Countdown on a page that still gates it behind a
+ * click, and standalone on /quiz/result/<score> where it is already earned.
  */
-export default function CouponUnlock({ code, validUntil }: Props) {
-  const [revealed, setRevealed] = useState(false);
+export default function CouponUnlock({ code, validUntil, revealed: initial = false }: Props) {
+  const [revealed, setRevealed] = useState(initial);
   const [status, setStatus] = useState<string | null>(null);
 
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setStatus('Copied.');
-    } catch {
-      setStatus('Select the code above and copy it.');
-    }
+    setStatus((await writeClipboard(code)) ? 'Copied.' : 'Select the code above and copy it.');
   };
 
   if (!revealed) {

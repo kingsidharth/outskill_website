@@ -9,6 +9,7 @@ import StickyCTA from '../../components/StickyCTA.astro';
 import LadderCard from '../../components/LadderCard.astro';
 import UseCaseLadder from '../../components/UseCaseLadder.astro';
 import SocialProof from '../../components/SocialProof.astro';
+import ToolLogos from '../../components/ToolLogos.astro';
 import MentorCard from '../../components/MentorCard.astro';
 import HelpMeDecide from '../../components/islands/HelpMeDecide.tsx';
 import { workshops, workshopBySlug, nextWorkshopSession, formatWhen } from '../../data/workshops';
@@ -59,7 +60,8 @@ const info: { label: string; value: string; live?: boolean }[] = [
 
     <div class="wrap relative z-10 pt-12 pb-10 md:pt-24 md:pb-20">
       <div class="max-w-[36rem] lg:max-w-[42rem]">
-        <p class="eyebrow">Free · 90 minutes · Live</p>
+        <ToolLogos slugs={[w.slug]} label={`${w.tool} — the tool this workshop runs in`} eager />
+        <p class="eyebrow mt-5">90 min Workshop · Free · Live</p>
         <h1 class="display-xl mt-3">{w.promise}</h1>
         <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">{w.subhead}</p>
 
@@ -120,7 +122,7 @@ const info: { label: string; value: string; live?: boolean }[] = [
     class="scroll-mt-16"
     eyebrow={w.icp}
     title="Things you can start using today."
-    lead="Five steps through the work you already do. The first three run in the session, in front of you."
+    lead="Five steps through the work you already do, the first three of them live in the session."
   >
     <UseCaseLadder steps={w.steps} />
 
@@ -161,7 +163,7 @@ const info: { label: string; value: string; live?: boolean }[] = [
     id="more"
     eyebrow="After the 90 minutes"
     title="Looking for something more serious?"
-    lead="The workshop is complete on its own. If you want more time and more depth, this is the order it goes in."
+    lead="The workshop is complete on its own; this is the order it goes in if you want more."
   >
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {nextRungs.map((r) => <LadderCard rung={r} featured={r.cta.kind === 'free'} />)}
@@ -173,29 +175,14 @@ const info: { label: string; value: string; live?: boolean }[] = [
   </Section>
 
   <!-- ==================== CROSS STRIP ==================== -->
+  <!--
+    Logos, not links. Every flavour books through the same seat, and the
+    per-tool pages are reachable from the footer only — so this strip says
+    "these exist" and sends you to the one shared page.
+  -->
   <Section rule eyebrow="Other sessions" title={crossTitle} lead={crossLead}>
-    <ul class="grid gap-3 sm:grid-cols-3">
-      {
-        cross.map((c) => (
-          <li>
-            <a href={c.path} class="card card-hover group flex h-full flex-col p-4 md:p-5">
-              <div class="flex items-center justify-between gap-3">
-                <h3 class="heading-xs">{c.tool}</h3>
-                <span class="num shrink-0 text-[0.75rem] text-faint">90 min</span>
-              </div>
-              <p class="mt-2 text-[0.9375rem] leading-snug text-muted">{c.outcome}</p>
-              <div class="flex-1" aria-hidden="true" />
-              <span class="mt-4 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-accent">
-                See what you build
-                <svg class="size-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <ToolLogos slugs={cross.map((c) => c.slug)} label="The other 90 min Workshop flavours" size="sm" />
+    <a href="/workshops" class="btn btn-ghost btn-sm mt-6">See every flavour</a>
   </Section>
 
   <!-- ==================== FAQ ==================== -->
@@ -206,7 +193,7 @@ const info: { label: string; value: string; live?: boolean }[] = [
   <Newsletter />
 
   <StickyCTA
-    label={`${w.name} · 90 minutes`}
+    label={`90 min Workshop · ${w.tool}`}
     price="Free"
     ctaLabel="Reserve a seat"
     ctaHref={w.href}

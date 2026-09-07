@@ -9,11 +9,9 @@ import CTA from '../components/CTA.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Countdown from '../components/islands/Countdown';
 import AgentTerminal from '../components/islands/AgentTerminal';
-import TrapQuiz from '../components/islands/TrapQuiz';
 import WhatYouGet from '../components/WhatYouGet.astro';
 import IsThisForMe from '../components/islands/IsThisForMe';
-import { mastermind, couponCode, formatCohortDate, nextCohortAfter } from '../data/mastermind';
-import { quiz } from '../data/quiz';
+import { mastermind, formatCohortDate, nextCohortAfter } from '../data/mastermind';
 
 // The stored date wins while it is still ahead of us; once that weekend has
 // passed, a rebuild rolls to the next Friday 19:00 IST using the same helper
@@ -41,7 +39,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
 
     <div class="wrap relative z-10 pt-12 pb-10 md:pt-24 md:pb-20">
       <div class="max-w-[36rem] lg:max-w-[42rem]">
-        <p class="eyebrow">Free · Live · This weekend</p>
+        <p class="eyebrow">{mastermind.eyebrow}</p>
         <h1 class="display-xl mt-3">{mastermind.headline}</h1>
         <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">{mastermind.subhead}</p>
 
@@ -79,11 +77,15 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
             <span class="display-md">Free with coupon</span>
           </p>
           <p class="mt-3 max-w-sm text-[0.9375rem] text-muted">
-            One coupon takes it to zero. It stops working the moment the weekend starts.
+            One coupon takes it to zero, and it stops working the moment the weekend starts.
+          </p>
+          <a href="/quiz" class="btn btn-ghost btn-block mt-5 sm:w-auto">Check your AI knowledge</a>
+          <p class="mt-2.5 max-w-sm text-[0.8125rem] text-muted">
+            Pass the four questions, or don't — the coupon is on the result page.
           </p>
         </div>
 
-        <Countdown client:idle expiresAt={cohortStart} code={couponCode} fallbackDate={cohortDate} />
+        <Countdown client:idle expiresAt={cohortStart} fallbackDate={cohortDate} />
       </div>
     </div>
   </section>
@@ -123,7 +125,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     rule
     eyebrow="The weekend"
     title="Three live sessions. Twelve hours."
-    lead={`Starts ${cohortDate}, 7 PM IST. Every session is hands-on, and recordings follow.`}
+    lead={`Starts ${cohortDate}, 7 PM IST — every session is hands-on, and recordings follow.`}
   >
     <ol class="border-t border-line">
       {
@@ -152,13 +154,14 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
   <WhatYouGet items={mastermind.whatYouGet ?? []} title="Twelve hours. This is what is in them." />
 
   <!-- ==================== QUIZ ==================== -->
-  <Section
-    rule
-    eyebrow="Four questions"
-    title="Think you already get LLMs?"
-    lead="Four questions engineers get wrong. Answer honestly — the explanations stay hidden until you submit."
-  >
-    <TrapQuiz client:visible questions={quiz} registerHref="#register" registerLabel={mastermind.ctaLabel} />
+  <Section rule eyebrow="Four questions" title="Think you already get LLMs?">
+    <div class="card max-w-2xl p-5 md:p-8">
+      <p class="text-[1.0625rem] leading-relaxed md:text-[1.125rem]">
+        Four questions engineers get wrong, two minutes, nothing stored — and the coupon waits on the
+        result page whatever you score.
+      </p>
+      <a href="/quiz" class="btn btn-accent btn-block mt-6 sm:w-auto">Check your AI knowledge</a>
+    </div>
   </Section>
 
   <!-- ==================== IS THIS FOR ME ==================== -->
@@ -166,7 +169,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     rule
     eyebrow="Is this for me?"
     title="Tick what is true. The answer updates."
-    lead="Nothing is stored. This is for you, not for us."
+    lead="Nothing is stored — this is for you, not for us."
   >
     <IsThisForMe
       client:visible
@@ -190,7 +193,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     rule
     eyebrow="Register"
     title="Save your seat."
-    lead="Free with the coupon, live, seat-limited. Leave your email; the joining links follow."
+    lead="Leave your email and the joining links follow."
   >
     <form id="register-form" data-program={mastermind.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
       <label for="register-email" class="sr-only">Email address</label>
@@ -215,13 +218,13 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
   <CTA
     eyebrow="One weekend"
     title="Three demos you built, by Sunday night."
-    body={`Starts ${cohortDate}, 7 PM IST. Free with the coupon until then.`}
+    body={`Starts ${cohortDate}, 7 PM IST, and the coupon holds until then.`}
     ctaLabel={mastermind.ctaLabel}
     ctaHref="#register"
   />
 
   <StickyCTA
-    label="2-day Mastermind"
+    label="Weekend Mastermind"
     price="Free"
     listPrice="₹4,999"
     ctaLabel="Claim free seat"

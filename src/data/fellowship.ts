@@ -2,7 +2,7 @@ import type { Program } from './types';
 
 export const fellowship: Program = {
   slug: 'fellowship',
-  name: 'AI Engineering Fellowship (GEF)',
+  name: '6M Fellowship',
   eyebrow: '6 months · weekends only',
   headline: 'Six months of weekends. A capstone you defend.',
   subhead: 'Four months across six levels, then two months building one system under supervision. Weekends only.',

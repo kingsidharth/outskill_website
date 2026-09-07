@@ -49,8 +49,8 @@ const COHORT_START = '2026-09-11T19:00:00+05:30';
 
 export const mastermind: Program = {
   slug: 'mastermind',
-  name: '2-Day AI Engineering Mastermind',
-  eyebrow: 'Free · Live · This weekend',
+  name: 'Weekend Mastermind',
+  eyebrow: 'Weekend Mastermind · Free · Live',
   headline: "We'll show you the behind-the-scenes, common to uncommon.",
   subhead: 'Two days, live. You build the loop yourself and leave with three demos that run.',
   ctaLabel: 'Claim your free seat',
@@ -118,7 +118,7 @@ export const mastermind: Program = {
     { q: 'Will I receive recordings of the sessions?', a: 'Yes. Session recordings and supporting material are provided after the live sessions.' },
     { q: 'What makes this different from other AI workshops?', a: 'The focus is the complete engineering loop: models, tools, workflows, agents, and review—not prompt tips alone.' },
     { q: 'Will I be able to apply these skills immediately after the workshop?', a: 'Yes. You will leave with patterns you can apply to coding, automation, and internal tools.' },
-    { q: 'Is the Mastermind really free?', a: `Yes — the coupon ${couponCode} takes the listed ₹4,999 to zero. It is valid until the cohort starts, and a fresh one opens for the next weekend.` },
+    { q: 'Is the Mastermind really free?', a: 'Yes. Pass through the four questions at /quiz and the coupon on the result page takes the listed ₹4,999 to zero. It is valid until the cohort starts, and a fresh one opens for the next weekend.' },
   ],
   seo: { title: '2-Day AI Engineering Mastermind', description: 'A free, live 12-hour AI Engineering Mastermind. Learn LLMs, tools, agent workflows, and multi-agent systems in three sessions.' },
 

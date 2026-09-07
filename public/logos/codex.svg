@@ -1,0 +1,24 @@
+<!--
+  Neutral placeholder lettermark for Codex — deliberately NOT the OpenAI logo.
+  Drawn in the site's paper tokens (ink #121110 on the light chip that
+  ToolLogos.astro provides) so it sits with the real marks without pretending
+  to be one.
+
+  TODO(founder): drop the official SVG here (same 155x78 viewBox, transparent
+  background, no white card — ToolLogos.astro draws the chip).
+-->
+<svg width="113.00" height="28.00" viewBox="20.00 24.50 113.00 28.00" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+  <g fill="none" stroke="#121110" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28.5 30.5 21 39l7.5 8.5" />
+    <path d="M45.5 30.5 53 39l-7.5 8.5" />
+    <path d="M39.5 28.5 34.5 49.5" />
+  </g>
+  <text
+    x="66"
+    y="46.5"
+    fill="#121110"
+    font-family="'Fira Sans Condensed', 'Fira Sans', system-ui, sans-serif"
+    font-size="22"
+    font-weight="700"
+  >Codex</text>
+</svg>

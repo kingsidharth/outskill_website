@@ -5,6 +5,11 @@
  * questions a buyer has before clicking: when, how long, what shape.
  *
  * Mobile: 2-up grid above the button.  Desktop: a row after a vertical rule.
+ *
+ * V4 §3: every value renders in ONE style — Fira Sans semibold, `text-fg`.
+ * No `.num`, no accent, no monospace, whatever the caller passes. `InfoBlock`
+ * carries no class field precisely so a date cannot arrive styled differently
+ * from a duration; if one ever does, it is normalised away here.
  */
 import type { InfoBlock } from '../data/types';
 

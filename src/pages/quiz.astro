@@ -1,0 +1,47 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import FAQ from '../components/FAQ.astro';
+import TrapQuiz from '../components/islands/TrapQuiz';
+import { quiz } from '../data/quiz';
+
+/**
+ * The gate in front of the Mastermind coupon (BRIEF-V4 §5). Nothing is stored
+ * and nothing is posted — the score becomes a path segment, and the result
+ * page carries the explanations and the code.
+ */
+const faq = [
+  { q: 'Is this scored against me anywhere?', a: 'No. Nothing is stored and nothing is sent — your answers stay in the browser and the score becomes part of the result page address.' },
+  { q: 'Do I need to pass to get the coupon?', a: 'No. The coupon is on the result page whatever you score.' },
+  { q: 'What if I get all four right?', a: 'The result page points you at the 14 days Accelerator as well, and the coupon is still there.' },
+  { q: 'How long does it take?', a: 'Four multiple-choice questions. About two minutes.' },
+];
+---
+
+<Base
+  title="Check your AI knowledge — 4 questions | Outskill"
+  description="Four questions engineers get wrong about LLMs. Answer them and see where you stand — the Weekend Mastermind coupon is on the result page."
+  cta={{ label: 'Weekend Mastermind', href: '/mastermind' }}
+>
+  <section class="border-b border-line">
+    <div class="wrap pt-12 pb-10 md:pt-20 md:pb-16">
+      <div class="max-w-[42rem]">
+        <p class="eyebrow">Four questions</p>
+        <h1 class="display-xl mt-3">Check your AI knowledge.</h1>
+        <p class="mt-4 max-w-[32rem] text-[1.0625rem] text-muted md:text-[1.25rem]">
+          Four questions engineers get wrong; the coupon is on the result page either way.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Section>
+    <TrapQuiz client:load questions={quiz} />
+  </Section>
+
+  <Section rule eyebrow="Before you start" title="Straight answers.">
+    <FAQ items={faq} />
+  </Section>
+</Base>

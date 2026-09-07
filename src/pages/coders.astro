@@ -9,6 +9,7 @@ import FAQ from '../components/FAQ.astro';
 import Newsletter from '../components/Newsletter.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import { ladder } from '../data/ladder';
+import ToolLogos from '../components/ToolLogos.astro';
 import { workshops } from '../data/workshops';
 import { hero as siteHero } from '../data/site';
 import { mastermind } from '../data/mastermind';
@@ -104,32 +105,13 @@ const info = mastermind.stats;
   </Section>
 
   <!-- ==================== WORKSHOP STRIP ==================== -->
+  <!-- Logos, not links: all three flavours book the same seat. -->
   <Section rule eyebrow={codersWorkshops.eyebrow} title={codersWorkshops.title} lead={codersWorkshops.lead}>
-    <ul class="grid gap-3 sm:grid-cols-3">
-      {
-        coderWorkshops.map((w) => (
-          <li>
-            <a href={w.path} class="card card-hover group flex h-full flex-col p-4 md:p-5">
-              <div class="flex items-center justify-between gap-3">
-                <h3 class="heading-xs">{w.tool}</h3>
-                <span class="num shrink-0 text-[0.75rem] text-faint">90 min</span>
-              </div>
-              <p class="mt-2 text-[0.9375rem] leading-snug text-muted">{w.outcome}</p>
-              <div class="flex-1" aria-hidden="true"></div>
-              <span class="mt-4 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-accent">
-                See what you build
-                <svg class="size-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <p class="mt-4 text-[0.9375rem] text-muted">
+    <ToolLogos slugs={coderWorkshops.map((w) => w.slug)} label="Tools the 90 min Workshop runs in for coders" />
+    <p class="mt-6 text-[0.9375rem] text-muted">
       Free, live, and recorded. Runs every other day — take the next one that fits your week.
     </p>
+    <a href="/workshops" class="btn btn-ghost mt-6">See the 90 min Workshop</a>
   </Section>
 
   <!-- ==================== FAQ ==================== -->
@@ -160,7 +142,7 @@ const info = mastermind.stats;
   <Newsletter />
 
   <StickyCTA
-    label="2-day Mastermind"
+    label="Weekend Mastermind"
     price="Free"
     listPrice="₹4,999"
     ctaLabel="Claim free seat"

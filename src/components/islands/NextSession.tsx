@@ -30,10 +30,12 @@ export default function NextSession({ fallback, time }: Props) {
     setLabel(`${DAYS[ist.getUTCDay()]}, ${ist.getUTCDate()} ${MONTHS[ist.getUTCMonth()]}`);
   }, []);
 
+  // V4: rendered exactly like any other InfoBlock value — Fira Sans semibold in
+  // `fg`. No `.num`, no accent. The component carries the style itself because
+  // its call sites wrap it in containers of different sizes.
   return (
-    <span>
-      <span className="num text-accent">{label}</span>
-      <span className="text-muted"> · {time}</span>
+    <span className="font-semibold text-fg">
+      {label} at {time}
     </span>
   );
 }
