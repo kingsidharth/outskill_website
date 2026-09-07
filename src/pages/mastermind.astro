@@ -10,6 +10,8 @@ import StickyCTA from '../components/StickyCTA.astro';
 import Countdown from '../components/islands/Countdown';
 import AgentTerminal from '../components/islands/AgentTerminal';
 import TrapQuiz from '../components/islands/TrapQuiz';
+import WhatYouGet from '../components/WhatYouGet.astro';
+import IsThisForMe from '../components/islands/IsThisForMe';
 import { mastermind, couponCode, formatCohortDate, nextCohortAfter } from '../data/mastermind';
 import { quiz } from '../data/quiz';
 
@@ -77,8 +79,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
             <span class="display-md">Free with coupon</span>
           </p>
           <p class="mt-3 max-w-sm text-[0.9375rem] text-muted">
-            The seat is listed at {mastermind.price.original}. One coupon takes it to zero for this cohort, and it
-            stops working the moment the weekend starts.
+            One coupon takes it to zero. It stops working the moment the weekend starts.
           </p>
         </div>
 
@@ -147,6 +148,9 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     </ol>
   </Section>
 
+  <!-- ==================== WHAT YOU GET ==================== -->
+  <WhatYouGet items={mastermind.whatYouGet ?? []} title="Twelve hours. This is what is in them." />
+
   <!-- ==================== QUIZ ==================== -->
   <Section
     rule
@@ -155,6 +159,24 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     lead="Four questions engineers get wrong. Answer honestly — the explanations stay hidden until you submit."
   >
     <TrapQuiz client:visible questions={quiz} registerHref="#register" registerLabel={mastermind.ctaLabel} />
+  </Section>
+
+  <!-- ==================== IS THIS FOR ME ==================== -->
+  <Section
+    rule
+    eyebrow="Is this for me?"
+    title="Tick what is true. The answer updates."
+    lead="Nothing is stored. This is for you, not for us."
+  >
+    <IsThisForMe
+      client:visible
+      statements={mastermind.isThisForMe ?? []}
+      programLabel="the Mastermind"
+      fitAt={3}
+      fitCta={{ label: 'Claim free seat', href: '#register' }}
+      fallbackCta={{ label: 'See the 90-minute workshops', href: '/workshops' }}
+      fallbackLabel="a 90-minute workshop"
+    />
   </Section>
 
   <!-- ==================== FAQ ==================== -->
@@ -168,7 +190,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     rule
     eyebrow="Register"
     title="Save your seat."
-    lead="Free with the coupon, live, and seat-limited. Leave your email and the schedule and joining links come to you."
+    lead="Free with the coupon, live, seat-limited. Leave your email; the joining links follow."
   >
     <form id="register-form" data-program={mastermind.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
       <label for="register-email" class="sr-only">Email address</label>
@@ -193,7 +215,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
   <CTA
     eyebrow="One weekend"
     title="Three demos you built, by Sunday night."
-    body={`Starts ${cohortDate} at 7 PM IST. Listed at ${mastermind.price.original}; free with the coupon until the cohort starts.`}
+    body={`Starts ${cohortDate}, 7 PM IST. Free with the coupon until then.`}
     ctaLabel={mastermind.ctaLabel}
     ctaHref="#register"
   />

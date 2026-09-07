@@ -1,0 +1,19 @@
+---
+/**
+ * "How we solve for" — a terse two-column list of problems a program
+ * addresses. No sentences, just the problem names.
+ */
+interface Props { items: string[] }
+const { items } = Astro.props;
+---
+
+<ul class="grid gap-x-10 border-t border-line sm:grid-cols-2 md:gap-x-16">
+  {
+    items.map((item, i) => (
+      <li class="flex items-baseline gap-4 border-b border-line py-3.5">
+        <span class="num text-[0.8125rem] text-faint">{String(i + 1).padStart(2, '0')}</span>
+        <span class="text-[0.9375rem] leading-snug md:text-base">{item}</span>
+      </li>
+    ))
+  }
+</ul>

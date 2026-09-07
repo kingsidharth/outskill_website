@@ -109,7 +109,7 @@ const info = mastermind.stats;
       {
         coderWorkshops.map((w) => (
           <li>
-            <a href={w.href} class="card card-hover group flex h-full flex-col p-4 md:p-5">
+            <a href={w.path} class="card card-hover group flex h-full flex-col p-4 md:p-5">
               <div class="flex items-center justify-between gap-3">
                 <h3 class="heading-xs">{w.tool}</h3>
                 <span class="num shrink-0 text-[0.75rem] text-faint">90 min</span>
@@ -117,7 +117,7 @@ const info = mastermind.stats;
               <p class="mt-2 text-[0.9375rem] leading-snug text-muted">{w.outcome}</p>
               <div class="flex-1" aria-hidden="true"></div>
               <span class="mt-4 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-accent">
-                Reserve a seat
+                See what you build
                 <svg class="size-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>

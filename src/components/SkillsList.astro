@@ -1,0 +1,21 @@
+---
+/**
+ * Numbered display lines, each with one supporting sentence.
+ * Generic: any page can pass `items` of {title, body}.
+ */
+interface Item { title: string; body: string }
+interface Props { items: Item[]; class?: string }
+const { items, class: className } = Astro.props;
+---
+
+<ol class:list={['border-t border-line', className]}>
+  {
+    items.map((item, i) => (
+      <li class="grid gap-2 border-b border-line py-6 md:grid-cols-[4rem_minmax(0,1fr)_minmax(0,1fr)] md:items-baseline md:gap-8 md:py-8">
+        <span class="num text-[0.875rem] text-faint">{String(i + 1).padStart(2, '0')}</span>
+        <h3 class="display-md">{item.title}</h3>
+        <p class="text-[0.9375rem] leading-relaxed text-muted md:text-base">{item.body}</p>
+      </li>
+    ))
+  }
+</ol>

@@ -51,8 +51,8 @@ export const mastermind: Program = {
   slug: 'mastermind',
   name: '2-Day AI Engineering Mastermind',
   eyebrow: 'Free · Live · This weekend',
-  headline: 'Ship three working agent demos by Sunday night.',
-  subhead: 'Two days, twelve hours, live. You build the agent loop yourself — context, tools, review — and leave with demos that run on your own machine.',
+  headline: 'We demo the behind-the-scenes, common to uncommon.',
+  subhead: 'Two days, live. You build the loop yourself and leave with three demos that run.',
   ctaLabel: 'Claim your free seat',
   ctaHref: '#register',
   nextCohortStart: COHORT_START,
@@ -118,7 +118,27 @@ export const mastermind: Program = {
     { q: 'Will I receive recordings of the sessions?', a: 'Yes. Session recordings and supporting material are provided after the live sessions.' },
     { q: 'What makes this different from other AI workshops?', a: 'The focus is the complete engineering loop: models, tools, workflows, agents, and review—not prompt tips alone.' },
     { q: 'Will I be able to apply these skills immediately after the workshop?', a: 'Yes. You will leave with patterns you can apply to coding, automation, and internal tools.' },
-    { q: 'Is the Mastermind really free?', a: `Yes. The listed price is ₹4,999 and the coupon ${couponCode} takes it to zero. The coupon is valid until the cohort starts; when a weekend passes, a fresh one opens for the next one.` },
+    { q: 'Is the Mastermind really free?', a: `Yes — the coupon ${couponCode} takes the listed ₹4,999 to zero. It is valid until the cohort starts, and a fresh one opens for the next weekend.` },
   ],
   seo: { title: '2-Day AI Engineering Mastermind', description: 'A free, live 12-hour AI Engineering Mastermind. Learn LLMs, tools, agent workflows, and multi-agent systems in three sessions.' },
+
+  /* ---- V3 (BRIEF-V3 §3) ---- */
+  whatYouGet: [
+    'Three live sessions across one weekend, twelve hours',
+    'A ticket handed to a coding agent, start to finish',
+    'An agent wired to GitHub, a database and Slack over MCP',
+    'A pull request the agent opened, for you to review',
+    'Role-based agents working a build in parallel',
+    'The loop as primitives: context, memory, tools, review',
+    'Recordings and the working material afterwards', // stated in the FAQ above
+    'Demos that run on your own machine, not ours',
+  ],
+  isThisForMe: [
+    'I can give one weekend to this',
+    'I write code, or I read it comfortably',
+    'I use autocomplete but have not built an agent',
+    'I want to see the behind-the-scenes, not the pitch',
+    'I would rather build during the session than watch',
+    'I want to know why agent loops break',
+  ],
 };

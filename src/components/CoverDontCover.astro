@@ -1,0 +1,51 @@
+---
+/**
+ * Two honest columns: what a program covers, and what it does not —
+ * each exclusion allowed a nuance line (BRIEF-V3 §4).
+ */
+interface DontItem { item: string; but?: string }
+interface Props {
+  cover: string[];
+  dontCover: DontItem[];
+  coverLabel?: string;
+  dontLabel?: string;
+}
+const { cover, dontCover, coverLabel = 'What we cover', dontLabel = "What we don't cover" } = Astro.props;
+---
+
+<div class="grid gap-10 md:grid-cols-2 md:gap-12">
+  <div>
+    <p class="label text-accent">{coverLabel}</p>
+    <ul class="mt-5 border-t border-line">
+      {
+        cover.map((c) => (
+          <li class="flex items-start gap-3 border-b border-line py-3.5 text-[0.9375rem] leading-snug md:text-base">
+            <svg viewBox="0 0 16 16" class="mt-[0.25rem] size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
+              <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>{c}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div>
+    <p class="label text-muted">{dontLabel}</p>
+    <ul class="mt-5 border-t border-line">
+      {
+        dontCover.map((d) => (
+          <li class="flex items-start gap-3 border-b border-line py-3.5">
+            <svg viewBox="0 0 16 16" class="mt-[0.3rem] size-4 shrink-0 text-faint" fill="none" aria-hidden="true">
+              <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <div>
+              <p class="text-[0.9375rem] leading-snug md:text-base">{d.item}</p>
+              {d.but && <p class="mt-1.5 text-[0.875rem] leading-snug text-muted">{d.but}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

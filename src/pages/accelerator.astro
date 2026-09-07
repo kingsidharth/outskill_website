@@ -3,50 +3,31 @@ export const prerender = true;
 
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
-import LadderCard from '../components/LadderCard.astro';
+import InfoBlocks from '../components/InfoBlocks.astro';
+import SkillsList from '../components/SkillsList.astro';
+import StackBenefits from '../components/StackBenefits.astro';
+import CommunityLine from '../components/CommunityLine.astro';
+import PythonBasecamp from '../components/PythonBasecamp.astro';
+import CoverDontCover from '../components/CoverDontCover.astro';
+import ToolsGrid from '../components/ToolsGrid.astro';
+import SolveFor from '../components/SolveFor.astro';
+import WhatYouGet from '../components/WhatYouGet.astro';
+import PricingSection from '../components/PricingSection.astro';
 import FAQ from '../components/FAQ.astro';
 import Newsletter from '../components/Newsletter.astro';
 import StickyCTA from '../components/StickyCTA.astro';
-import InfoBlocks from '../components/InfoBlocks.astro';
 import SprintTimeline from '../components/islands/SprintTimeline.tsx';
+import StillUnsure from '../components/islands/StillUnsure.tsx';
+import IsThisForMe from '../components/islands/IsThisForMe.tsx';
 import { accelerator } from '../data/accelerator';
-import { ladderBySlug } from '../data/ladder';
-import type { Feature, InfoBlock } from '../data/types';
+import type { InfoBlock } from '../data/types';
 
-const before = ladderBySlug['bootcamp'];
-const after = ladderBySlug['fellowship'];
-
+/* No amount here — the Pricing section is the only place it appears (§2). */
 const info: InfoBlock[] = [
   { label: 'Duration', value: '14 days' },
-  { label: 'Format', value: 'Daily, back-to-back' },
+  { label: 'Format', value: 'Daily, live' },
   { label: 'Next start', value: 'On selection' },
-  { label: 'Price', value: '₹1,25,000' },
-];
-
-const addons: Feature[] = [
-  { title: 'Business foundations', body: 'Frame AI work in business terms: scoping, stakeholder communication, and what it returns.' },
-  { title: 'Monetisation modules', body: 'Package and price what you build, from software to services.' },
-  { title: 'Tool and workflow deep dives', body: 'Extra sessions on specific tools, frameworks, and deployment patterns.' },
-  { title: 'Weekly AI updates', body: 'A year of curated releases and the engineering patterns that come with them.' },
-];
-
-/* Metrics are programme facts from accelerator.ts — nothing invented. */
-const outcomeCards = [
-  {
-    metric: '7+ apps',
-    title: 'Built end to end',
-    body: 'Chat systems, an automation pipeline, a RAG assistant grounded in your own media, agents, and a multi-agent development team.',
-  },
-  {
-    metric: '1 system',
-    title: 'Past the demo line',
-    body: 'The capstone gets deployed with evals, cost controls, security, and monitoring — the parts that decide whether it survives a week.',
-  },
-  {
-    metric: '1 year',
-    title: 'Of live updates',
-    body: 'The field moves. You keep getting the model releases and pattern changes that matter for what you built.',
-  },
+  { label: 'Price', value: 'By application' },
 ];
 ---
 
@@ -79,10 +60,9 @@ const outcomeCards = [
           <InfoBlocks items={info} variant="row" />
         </div>
 
-        <p class="mt-5 hidden text-[0.9375rem] text-muted md:block">
-          ₹1,25,000. Application only — reviewed in 48 hours.
-          <a href="#curriculum" class="ml-2 underline-offset-4 hover:text-fg hover:underline">See the fourteen days →</a>
-        </p>
+        <a href="#curriculum" class="mt-5 hidden text-[0.9375rem] text-muted underline-offset-4 hover:text-fg hover:underline md:inline-block">
+          See the fourteen days →
+        </a>
 
         <dl class="mt-10 flex gap-6 border-t border-line pt-6 md:mt-12 md:gap-10">
           {
@@ -105,123 +85,143 @@ const outcomeCards = [
     </div>
   </section>
 
-  <!-- ==================== OUTCOMES ==================== -->
+  <!-- ==================== SKILLS ==================== -->
   <Section
-    eyebrow="What you leave with"
-    title="Seven things that run, and one that stays up."
-    lead="Two weeks is enough to build a lot. It is only enough to operate one of them properly, so that is the one the capstone is for."
+    id="skills"
+    eyebrow="What you learn to build"
+    title="Six things you can build after."
+    lead="Not topics. Things that run, that someone else can open and use."
   >
-    <div class="grid gap-4 md:grid-cols-3 md:gap-5">
+    <SkillsList items={accelerator.skills} />
+
+    <div class="mt-6 grid gap-4 md:mt-8 md:grid-cols-2 md:gap-5">
       {
-        outcomeCards.map((o) => (
-          <article class="card flex flex-col p-5 md:p-7">
-            <p class="num text-[2rem] text-accent">{o.metric}</p>
-            <h3 class="heading-sm mt-2">{o.title}</h3>
-            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{o.body}</p>
+        [accelerator.hackathon, accelerator.network].map((c) => (
+          <article class="card p-5 md:p-7">
+            <h3 class="heading-sm">{c.title}</h3>
+            <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{c.body}</p>
           </article>
         ))
       }
     </div>
   </Section>
 
-  <!-- ==================== SPRINT TIMELINE ISLAND ==================== -->
+  <!-- ==================== THE FOURTEEN DAYS ==================== -->
   <Section
     rule
     id="curriculum"
     eyebrow="The fourteen days"
-    title="Open a day to see what it asks of you."
-    lead="Every block ends with something shippable. Tap one to see the focus, what you learn, and what you walk out with."
+    title="Open a day to see what it asks."
+    lead="Every block ends with something shippable. Tap one for the focus and what you walk out with."
   >
     <SprintTimeline client:visible sprints={accelerator.sprints} />
   </Section>
 
-  <!-- ==================== FEATURES ==================== -->
+  <!-- ==================== THE STACK, AS BENEFITS ==================== -->
   <Section
     rule
-    eyebrow="The stack you cover"
-    title="From a first model call to an on-call rotation."
-    lead="Each area exists because the capstone needs it, not because it looks good in a syllabus."
+    eyebrow="The stack"
+    title="Five questions the stack answers."
+    lead="Tools change every quarter. These questions do not."
   >
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
-      {
-        accelerator.features.map((f) => (
-          <article class="card p-5 md:p-7">
-            <h3 class="heading-xs">{f.title}</h3>
-            <p class="mt-2 text-[0.9375rem] leading-relaxed text-muted">{f.body}</p>
-          </article>
-        ))
-      }
-    </div>
+    <StackBenefits items={accelerator.stackBenefits} />
   </Section>
 
-  <!-- ==================== ADD-ONS ==================== -->
+  <!-- ==================== COMMUNITY ==================== -->
+  <Section rule eyebrow="Who's in the room" title="A senior room.">
+    <CommunityLine figures={accelerator.community.figures} roles={accelerator.community.roles} />
+  </Section>
+
+  <!-- ==================== PYTHON BASECAMP ==================== -->
   <Section
     rule
-    eyebrow="Included alongside"
-    title="The work around the work."
-    lead="Building the system is half of it. These cover the half that decides whether anyone pays for it."
+    eyebrow="Before day one"
+    title="Rusty Python? Not a problem."
+    lead="Basecamp runs before the cohort. It is free and it is included either way."
   >
-    <div class="grid gap-4 sm:grid-cols-2 md:gap-5">
-      {
-        addons.map((a) => (
-          <article class="card p-5 md:p-7">
-            <h3 class="heading-xs">{a.title}</h3>
-            <p class="mt-2 text-[0.9375rem] leading-relaxed text-muted">{a.body}</p>
-          </article>
-        ))
-      }
-    </div>
+    <PythonBasecamp
+      title={accelerator.pythonBasecamp.title}
+      body={accelerator.pythonBasecamp.body}
+      helpsIf={accelerator.pythonBasecamp.helpsIf}
+    />
   </Section>
 
-  <!-- ==================== AUDIENCE ==================== -->
+  <!-- ==================== COVER / DON'T COVER ==================== -->
   <Section
     rule
-    eyebrow="Who it's for"
-    title="People who can actually clear two weeks."
-    lead="This runs back-to-back at full-time intensity. Coding experience is assumed; the fourteen days are the real entry requirement."
+    eyebrow="Scope"
+    title="What we cover. What we don't."
+    lead="Fourteen days buys depth in one direction. Here is which one."
   >
-    <div class="grid gap-8 md:grid-cols-2 md:gap-12">
-      <div>
-        <p class="label">You will be able to</p>
-        <ul class="mt-4 space-y-3">
-          {
-            accelerator.outcomes.map((o) => (
-              <li class="flex items-start gap-3 text-[0.9375rem] md:text-base">
-                <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
-                  <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                {o}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <div>
-        <p class="label">This fits you if</p>
-        <ul class="mt-4 space-y-3">
-          {accelerator.audience.map((a) => <li class="card px-5 py-4 text-[0.9375rem]">{a}</li>)}
-        </ul>
-      </div>
-    </div>
+    <CoverDontCover cover={accelerator.cover} dontCover={accelerator.dontCover} />
   </Section>
 
-  <!-- ==================== ADJACENT RUNGS ==================== -->
+  <!-- ==================== STILL UNSURE? ==================== -->
   <Section
     rule
-    eyebrow="If the shape is wrong"
-    title="Same material, a lighter or a longer commitment."
-    lead="Fourteen evenings instead of fourteen full days, or six months of weekends if you cannot step away from work at all."
+    id="still-unsure"
+    eyebrow="Still unsure?"
+    title="Six questions. Answer honestly."
+    lead="If most of these make you curious, this is your room. If not, we will say so."
   >
-    <div class="grid gap-4 md:grid-cols-2 md:gap-5">
-      <LadderCard rung={before} />
-      <LadderCard rung={after} />
-    </div>
+    <StillUnsure
+      client:visible
+      prompts={accelerator.stillUnsure.prompts}
+      roles={accelerator.stillUnsure.roles}
+      rolesLine={accelerator.stillUnsure.rolesLine}
+      applyHref="#apply"
+      mastermindHref="/mastermind"
+      workshopsHref="/workshops"
+    />
   </Section>
 
-  <!-- ==================== FAQ ==================== -->
-  <Section rule eyebrow="Before you apply" title="Straight answers.">
-    <FAQ items={accelerator.faq} />
+  <!-- ==================== OPEN SOURCE + TOOLS ==================== -->
+  <Section
+    rule
+    eyebrow="Open source & local models"
+    title="Hosted is a choice, not a default."
+  >
+    <ToolsGrid tools={accelerator.tools} note={accelerator.openSourceLine} />
   </Section>
+
+  <!-- ==================== HOW WE SOLVE FOR ==================== -->
+  <Section
+    rule
+    eyebrow="How we solve for"
+    title="The twelve problems in the way."
+    lead="Each one gets worked through on something you are building, not on a slide."
+  >
+    <SolveFor items={accelerator.solveFor} />
+  </Section>
+
+  <!-- ==================== WHAT YOU GET ==================== -->
+  <WhatYouGet items={accelerator.whatYouGet} />
+
+  <!-- ==================== IS THIS FOR ME? ==================== -->
+  <Section
+    rule
+    id="fit"
+    eyebrow="Is this for me?"
+    title="Tick what is true for you."
+    lead="Nothing is sent anywhere. It only changes the line at the bottom."
+  >
+    <IsThisForMe
+      client:visible
+      statements={accelerator.isThisForMe}
+      programLabel="the Accelerator"
+      fitAt={4}
+      fitCta={{ label: 'Apply now', href: '#apply' }}
+      fallbackCta={{ label: 'See the Mastermind', href: '/mastermind' }}
+      fallbackLabel="the Mastermind"
+    />
+  </Section>
+
+  <!-- ==================== PRICING (the only amount on the page) ==================== -->
+  <PricingSection
+    pricing={accelerator.pricing}
+    programLabel="AI Engineering Accelerator"
+    title="One number. Applications reviewed in 48 hours."
+  />
 
   <!-- ==================== APPLY ==================== -->
   <Section
@@ -229,15 +229,10 @@ const outcomeCards = [
     id="apply"
     eyebrow="Apply"
     title="Start your application."
-    lead="Leave your email and the team comes back within 48 hours with fit, dates, and the payment path."
+    lead="Leave your email. We come back within 48 hours with fit, dates and next steps."
   >
     <div class="card max-w-2xl p-5 md:p-7">
-      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-line pb-5">
-        <span class="num text-[1.75rem] text-accent">₹1,25,000</span>
-        <span class="text-[0.9375rem] text-muted">application only — nothing is charged here</span>
-      </div>
-
-      <form id="register-form" data-program={accelerator.slug} class="mt-5 flex flex-col gap-3 sm:flex-row">
+      <form id="register-form" data-program={accelerator.slug} class="flex flex-col gap-3 sm:flex-row">
         <label for="register-email" class="sr-only">Email address</label>
         <input
           id="register-email"
@@ -251,18 +246,21 @@ const outcomeCards = [
         <button type="submit" class="btn btn-ghost shrink-0">Apply now</button>
       </form>
       <p id="register-msg" role="status" class="mt-3 min-h-6 text-[0.9375rem] text-accent"></p>
-      <p class="mt-1 text-[0.8125rem] text-muted">
-        Applications are reviewed in 48 hours. Nothing is charged from this form.
-      </p>
+      <p class="mt-1 text-[0.8125rem] text-muted">Nothing is charged from this form.</p>
     </div>
+  </Section>
+
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you apply" title="Straight answers.">
+    <FAQ items={accelerator.faq} />
   </Section>
 
   <Newsletter />
 
   <StickyCTA
-    kind=\"apply\"
+    kind="apply"
     label="14 days daily · Accelerator"
-    price="₹1,25,000"
+    note="By application"
     ctaLabel="Apply now"
     ctaHref="#apply"
   />
@@ -312,6 +310,8 @@ const outcomeCards = [
   document.addEventListener('astro:page-load', () => {
     const form = document.getElementById('register-form');
     if (!(form instanceof HTMLFormElement)) return;
+    if (form.dataset.bound) return;
+    form.dataset.bound = '1';
     const msg = document.getElementById('register-msg');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -320,7 +320,7 @@ const outcomeCards = [
         const res = await fetch('/api/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, program: form.dataset.program }),
+          body: JSON.stringify({ email, program: 'accelerator' }),
         });
         if (!res.ok) throw new Error('register failed');
         if (msg) msg.textContent = "Application started — we'll come back within 48 hours.";

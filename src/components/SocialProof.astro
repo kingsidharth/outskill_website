@@ -1,0 +1,41 @@
+---
+/**
+ * Two or three short quotes with name and role, then the rating line below.
+ *
+ * If `quote` is empty the card renders name and role only. We never write a
+ * sentence and attribute it to a real person — see `src/data/testimonials.ts`.
+ */
+import { testimonials as defaultTestimonials, ratingLine } from '../data/testimonials';
+import type { Testimonial } from '../data/testimonials';
+
+interface Props {
+  items?: Testimonial[];
+}
+
+const { items = defaultTestimonials } = Astro.props;
+const shown = items.slice(0, 3);
+---
+
+<div>
+  <ul class="grid gap-4 md:grid-cols-3 md:gap-5">
+    {
+      shown.map((t) => (
+        <li class="card flex flex-col p-5 md:p-6">
+          {t.quote ? (
+            <blockquote class="text-[1.0625rem] leading-relaxed text-fg">{t.quote}</blockquote>
+          ) : (
+            <span class="block size-8 rounded-full border border-line-strong" aria-hidden="true" />
+          )}
+          <div class="flex-1" aria-hidden="true" />
+          <p class:list={['heading-xs', t.quote ? 'mt-5' : 'mt-4']}>{t.name}</p>
+          <p class="mt-0.5 text-[0.875rem] text-muted">{t.role}</p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="mt-5 text-[0.9375rem] text-muted">
+    <span class="font-semibold text-accent">{ratingLine.split(' · ')[0]}</span>
+    <span> · {ratingLine.split(' · ')[1]}</span>
+  </p>
+</div>

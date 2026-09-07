@@ -4,8 +4,8 @@ export const bootcamp: Program = {
   slug: 'bootcamp',
   name: 'AI Engineering Bootcamp',
   eyebrow: '14 days · evenings · live',
-  headline: 'Ship a coding agent that opens its own pull requests.',
-  subhead: 'In fourteen evenings you build one agent end to end — it plans a task, edits a real repository, runs the tests, and puts up a PR you can review. You keep the code.',
+  headline: 'Ship a coding agent that opens pull requests.',
+  subhead: 'Fourteen evenings. You build one agent that plans, edits a real repo, and opens a PR.',
   ctaLabel: 'Enrol',
   ctaHref: '#register',
   stats: [{ label: 'Duration', value: '14 days' }, { label: 'Format', value: 'Live sprints' }, { label: 'Focus', value: 'Coding agents' }, { label: 'Output', value: 'Working systems' }],
@@ -37,8 +37,89 @@ export const bootcamp: Program = {
     { q: 'Why is the program split into sprints?', a: 'Each sprint adds one system layer and ends with something runnable, so the final agent has a clear history.' },
     { q: 'How are agents made safe?', a: 'The curriculum covers sandboxing, permissions, review gates, retries, logs, and evals.' },
     { q: 'Is this about using existing coding tools?', a: 'You may use them as references, but the core work is building the underlying agent patterns yourself.' },
-    { q: 'What is included in the price?', a: 'The ₹2,499 intro price for this cohort covers the full 14-day sprint programme and its build material. ₹19,999 is the list price.' },
+    { q: 'What is included?', a: 'The full 14-day sprint programme, the build material, code review, and the recordings. The amount is in the pricing section on this page.' },
     { q: 'What do I need before day one?', a: 'Working programming experience, a machine you can install things on, and an API key for a model provider. No machine learning background is assumed.' },
   ],
-  seo: { title: '14 days, ₹2,499 — ship your own coding agent', description: 'Fourteen evenings of live sprints. You leave with a coding agent that plans, edits a real repo, runs tests, and opens a pull request.' },
+  seo: { title: '14 days — ship your own coding agent', description: 'Fourteen evenings of live sprints. You leave with a coding agent that plans, edits a real repo, runs tests, and opens a pull request.' },
+
+  /* ---- V3: the only place an amount lives (BRIEF-V3 §2) ---- */
+  pricing: {
+    list: '₹19,999',
+    current: '₹2,499',
+    kind: 'buy',
+    ctaLabel: 'Enrol',
+    ctaHref: '#register',
+    // TODO(founder): confirm "one payment, no subscription".
+    note: 'Intro price for this cohort. One payment, no subscription.',
+    includes: [
+      'Fourteen live evening sprints',
+      'Eight builds, each one runnable',
+      'Code review on your own repository',
+      'Recordings of every session', // TODO(founder): confirm recordings
+      'The full sprint material and starter repos',
+      'Free Python Basecamp before day one',
+      'Cohort channel for the fourteen days', // TODO(founder): confirm a cohort channel exists
+      'Your agent, your code, yours to keep',
+    ],
+  },
+  whatYouGet: [
+    'A coding agent that plans, edits, tests and opens a PR',
+    'Eight sprint builds you can run after the cohort',
+    'The agent loop taken apart layer by layer',
+    'Typed file, shell and source-control tools',
+    'Working memory and durable memory, separated',
+    'A sandbox that bounds what generated code can do',
+    'An eval suite that catches your agent regressing',
+    'A small team of agents finishing one workflow',
+    'Review on your code from someone who has shipped it', // TODO(founder): confirm reviewer
+    'Recordings and material you keep', // TODO(founder): confirm recordings
+  ],
+  isThisForMe: [
+    'I write code most weeks',
+    'I have a repository I actually care about',
+    'Autocomplete is no longer enough for me',
+    'I can give fourteen evenings to this',
+    'I want to build the tool, not wait for it',
+    'I would rather ship than take notes',
+    'I am fine reading someone else’s codebase',
+  ],
 };
+
+/* ---- V3 extras. Kept as named exports so the shared `Program` type stays
+   untouched while another builder edits it for the Accelerator. ---- */
+
+/** Big-type community line. Descriptors come from `bootcamp.audience`. */
+export const bootcampCommunity = [
+  'Software engineers.',
+  'Technical leads.',
+  'Founders shipping their own product.',
+  'You?',
+];
+
+/** Free pre-course session (BRIEF-V3 §5). */
+export const bootcampBasecamp = {
+  title: 'Free: Python Basecamp',
+  body: 'A fresher session plus resources, before day one.',
+  helpsIf: [
+    'not familiar with Python',
+    'haven’t coded in a while',
+    'vibe coder',
+    'don’t write Python every day',
+  ],
+};
+
+export const bootcampCover: string[] = [
+  'The agent loop — context, model call, tools, memory, review.',
+  'Tool calling against files, shells, APIs and source control.',
+  'Sandboxed execution: isolation, limits, failure recovery.',
+  'Evals, traces and regression checks for agent behaviour.',
+  'Orchestrating several agents without losing control.',
+  'Running an agent in production: retries, cost caps, audit logs.',
+];
+
+export const bootcampDontCover: { title: string; nuance?: string }[] = [
+  { title: 'The traditional front-end / back-end stack', nuance: 'We do cover how it changes once an agent writes the code.' },
+  { title: 'Database modelling', nuance: 'We do cover the data patterns agents need.' },
+  { title: 'InfoSec and traditional security', nuance: 'We do cover permissions, sandboxing and privacy under AI.' },
+  { title: 'ML maths and fine-tuning', nuance: 'That is the Fellowship, not fourteen evenings.' },
+];

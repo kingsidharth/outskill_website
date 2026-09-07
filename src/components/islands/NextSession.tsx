@@ -23,14 +23,11 @@ export default function NextSession({ fallback, time }: Props) {
   const [label, setLabel] = useState(fallback);
 
   useEffect(() => {
-    setLabel(
-      new Intl.DateTimeFormat('en-IN', {
-        weekday: 'short',
-        day: 'numeric',
-        month: 'short',
-        timeZone: 'Asia/Kolkata',
-      }).format(nextSlot(new Date()))
-    );
+    // Hand-rolled so the month matches the workshop LPs ("Sep", not Intl's en-IN "Sept").
+    const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const ist = new Date(nextSlot(new Date()).getTime() + 5.5 * 60 * 60 * 1000);
+    setLabel(`${DAYS[ist.getUTCDay()]}, ${ist.getUTCDate()} ${MONTHS[ist.getUTCMonth()]}`);
   }, []);
 
   return (

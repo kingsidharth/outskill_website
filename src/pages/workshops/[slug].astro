@@ -1,0 +1,301 @@
+---
+export const prerender = true;
+
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import FAQ from '../../components/FAQ.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import StickyCTA from '../../components/StickyCTA.astro';
+import LadderCard from '../../components/LadderCard.astro';
+import UseCaseLadder from '../../components/UseCaseLadder.astro';
+import SocialProof from '../../components/SocialProof.astro';
+import MentorCard from '../../components/MentorCard.astro';
+import HelpMeDecide from '../../components/islands/HelpMeDecide.tsx';
+import { workshops, workshopBySlug, nextWorkshopSession, formatWhen } from '../../data/workshops';
+import { ladder } from '../../data/ladder';
+import { mentorFor } from '../../data/mentors';
+
+/** One page per enabled workshop. `enabled: false` removes the route. */
+export function getStaticPaths() {
+  return workshops.map((w) => ({ params: { slug: w.slug } }));
+}
+
+const { slug } = Astro.params;
+const w = workshopBySlug[slug!];
+
+const when = formatWhen(nextWorkshopSession());
+const mentor = mentorFor(w.slug);
+const isCoder = w.audience.includes('coders');
+
+// "Looking for something more serious?" — the next rungs up, no amounts.
+const nextRungs = ladder.filter((r) => (isCoder ? [1, 2, 3] : [1, 2]).includes(r.rung));
+
+// The cross-strip: coder pages point at the non-technical sessions, and the
+// other way round. Slugs come from the workshop's own `related` list.
+const cross = w.related.map((s) => workshopBySlug[s]).filter(Boolean);
+const crossTitle = isCoder ? 'Not writing code that day?' : 'Ready to write code?';
+const crossLead = isCoder
+  ? 'The same 90 minutes, run in a browser instead of a terminal.'
+  : 'When the prototype needs a real repo, take one of these instead.';
+
+const info: { label: string; value: string; live?: boolean }[] = [
+  { label: 'Duration', value: '90 minutes' },
+  { label: 'When', value: when, live: true },
+  { label: 'Format', value: 'Live online' },
+  { label: 'Price', value: 'Free' },
+];
+---
+
+<Base
+  title={`${w.name} — free, 90 minutes, live`}
+  description={`${w.promise} ${w.subhead}`}
+  image={`/gen/v2/${w.art}.webp`}
+  cta={{ label: 'Reserve a seat', href: w.href }}
+>
+  <!-- ==================== HERO ==================== -->
+  <section class="hero grain relative isolate overflow-hidden border-b border-line">
+    <div class="hero-art" data-art={w.art} aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="wrap relative z-10 pt-12 pb-10 md:pt-24 md:pb-20">
+      <div class="max-w-[36rem] lg:max-w-[42rem]">
+        <p class="eyebrow">Free · 90 minutes · Live</p>
+        <h1 class="display-xl mt-3">{w.promise}</h1>
+        <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">{w.subhead}</p>
+
+        <!-- Mobile: info blocks, then a full-width button. -->
+        <div class="mt-7 md:hidden">
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-4">
+            {
+              info.map((item) => (
+                <div class:list={[item.live && 'col-span-2']}>
+                  <dt class="text-[0.8125rem] text-muted">{item.label}</dt>
+                  <dd
+                    class="mt-0.5 text-[0.9375rem] font-semibold text-fg"
+                    data-next-session={item.live ? '' : undefined}
+                  >
+                    {item.value}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+          <a href={w.href} class="btn btn-accent btn-block mt-5">Reserve a seat</a>
+          <a href="#ladder" class="btn btn-ghost btn-block mt-2.5">See what you build</a>
+        </div>
+
+        <!-- Desktop: button, vertical rule, info blocks alongside. -->
+        <div class="mt-9 hidden items-center gap-6 md:flex">
+          <a href={w.href} class="btn btn-accent shrink-0">Reserve a seat</a>
+          <dl class="flex flex-wrap gap-x-8 gap-y-4 border-l border-line-strong pl-5">
+            {
+              info.map((item) => (
+                <div>
+                  <dt class="text-[0.8125rem] text-muted">{item.label}</dt>
+                  <dd
+                    class="mt-0.5 text-[0.9375rem] font-semibold text-fg"
+                    data-next-session={item.live ? '' : undefined}
+                  >
+                    {item.value}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <a
+          href="#ladder"
+          class="mt-5 hidden text-[0.9375rem] text-muted underline-offset-4 hover:text-fg hover:underline md:inline-block"
+        >
+          See what you build →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== USE CASE LADDER ==================== -->
+  <Section
+    id="ladder"
+    class="scroll-mt-16"
+    eyebrow={w.icp}
+    title="Things you can start using today."
+    lead="Five steps through the work you already do. The first three run in the session, in front of you."
+  >
+    <UseCaseLadder steps={w.steps} />
+
+    <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <p class="max-w-xl text-[0.9375rem] text-muted">{w.needs}</p>
+      <a href={w.href} class="btn btn-accent w-full shrink-0 sm:w-auto">Reserve a seat</a>
+    </div>
+  </Section>
+
+  <!-- ==================== VIBE CODERS WELCOME (coder LPs) ==================== -->
+  {
+    w.vibeWelcome && (
+      <Section rule>
+        <div class="card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between md:p-7">
+          <div class="max-w-2xl">
+            <p class="label">Vibe coders welcome</p>
+            <p class="mt-2 text-[1.0625rem] leading-relaxed text-fg">{w.vibeWelcome}</p>
+          </div>
+          <a href="/vibe-coders" class="btn btn-ghost btn-sm shrink-0">See the vibe track</a>
+        </div>
+      </Section>
+    )
+  }
+
+  <!-- ==================== SOCIAL PROOF ==================== -->
+  <Section rule eyebrow="Who has done this" title="People who came out the other side.">
+    <SocialProof />
+  </Section>
+
+  <!-- ==================== MENTOR ==================== -->
+  <Section rule eyebrow="Who runs it" title="One person, live, for 90 minutes.">
+    <MentorCard mentor={mentor} />
+  </Section>
+
+  <!-- ==================== NEXT RUNGS ==================== -->
+  <Section
+    rule
+    id="more"
+    eyebrow="After the 90 minutes"
+    title="Looking for something more serious?"
+    lead="The workshop is complete on its own. If you want more time and more depth, this is the order it goes in."
+  >
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
+      {nextRungs.map((r) => <LadderCard rung={r} featured={r.cta.kind === 'free'} />)}
+    </div>
+
+    <div class="mt-5">
+      <HelpMeDecide client:visible />
+    </div>
+  </Section>
+
+  <!-- ==================== CROSS STRIP ==================== -->
+  <Section rule eyebrow="Other sessions" title={crossTitle} lead={crossLead}>
+    <ul class="grid gap-3 sm:grid-cols-3">
+      {
+        cross.map((c) => (
+          <li>
+            <a href={c.path} class="card card-hover group flex h-full flex-col p-4 md:p-5">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="heading-xs">{c.tool}</h3>
+                <span class="num shrink-0 text-[0.75rem] text-faint">90 min</span>
+              </div>
+              <p class="mt-2 text-[0.9375rem] leading-snug text-muted">{c.outcome}</p>
+              <div class="flex-1" aria-hidden="true" />
+              <span class="mt-4 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-accent">
+                See what you build
+                <svg class="size-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you book" title="Straight answers.">
+    <FAQ items={w.faq} />
+  </Section>
+
+  <Newsletter />
+
+  <StickyCTA
+    label={`${w.name} · 90 minutes`}
+    price="Free"
+    ctaLabel="Reserve a seat"
+    ctaHref={w.href}
+    kind="free"
+  />
+</Base>
+
+<style>
+  .hero {
+    background-color: var(--color-bg);
+  }
+
+  /* v2 art first, V1 hero underneath as a fallback: a layer that 404s is
+     transparent, so the next one shows through. */
+  .hero-art {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-position: 55% 40%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .hero-art[data-art='workshop'] {
+    background-image: url('/gen/v2/workshop-m.webp'), url('/gen/v2/workshop.webp'), url('/gen/hero-hub.webp');
+  }
+  .hero-art[data-art='coders'] {
+    background-image: url('/gen/v2/coders-m.webp'), url('/gen/v2/coders.webp'), url('/gen/hero-hub.webp');
+  }
+
+  @media (min-width: 768px) {
+    .hero-art {
+      background-position: right center;
+    }
+    .hero-art[data-art='workshop'] {
+      background-image: url('/gen/v2/workshop.webp'), url('/gen/hero-hub.webp');
+    }
+    .hero-art[data-art='coders'] {
+      background-image: url('/gen/v2/coders.webp'), url('/gen/hero-hub.webp');
+    }
+  }
+
+  /* The art is dark-left with a lit subject right; the scrim keeps the
+     headline and the info blocks above AA on both crops. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(100deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.72) 48%, rgba(10, 10, 10, 0.45) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.55) 45%, rgba(10, 10, 10, 0.9) 80%, var(--color-bg) 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, var(--color-bg) 0%, rgba(10, 10, 10, 0.92) 40%, rgba(10, 10, 10, 0.25) 70%, rgba(10, 10, 10, 0) 100%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0.5) 100%);
+    }
+  }
+</style>
+
+<script>
+  /**
+   * The page is prerendered, so the build-time "When" can go stale. Recompute
+   * it on load with the same rule the data layer uses (next 19:00 IST slot)
+   * and the same hand-rolled month names — Intl renders September as "Sept"
+   * for en-IN, and the string has to match exactly.
+   *
+   * `astro:page-load` fires on first load and after every ClientRouter
+   * navigation.
+   */
+  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const IST = 5.5 * 60 * 60 * 1000;
+
+  function refreshWhen() {
+    const now = new Date();
+    const ist = new Date(now.getTime() + IST);
+    const slot = new Date(
+      Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate(), 13, 30, 0)
+    );
+    if (slot.getTime() <= now.getTime()) slot.setUTCDate(slot.getUTCDate() + 1);
+    const s = new Date(slot.getTime() + IST);
+    const label = `${DAYS[s.getUTCDay()]}, ${s.getUTCDate()} ${MONTHS[s.getUTCMonth()]} at 7:00 PM IST`;
+    document.querySelectorAll('[data-next-session]').forEach((el) => {
+      el.textContent = label;
+    });
+  }
+
+  document.addEventListener('astro:page-load', refreshWhen);
+</script>

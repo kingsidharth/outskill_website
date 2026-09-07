@@ -9,18 +9,22 @@ import Newsletter from '../components/Newsletter.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import InfoBlocks from '../components/InfoBlocks.astro';
 import AgentLoopExplorer from '../components/islands/AgentLoopExplorer';
-import { bootcamp } from '../data/bootcamp';
+import PricingSection from '../components/PricingSection.astro';
+import WhatYouGet from '../components/WhatYouGet.astro';
+import IsThisForMe from '../components/islands/IsThisForMe';
+import { bootcamp, bootcampCommunity, bootcampBasecamp, bootcampCover, bootcampDontCover } from '../data/bootcamp';
 import { ladderBySlug } from '../data/ladder';
 import type { InfoBlock } from '../data/types';
 
 const before = ladderBySlug['mastermind'];
 const after = ladderBySlug['accelerator'];
 
+/* No amounts outside the pricing section (BRIEF-V3 §2) — Price becomes a tier. */
 const info: InfoBlock[] = [
   { label: 'Duration', value: '14 days' },
   { label: 'Format', value: 'Live sprints, evenings' },
   { label: 'Next start', value: 'At enrolment' },
-  { label: 'Price', value: '₹2,499' },
+  { label: 'Price', value: 'Paid' },
 ];
 
 /* Three outcome cards. Metrics are programme facts drawn from the sprint list
@@ -29,7 +33,7 @@ const outcomeCards = [
   {
     metric: '1 agent',
     title: 'That opens a pull request',
-    body: 'By day fourteen your agent plans a scoped task, edits a real repository, runs the tests, and puts up a PR for you to review.',
+    body: 'By day fourteen it plans a task, edits a real repo, runs tests, opens a PR.',
   },
   {
     metric: '8 sprints',
@@ -73,8 +77,7 @@ const outcomeCards = [
         </div>
 
         <p class="mt-5 hidden text-[0.9375rem] text-muted md:block">
-          <span class="text-faint line-through">₹19,999</span>
-          <span class="ml-2">₹2,499 — intro price for this cohort.</span>
+          <span>Intro price for this cohort — see pricing below.</span>
           <a href="#sprints" class="ml-2 underline-offset-4 hover:text-fg hover:underline">See the 14 days →</a>
         </p>
 
@@ -124,7 +127,7 @@ const outcomeCards = [
     id="loop"
     eyebrow="The thing you are building"
     title="The loop your agent runs on every task."
-    lead="Click a stage to see what it has to get right — and what the agent is carrying while it works."
+    lead="Click a stage to see what it must get right, and what it carries."
   >
     <AgentLoopExplorer client:visible />
   </Section>
@@ -135,7 +138,7 @@ const outcomeCards = [
     id="sprints"
     eyebrow="The 14 days"
     title="One system layer per sprint."
-    lead="Each sprint ends with something runnable, so the finished agent has a history you can explain line by line."
+    lead="Each sprint ends with something runnable. The agent has a history you can explain."
   >
     <ol class="border-t border-line">
       {
@@ -171,31 +174,23 @@ const outcomeCards = [
   <Section
     rule
     eyebrow="Who it's for"
-    title="Engineers who would rather build the tool than wait for it."
-    lead="You need programming experience and a repository you care about. No machine learning background is assumed."
+    title="Build the tool. Don't wait for it."
+    lead="Programming experience and a repo you care about. No ML background assumed."
   >
-    <div class="grid gap-8 md:grid-cols-2 md:gap-12">
-      <div>
-        <p class="label">You will be able to</p>
-        <ul class="mt-4 space-y-3">
-          {
-            bootcamp.outcomes.map((o) => (
-              <li class="flex items-start gap-3 text-[0.9375rem] md:text-base">
-                <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
-                  <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                {o}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <div>
-        <p class="label">This fits you if</p>
-        <ul class="mt-4 space-y-3">
-          {bootcamp.audience.map((a) => <li class="card px-5 py-4 text-[0.9375rem]">{a}</li>)}
-        </ul>
-      </div>
+    <div>
+      <p class="label">You will be able to</p>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-2 sm:gap-x-10">
+        {
+          bootcamp.outcomes.map((o) => (
+            <li class="flex items-start gap-3 text-[0.9375rem] md:text-base">
+              <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
+                <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {o}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </Section>
 
@@ -203,8 +198,8 @@ const outcomeCards = [
   <Section
     rule
     eyebrow="Not sure this is the right step"
-    title="The step below is free. The step above is fourteen full days."
-    lead="Trade down if you want to test the water first, or up if you can clear two weeks and want production practice."
+    title="One step down is free. One step up is longer."
+    lead="Trade down to test the water, or up for two full weeks of production practice."
   >
     <div class="grid gap-4 md:grid-cols-2 md:gap-5">
       <LadderCard rung={before} featured />
@@ -212,10 +207,92 @@ const outcomeCards = [
     </div>
   </Section>
 
-  <!-- ==================== FAQ ==================== -->
-  <Section rule eyebrow="Before you enrol" title="Straight answers.">
-    <FAQ items={bootcamp.faq} />
+  <!-- ==================== COMMUNITY ==================== -->
+  <Section rule eyebrow="The room" title="Who you build alongside.">
+    <ul>
+      {
+        bootcampCommunity.map((line, i) => (
+          <li
+            class:list={[
+              'display-md leading-tight',
+              i === bootcampCommunity.length - 1 ? 'text-accent' : 'text-fg',
+            ]}
+          >
+            {line}
+          </li>
+        ))
+      }
+    </ul>
   </Section>
+
+  <!-- ==================== PYTHON BASECAMP ==================== -->
+  <Section rule eyebrow="Before day one" title={bootcampBasecamp.title}>
+    <div class="card max-w-3xl p-5 md:p-7">
+      <p class="display-md">{bootcampBasecamp.body}</p>
+      <p class="label mt-6">Helps if you are</p>
+      <ul class="mt-3 flex flex-wrap gap-2">
+        {
+          bootcampBasecamp.helpsIf.map((h) => (
+            <li class="rounded-md border border-line px-2.5 py-1 text-[0.9375rem] text-muted">{h}</li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <!-- ==================== COVER / DON'T COVER ==================== -->
+  <Section
+    rule
+    eyebrow="Scope"
+    title="What we cover. What we don't."
+    lead="Fourteen evenings buy depth in one place, not coverage everywhere."
+  >
+    <div class="grid gap-8 md:grid-cols-2 md:gap-12">
+      <div>
+        <p class="label label-accent">We cover</p>
+        <ul class="mt-4 border-t border-line">
+          {bootcampCover.map((c) => <li class="border-b border-line py-3 text-[0.9375rem] md:text-base">{c}</li>)}
+        </ul>
+      </div>
+      <div>
+        <p class="label">We don't cover</p>
+        <ul class="mt-4 border-t border-line">
+          {
+            bootcampDontCover.map((c) => (
+              <li class="border-b border-line py-3">
+                <p class="text-[0.9375rem] md:text-base">{c.title}</p>
+                {c.nuance && <p class="mt-1 text-[0.875rem] text-muted">{c.nuance}</p>}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ==================== WHAT YOU GET ==================== -->
+  <WhatYouGet items={bootcamp.whatYouGet ?? []} />
+
+  <!-- ==================== IS THIS FOR ME ==================== -->
+  <Section
+    rule
+    eyebrow="Is this for me?"
+    title="Tick what is true. The answer updates."
+    lead="Nothing is stored. This is for you, not for us."
+  >
+    <IsThisForMe
+      client:visible
+      statements={bootcamp.isThisForMe ?? []}
+      programLabel="the Bootcamp"
+      fitAt={4}
+      fitCta={{ label: 'Enrol', href: '#register' }}
+      fallbackCta={{ label: 'See the Mastermind', href: '/mastermind' }}
+      fallbackLabel="the Mastermind"
+    />
+  </Section>
+
+  <!-- ==================== PRICING (the only amounts on this page) ========= -->
+  <PricingSection pricing={bootcamp.pricing!} programLabel="14 days · Bootcamp" />
 
   <!-- ==================== ENROL ==================== -->
   <Section
@@ -223,16 +300,10 @@ const outcomeCards = [
     id="register"
     eyebrow="Enrol"
     title="Take the seat."
-    lead="Leave your email and we'll send the schedule, the prerequisites, and the payment link for this cohort."
+    lead="Leave your email. We send the schedule, the prerequisites, and the payment link."
   >
     <div class="card max-w-2xl p-5 md:p-7">
-      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-line pb-5">
-        <span class="text-[1rem] text-faint line-through">₹19,999</span>
-        <span class="num text-[1.75rem] text-accent">₹2,499</span>
-        <span class="text-[0.9375rem] text-muted">intro price for this cohort</span>
-      </div>
-
-      <form id="register-form" data-program={bootcamp.slug} class="mt-5 flex flex-col gap-3 sm:flex-row">
+      <form id="register-form" data-program={bootcamp.slug} class="flex flex-col gap-3 sm:flex-row">
         <label for="register-email" class="sr-only">Email address</label>
         <input
           id="register-email"
@@ -252,15 +323,14 @@ const outcomeCards = [
     </div>
   </Section>
 
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you enrol" title="Straight answers.">
+    <FAQ items={bootcamp.faq} />
+  </Section>
+
   <Newsletter />
 
-  <StickyCTA
-    label="14 days · Bootcamp"
-    price="₹2,499"
-    listPrice="₹19,999"
-    ctaLabel="Enrol"
-    ctaHref="#register"
-  />
+  <StickyCTA label="14 days · Bootcamp" note="Intro price this cohort" ctaLabel="Enrol" ctaHref="#register" />
 </Base>
 
 <style>

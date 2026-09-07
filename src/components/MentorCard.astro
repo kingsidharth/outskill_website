@@ -1,0 +1,55 @@
+---
+/**
+ * Who runs the session. Photo placeholder, name, one-line credential, three
+ * bullets. Values come from `src/data/mentors.ts`, which ships a neutral
+ * "Your mentor" placeholder until the founder fills in a real person.
+ */
+import type { Mentor } from '../data/mentors';
+
+interface Props {
+  mentor: Mentor;
+}
+
+const { mentor } = Astro.props;
+---
+
+<article class="card flex flex-col gap-5 p-5 sm:flex-row sm:gap-7 md:p-7">
+  {
+    mentor.photo ? (
+      <img
+        src={mentor.photo}
+        alt={mentor.name}
+        width="96"
+        height="96"
+        loading="lazy"
+        class="size-[4.5rem] shrink-0 rounded-full object-cover sm:size-24"
+      />
+    ) : (
+      <span
+        class="flex size-[4.5rem] shrink-0 items-center justify-center rounded-full border border-dashed border-line-strong bg-surface-2 sm:size-24"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 24 24" fill="none" class="size-7 text-faint">
+          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.5" />
+          <path d="M4.5 20c1.6-3.6 4.3-5.4 7.5-5.4S18 16.4 19.5 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </span>
+    )
+  }
+
+  <div class="min-w-0">
+    <h3 class="display-md">{mentor.name}</h3>
+    <p class="mt-2 max-w-xl text-[0.9375rem] text-muted">{mentor.credential}</p>
+
+    <ul class="mt-5 grid gap-2 sm:grid-cols-3 sm:gap-5">
+      {
+        mentor.bullets.map((b) => (
+          <li class="flex gap-2.5 text-[0.9375rem] leading-snug text-muted">
+            <span class="mt-[0.55em] size-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            {b}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</article>

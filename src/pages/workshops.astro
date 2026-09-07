@@ -67,15 +67,15 @@ const audiences = [
 const faq: FAQItem[] = [
   {
     q: 'Is it really free?',
-    a: 'Yes. All five workshops are free, 90 minutes, and complete on their own. There is a paid ladder above them and you will hear that it exists.',
+    a: 'Yes. Every workshop is free, 90 minutes, and complete on its own. There is a paid ladder above them and you will hear that it exists.',
   },
   {
     q: 'How often does it run?',
     a: 'Every other day, at 7:00 PM IST, live. The date at the top of this page is the next session; if it does not fit, take the one after it.',
   },
   {
-    q: 'Which of the five should I pick?',
-    a: 'The one running the tool you already have open. Claude Code, Codex, and Copilot assume you write software. ChatGPT and AI for PMs assume you do not. About ninety per cent of the session is the same either way.',
+    q: 'Which one should I pick?',
+    a: 'The one running the tool you already have open. Claude Code, Codex, and Copilot assume you write software. ChatGPT, AI for PMs, and AI for Founders assume you do not. About ninety per cent of the session is the same either way.',
   },
   {
     q: 'What do I need before the session?',
@@ -87,14 +87,14 @@ const faq: FAQItem[] = [
   },
   {
     q: 'Where does the registration link go?',
-    a: 'To outskill.com, where the seat is booked. Per-workshop links are not live yet, so all five point at the same place for now.',
+    a: 'To outskill.com, where the seat is booked. Per-workshop links are not live yet, so they all point at the same place for now.',
   },
 ];
 ---
 
 <Base
-  title="Free 90-minute AI workshops — ChatGPT, Claude Code, Codex, Copilot, AI for PMs"
-  description="One live 90-minute session, five tools. You build one working thing while it runs. Free, every other day, 7:00 PM IST."
+  title="Free 90-minute AI workshops — ChatGPT, Claude Code, Codex, Copilot, PMs, Founders"
+  description="One live 90-minute session, six flavours. You build one working thing while it runs. Free, every other day, 7:00 PM IST."
   image="/gen/v2/workshop.webp"
   cta={{ label: 'Reserve a seat', href: registerHref }}
 >
@@ -108,7 +108,7 @@ const faq: FAQItem[] = [
         <p class="eyebrow">Free · 90 minutes · Live</p>
         <h1 class="display-xl mt-3">Build one working thing before the 90 minutes are up.</h1>
         <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">
-          Same session, five flavours. Pick the tool you already use.
+          Same session, six flavours. Pick the one you already use.
         </p>
 
         <!-- Info blocks. "Next session" is an island because this page is
@@ -175,12 +175,36 @@ const faq: FAQItem[] = [
   <!-- ==================== SWITCHER ==================== -->
   <Section
     id="pick"
-    eyebrow="Step 0 · Five flavours"
+    eyebrow="Step 0 · Six flavours"
     class="scroll-mt-16"
     title="Choose the tool, not the syllabus."
     lead="About ninety per cent of the session is identical. What changes is what is on your screen — so pick the thing you already have open."
   >
     <WorkshopSwitcher client:idle variants={variants} />
+
+    <p class="label mt-10">One page each</p>
+    <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        workshops.map((w) => (
+          <li>
+            <a href={w.path} class="card card-hover group flex h-full flex-col p-4 md:p-5">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="heading-xs">{w.tool}</h3>
+                <span class="shrink-0 text-[0.8125rem] text-faint">{w.tag}</span>
+              </div>
+              <p class="mt-2 text-[0.9375rem] leading-snug text-muted">{w.outcome}</p>
+              <div class="flex-1" aria-hidden="true" />
+              <span class="mt-4 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-accent">
+                See what you build
+                <svg class="size-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </Section>
 
   <!-- ==================== HOW IT RUNS ==================== -->

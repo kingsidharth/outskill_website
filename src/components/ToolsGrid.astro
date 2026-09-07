@@ -1,0 +1,19 @@
+---
+/**
+ * Compact chip grid of tool names. Supporting detail, never a headline
+ * (BRIEF-V3 §4). An optional `note` sits above the chips.
+ */
+interface Props { tools: string[]; note?: string }
+const { tools, note } = Astro.props;
+---
+
+<div>
+  {note && <p class="max-w-2xl text-[1rem] leading-relaxed text-muted md:text-[1.0625rem]">{note}</p>}
+  <ul class:list={['flex flex-wrap gap-2', note && 'mt-6']}>
+    {
+      tools.map((t) => (
+        <li class="rounded-sm border border-line bg-surface px-3 py-1.5 text-[0.8125rem] text-muted">{t}</li>
+      ))
+    }
+  </ul>
+</div>

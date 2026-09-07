@@ -1,0 +1,37 @@
+---
+/**
+ * The free pre-programme session, with an honest "helps if" list.
+ * Generic enough for any program that ships a warm-up (BRIEF-V3 §4, §5).
+ */
+interface Props {
+  title: string;
+  body: string;
+  helpsIf: string[];
+  badge?: string;
+  helpsLabel?: string;
+}
+const { title, body, helpsIf, badge = 'Free', helpsLabel = 'Helps if' } = Astro.props;
+---
+
+<div class="card p-6 md:p-9">
+  <div class="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
+    <div>
+      <p class="label text-accent">{badge}</p>
+      <h3 class="display-md mt-2">{title}</h3>
+      <p class="mt-4 max-w-md text-[1rem] leading-relaxed text-muted md:text-[1.0625rem]">{body}</p>
+    </div>
+    <div>
+      <p class="label text-muted">{helpsLabel}</p>
+      <ul class="mt-4 grid gap-2.5">
+        {
+          helpsIf.map((h) => (
+            <li class="flex items-start gap-3 text-[0.9375rem] leading-snug">
+              <span class="mt-[0.4rem] inline-block size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+              <span>{h}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>

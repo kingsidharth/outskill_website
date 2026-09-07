@@ -9,7 +9,7 @@ interface Props {
   programLabel: string;
   /** Threshold (inclusive) at which the program "fits". Default: ceil(n/2). */
   fitAt?: number;
-  fitCta: { label: string; href: string };
+  fitCta: { label: string; href: string; kind?: 'buy' | 'apply' | 'free' };
   fallbackCta: { label: string; href: string };
   fallbackLabel?: string;
 }
@@ -59,7 +59,7 @@ export default function IsThisForMe({ statements, programLabel, fitAt, fitCta, f
         {touched && (
           <a
             href={fits ? fitCta.href : fallbackCta.href}
-            className={`btn btn-sm w-full sm:w-auto ${fits ? 'btn-accent' : 'btn-ghost'}`}
+            className={`btn btn-sm w-full sm:w-auto ${fits && fitCta.kind !== 'apply' ? 'btn-accent' : 'btn-ghost'}`}
           >
             {fits ? fitCta.label : fallbackCta.label}
           </a>

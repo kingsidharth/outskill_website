@@ -9,30 +9,34 @@ import Newsletter from '../components/Newsletter.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import InfoBlocks from '../components/InfoBlocks.astro';
 import CurriculumExplorer from '../components/islands/CurriculumExplorer';
-import { fellowship } from '../data/fellowship';
+import PricingSection from '../components/PricingSection.astro';
+import WhatYouGet from '../components/WhatYouGet.astro';
+import IsThisForMe from '../components/islands/IsThisForMe';
+import { fellowship, fellowshipCommunity, fellowshipCover, fellowshipDontCover } from '../data/fellowship';
 import { ladderBySlug } from '../data/ladder';
 import type { InfoBlock } from '../data/types';
 
 const before = ladderBySlug['accelerator'];
 const lighter = ladderBySlug['bootcamp'];
 
+/* No amounts outside the pricing section (BRIEF-V3 §2) — Price becomes a tier. */
 const info: InfoBlock[] = [
   { label: 'Duration', value: '6 months' },
   { label: 'Format', value: 'Weekends, live' },
   { label: 'Next start', value: 'On selection' },
-  { label: 'Price', value: '₹2,00,000' },
+  { label: 'Price', value: 'By application' },
 ];
 
 const phases = [
   {
     label: 'Months 1–4',
     title: 'Six levels of learning',
-    body: 'Foundations and maths, LLM theory, forward-deployed field skills, then implementation — retrieval, agents, and the infrastructure under them. Fine-tuning and architecture arrive last, once there is somewhere for them to land.',
+    body: 'Foundations, LLM theory, field skills, then implementation. Fine-tuning and architecture arrive last.',
   },
   {
     label: 'Months 5–6',
     title: 'One capstone, supervised',
-    body: 'Two months building a single system with review: scoped with a real user in mind, evaluated against what they needed, and defended in front of people who will push back.',
+    body: 'One system, scoped for a real user, evaluated against what they needed, and defended.',
   },
 ];
 
@@ -86,7 +90,7 @@ const outcomeCards = [
         </div>
 
         <p class="mt-5 hidden text-[0.9375rem] text-muted md:block">
-          ₹2,00,000. Application only — reviewed in 48 hours.
+          Application only — reviewed in 48 hours.
           <a href="#curriculum" class="ml-2 underline-offset-4 hover:text-fg hover:underline">See the six levels →</a>
         </p>
 
@@ -114,7 +118,7 @@ const outcomeCards = [
   <!-- ==================== OUTCOMES ==================== -->
   <Section
     eyebrow="What you leave with"
-    title="A system you built, and the depth to argue for it."
+    title="A system you built. The depth to defend it."
     lead="Six months is long enough to stop copying patterns and start choosing between them."
   >
     <div class="grid gap-4 md:grid-cols-3 md:gap-5">
@@ -135,8 +139,8 @@ const outcomeCards = [
     rule
     id="curriculum"
     eyebrow="The six levels"
-    title="Open a level to see the theory, the skills, and what you build."
-    lead="Levels 4 and 5 — fine-tuning and architecture — come after the earlier ones, because they are only useful once you have shipped without them."
+    title="Open a level. Theory, skills, and what you build."
+    lead="Fine-tuning and architecture come last — they only help once you have shipped without them."
   >
     <CurriculumExplorer client:visible levels={fellowship.levels ?? []} />
   </Section>
@@ -146,7 +150,7 @@ const outcomeCards = [
     rule
     eyebrow="How the six months split"
     title="Four months learning. Two months building."
-    lead="The second half is not a project week bolted on the end. It is a third of the programme."
+    lead="Not a project week bolted on the end. It is a third of the programme."
   >
     <div class="grid gap-4 md:grid-cols-2 md:gap-5">
       {
@@ -185,30 +189,22 @@ const outcomeCards = [
     rule
     eyebrow="Who it's for"
     title="People playing a longer game than one cohort."
-    lead="Programming experience is expected. A machine learning background is not — level 0 builds it."
+    lead="Programming experience is expected. An ML background is not — level 0 builds it."
   >
-    <div class="grid gap-8 md:grid-cols-2 md:gap-12">
-      <div>
-        <p class="label">You will be able to</p>
-        <ul class="mt-4 space-y-3">
-          {
-            fellowship.outcomes.map((o) => (
-              <li class="flex items-start gap-3 text-[0.9375rem] md:text-base">
-                <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
-                  <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                {o}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <div>
-        <p class="label">This fits you if</p>
-        <ul class="mt-4 space-y-3">
-          {fellowship.audience.map((a) => <li class="card px-5 py-4 text-[0.9375rem]">{a}</li>)}
-        </ul>
-      </div>
+    <div>
+      <p class="label">You will be able to</p>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-2 sm:gap-x-10">
+        {
+          fellowship.outcomes.map((o) => (
+            <li class="flex items-start gap-3 text-[0.9375rem] md:text-base">
+              <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
+                <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {o}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </Section>
 
@@ -216,7 +212,7 @@ const outcomeCards = [
   <Section
     rule
     eyebrow="If six months is too much"
-    title="This is the last step. The ones under it are shorter and cheaper."
+    title="This is the last step. The ones below are shorter."
     lead="There is nothing above the Fellowship. If the commitment is wrong, trade down rather than wait."
   >
     <div class="grid gap-4 md:grid-cols-2 md:gap-5">
@@ -225,10 +221,81 @@ const outcomeCards = [
     </div>
   </Section>
 
-  <!-- ==================== FAQ ==================== -->
-  <Section rule eyebrow="Before you apply" title="Straight answers.">
-    <FAQ items={fellowship.faq} />
+  <!-- ==================== COMMUNITY ==================== -->
+  <Section rule eyebrow="The room" title="Who you spend six months with.">
+    <ul>
+      {
+        fellowshipCommunity.map((line, i) => (
+          <li
+            class:list={[
+              'display-md leading-tight',
+              i === fellowshipCommunity.length - 1 ? 'text-accent' : 'text-fg',
+            ]}
+          >
+            {line}
+          </li>
+        ))
+      }
+    </ul>
   </Section>
+
+  <!-- ==================== COVER / DON'T COVER ==================== -->
+  <Section
+    rule
+    eyebrow="Scope"
+    title="What we cover. What we don't."
+    lead="Six months is long. It is still not everything — here is the line."
+  >
+    <div class="grid gap-8 md:grid-cols-2 md:gap-12">
+      <div>
+        <p class="label label-accent">We cover</p>
+        <ul class="mt-4 border-t border-line">
+          {fellowshipCover.map((c) => <li class="border-b border-line py-3 text-[0.9375rem] md:text-base">{c}</li>)}
+        </ul>
+      </div>
+      <div>
+        <p class="label">We don't cover</p>
+        <ul class="mt-4 border-t border-line">
+          {
+            fellowshipDontCover.map((c) => (
+              <li class="border-b border-line py-3">
+                <p class="text-[0.9375rem] md:text-base">{c.title}</p>
+                {c.nuance && <p class="mt-1 text-[0.875rem] text-muted">{c.nuance}</p>}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ==================== WHAT YOU GET ==================== -->
+  <WhatYouGet items={fellowship.whatYouGet ?? []} />
+
+  <!-- ==================== IS THIS FOR ME ==================== -->
+  <Section
+    rule
+    eyebrow="Is this for me?"
+    title="Tick what is true. The answer updates."
+    lead="Nothing is stored. This is for you, not for us."
+  >
+    <IsThisForMe
+      client:visible
+      statements={fellowship.isThisForMe ?? []}
+      programLabel="the Fellowship"
+      fitAt={4}
+      fitCta={{ label: 'Apply now', href: '#apply' }}
+      fallbackCta={{ label: 'See the Mastermind', href: '/mastermind' }}
+      fallbackLabel="the Mastermind"
+    />
+  </Section>
+
+  <!-- ==================== PRICING (the only amounts on this page) ========= -->
+  <PricingSection
+    pricing={fellowship.pricing!}
+    programLabel="6 months, weekends · Fellowship"
+    title="One number. Application first."
+  />
 
   <!-- ==================== APPLY ==================== -->
   <Section
@@ -236,15 +303,10 @@ const outcomeCards = [
     id="apply"
     eyebrow="Apply"
     title="Start your application."
-    lead="Leave your email and the team comes back within 48 hours with fit, the weekend schedule, and the payment path."
+    lead="Leave your email. The team comes back in 48 hours with fit, schedule and next steps."
   >
     <div class="card max-w-2xl p-5 md:p-7">
-      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-line pb-5">
-        <span class="num text-[1.75rem] text-accent">₹2,00,000</span>
-        <span class="text-[0.9375rem] text-muted">application only — nothing is charged here</span>
-      </div>
-
-      <form id="register-form" data-program={fellowship.slug} class="mt-5 flex flex-col gap-3 sm:flex-row">
+      <form id="register-form" data-program={fellowship.slug} class="flex flex-col gap-3 sm:flex-row">
         <label for="register-email" class="sr-only">Email address</label>
         <input
           id="register-email"
@@ -264,12 +326,17 @@ const outcomeCards = [
     </div>
   </Section>
 
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you apply" title="Straight answers.">
+    <FAQ items={fellowship.faq} />
+  </Section>
+
   <Newsletter />
 
   <StickyCTA
-    kind=\"apply\"
+    kind="apply"
     label="6 months, weekends · Fellowship"
-    price="₹2,00,000"
+    note="By application"
     ctaLabel="Apply now"
     ctaHref="#apply"
   />
