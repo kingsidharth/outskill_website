@@ -51,7 +51,7 @@ export const mastermind: Program = {
   slug: 'mastermind',
   name: '2-Day AI Engineering Mastermind',
   eyebrow: 'Free · Live · This weekend',
-  headline: 'We demo the behind-the-scenes, common to uncommon.',
+  headline: 'We'll show you the behind-the-scenes, common to uncommon.',
   subhead: 'Two days, live. You build the loop yourself and leave with three demos that run.',
   ctaLabel: 'Claim your free seat',
   ctaHref: '#register',
