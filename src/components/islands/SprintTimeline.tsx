@@ -19,8 +19,10 @@ export default function SprintTimeline({ sprints }: Props) {
 
   const select = useCallback((n: number) => {
     setSelected((prev) => (prev === n ? null : n));
-    scrollTo(n - 1);
-  }, [scrollTo]);
+    // Sprint numbers start at 0, so the child index is the position in the
+    // array, not `n - 1`. Matches what the keyboard handler already does.
+    scrollTo(sprints.findIndex((s) => s.n === n));
+  }, [scrollTo, sprints]);
 
   const handleKey = useCallback((e: React.KeyboardEvent) => {
     if (selected === null) return;
@@ -65,7 +67,7 @@ export default function SprintTimeline({ sprints }: Props) {
   return (
     <div
       ref={listRef}
-      className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:flex-col md:snap-none md:overflow-x-visible"
+      className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pb-4 md:flex-col md:snap-none md:items-stretch md:overflow-x-visible"
       role="listbox"
       aria-label="Sprint timeline"
       tabIndex={0}
@@ -77,19 +79,19 @@ export default function SprintTimeline({ sprints }: Props) {
             key={sprint.n}
             role="option"
             aria-selected={isOpen}
-            className={`snap-start shrink-0 w-[85vw] md:w-full card p-4 sm:p-5 transition-colors cursor-pointer ${
-              isOpen ? 'border-accent' : 'hover:border-fg/25'
+            className={`snap-start shrink-0 w-[85vw] md:w-full card card-hover cursor-pointer p-4 md:p-5 ${
+              isOpen ? 'border-accent bg-surface-2' : ''
             }`}
             onClick={() => select(sprint.n)}
             onKeyDown={handleKey}
           >
             <div className="flex items-center gap-3">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs font-medium text-muted">
+              <span className="num flex size-8 shrink-0 items-center justify-center rounded-md border border-line bg-bg text-[0.8125rem] text-muted">
                 {sprint.n}
               </span>
               <div className="min-w-0">
-                <p className="font-medium truncate">{sprint.title}</p>
-                <p className="font-label text-xs text-muted">{sprint.days}</p>
+                <p className="heading-xs truncate">{sprint.title}</p>
+                <p className="label mt-0.5">{sprint.days}</p>
               </div>
               <svg
                 className={`ml-auto size-4 shrink-0 text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
@@ -104,24 +106,24 @@ export default function SprintTimeline({ sprints }: Props) {
             {isOpen && (
               <div className="mt-4 space-y-3 border-t border-line pt-4">
                 <div>
-                  <p className="font-label text-xs text-accent">Focus</p>
-                  <p className="mt-1 text-sm">{sprint.focus}</p>
+                  <p className="label label-accent">Focus</p>
+                  <p className="mt-1 text-[0.9375rem]">{sprint.focus}</p>
                 </div>
                 <div>
-                  <p className="font-label text-xs text-accent">Learn</p>
+                  <p className="label label-accent">Learn</p>
                   <ul className="mt-1 space-y-0.5">
                     {sprint.learn.map((item, i) => (
-                      <li key={i} className="text-sm text-muted before:mr-2 before:text-accent before:content-['▸']">{item}</li>
+                      <li key={i} className="text-[0.9375rem] text-muted before:mr-2 before:text-accent before:content-['▸']">{item}</li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <p className="font-label text-xs text-accent">Ship</p>
-                  <p className="mt-1 text-sm">{sprint.ship}</p>
+                  <p className="label label-accent">Ship</p>
+                  <p className="mt-1 text-[0.9375rem]">{sprint.ship}</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {sprint.tools.map((tool, i) => (
-                    <span key={i} className="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">{tool}</span>
+                    <span key={i} className="rounded-md border border-line px-2.5 py-0.5 text-[0.8125rem] text-muted">{tool}</span>
                   ))}
                 </div>
               </div>

@@ -1,0 +1,229 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import LadderCard from '../components/LadderCard.astro';
+import FAQ from '../components/FAQ.astro';
+import Newsletter from '../components/Newsletter.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import NextSession from '../components/islands/NextSession.tsx';
+import { nextWorkshopSession, formatIST, WORKSHOP_TIME } from '../data/workshops';
+import { vibeHero, vibeLadder, vibeOutcomes, vibeNeeds, vibeFaq } from '../data/vibe';
+
+const nextSession = formatIST(nextWorkshopSession());
+---
+
+<Base
+  title="For vibe coders — build something people can click, in 90 free minutes"
+  description="Build with AI tools and little or no code. Start with the free 90-minute ChatGPT workshop and leave with one working thing."
+  image="/gen/v2/vibe.webp"
+  cta={{ label: 'Reserve a seat', href: vibeHero.cta.href }}
+>
+  <!-- ==================== HERO ==================== -->
+  <section class="hero grain relative isolate overflow-hidden border-b border-line">
+    <div class="hero-art" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="wrap relative z-10 pt-12 pb-10 md:pt-24 md:pb-20">
+      <div class="max-w-[36rem] lg:max-w-[42rem]">
+        <p class="eyebrow">{vibeHero.eyebrow}</p>
+        <h1 class="display-xl mt-3">{vibeHero.headline}</h1>
+        <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">{vibeHero.subhead}</p>
+
+        <!-- Mobile: info blocks above a full-width button. The "Next session"
+             value is an island — this page is prerendered, so a build-time
+             date would go stale within days. -->
+        <div class="mt-7 md:hidden">
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-4">
+            <div class="col-span-2">
+              <dt class="text-[0.8125rem] text-muted">Next session</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">
+                <NextSession client:idle fallback={nextSession} time={WORKSHOP_TIME} />
+              </dd>
+            </div>
+            {
+              vibeHero.info.map((item) => (
+                <div>
+                  <dt class="text-[0.8125rem] text-muted">{item.label}</dt>
+                  <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">{item.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <a href={vibeHero.cta.href} class="btn btn-accent btn-block mt-5">{vibeHero.cta.label}</a>
+          <a href={vibeHero.secondary.href} class="btn btn-ghost btn-block mt-2.5">{vibeHero.secondary.label}</a>
+        </div>
+
+        <!-- Desktop: button, vertical rule, info blocks alongside. -->
+        <div class="mt-9 hidden items-center gap-6 md:flex">
+          <a href={vibeHero.cta.href} class="btn btn-accent shrink-0">{vibeHero.cta.label}</a>
+          <dl class="flex flex-wrap gap-x-8 gap-y-4 border-l border-line-strong pl-5">
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Next session</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">
+                <NextSession client:idle fallback={nextSession} time={WORKSHOP_TIME} />
+              </dd>
+            </div>
+            {
+              vibeHero.info.map((item) => (
+                <div>
+                  <dt class="text-[0.8125rem] text-muted">{item.label}</dt>
+                  <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">{item.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <a
+          href={vibeHero.secondary.href}
+          class="mt-5 hidden text-[0.9375rem] text-muted underline-offset-4 hover:text-fg hover:underline md:inline-block"
+        >
+          {vibeHero.secondary.label} →
+        </a>
+
+        <dl class="mt-10 flex gap-6 border-t border-line pt-6 md:mt-12 md:gap-10">
+          {
+            vibeHero.stats.map((s) => (
+              <div>
+                <dt class="sr-only">{s.label}</dt>
+                <dd>
+                  <span class="font-display block text-[1.75rem] font-bold leading-none md:text-[2.125rem]">{s.value}</span>
+                  <span class="mt-0.5 block text-[0.8125rem] text-muted">{s.label}</span>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== OUTCOMES ==================== -->
+  <Section
+    eyebrow="What you leave with"
+    title="Three things, all of which run."
+    lead="Not notes, not a certificate. Something you can open on Monday and hand to somebody else."
+  >
+    <div class="grid gap-4 md:grid-cols-3 md:gap-5">
+      {
+        vibeOutcomes.map((o) => (
+          <article class="card flex flex-col p-5 md:p-7">
+            <h3 class="display-md">{o.title}</h3>
+            <p class="mt-4 text-[0.9375rem] leading-relaxed text-muted md:text-base">{o.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ==================== LADDER (non-coder rungs) ==================== -->
+  <Section
+    id="ladder"
+    rule
+    eyebrow="Where to start"
+    title="Both free steps, then a weekend."
+    lead="You do not need to write code for any of these. Each one leads with the hours and the price, because that is the part you have to find first."
+  >
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
+      {vibeLadder.map((r) => <LadderCard rung={r} featured={r.price.current === 'Free'} />)}
+
+      <aside class="card flex flex-col justify-center border-dashed p-5 md:p-7">
+        <p class="heading-sm">When you are ready to write code</p>
+        <p class="mt-2 text-[0.9375rem] text-muted">
+          The moment your prototype needs real data, payments, or other people depending on it, the ladder
+          keeps going — Bootcamp, Accelerator, Fellowship. Those assume you write software.
+        </p>
+        <a href="/coders" class="btn btn-ghost btn-sm mt-5 self-start">See the coder track</a>
+      </aside>
+    </div>
+  </Section>
+
+  <!-- ==================== WHAT YOU NEED ==================== -->
+  <Section
+    rule
+    eyebrow="What you need"
+    title="A laptop and an account. That is the whole list."
+    lead="Setup is not part of the 90 minutes, so the only thing to do beforehand is sign in."
+  >
+    <ul class="max-w-3xl border-t border-line">
+      {
+        vibeNeeds.map((n) => (
+          <li class="flex gap-4 border-b border-line py-5">
+            <span class="mt-[0.6em] size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            <span class="text-[1.0625rem] leading-snug">{n}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="card mt-8 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between md:p-6">
+      <div>
+        <p class="label">Next session</p>
+        <p class="mt-1 text-[1.25rem]">
+          <NextSession client:visible fallback={nextSession} time={WORKSHOP_TIME} />
+        </p>
+      </div>
+      <a href={vibeHero.cta.href} class="btn btn-accent w-full shrink-0 sm:w-auto">Reserve a seat</a>
+    </div>
+  </Section>
+
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you book" title="Straight answers.">
+    <FAQ items={vibeFaq} />
+  </Section>
+
+  <Newsletter />
+
+  <StickyCTA
+    label="90-minute workshop · live"
+    price="Free"
+    ctaLabel="Reserve a seat"
+    ctaHref={vibeHero.cta.href}
+  />
+</Base>
+
+<style>
+  .hero {
+    background-color: var(--color-bg);
+  }
+
+  /* v2 art first, V1 hero underneath as a fallback: a layer that 404s is
+     transparent, so the next one shows through. */
+  .hero-art {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: url('/gen/v2/vibe-m.webp'), url('/gen/v2/vibe.webp'), url('/gen/hero-hub.webp');
+    background-position: 40% 38%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 768px) {
+    .hero-art {
+      background-image: url('/gen/v2/vibe.webp'), url('/gen/hero-hub.webp');
+      background-position: right center;
+    }
+  }
+
+  /* This artwork has a pale slab on the right and a light floor along the
+     bottom, so both scrims are a touch heavier than the homepage's. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(100deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.78) 45%, rgba(10, 10, 10, 0.48) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.58) 45%, rgba(10, 10, 10, 0.92) 78%, var(--color-bg) 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, var(--color-bg) 0%, rgba(10, 10, 10, 0.94) 42%, rgba(10, 10, 10, 0.35) 70%, rgba(10, 10, 10, 0) 100%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0.58) 100%);
+    }
+  }
+</style>

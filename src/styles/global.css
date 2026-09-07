@@ -164,6 +164,7 @@ a { color: inherit; }
 .btn-paper:hover { background: #fff; }
 .btn-sm { padding: 0.5rem 0.9375rem; font-size: 0.875rem; }
 .btn-block { display: flex; width: 100%; }
+@media (min-width: 40rem) { .btn-block.sm\:w-auto { width: auto; display: inline-flex; } }
 
 /* ==========================================================================
    Surfaces

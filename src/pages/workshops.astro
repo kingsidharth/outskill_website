@@ -1,0 +1,302 @@
+---
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import FAQ from '../components/FAQ.astro';
+import Newsletter from '../components/Newsletter.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import NextSession from '../components/islands/NextSession.tsx';
+import WorkshopSwitcher from '../components/islands/WorkshopSwitcher.tsx';
+import { workshops, nextWorkshopSession, formatIST, WORKSHOP_TIME } from '../data/workshops';
+import type { FAQItem } from '../data/types';
+
+const nextSession = formatIST(nextWorkshopSession());
+const registerHref = workshops[0].href;
+
+// The switcher needs plain data across the island boundary.
+const variants = workshops.map((w) => ({
+  slug: w.slug,
+  tool: w.tool,
+  tag: w.tag,
+  outcome: w.outcome,
+  build: [...w.build],
+  needs: w.needs,
+  href: w.href,
+}));
+
+const steps = [
+  {
+    n: '1',
+    title: 'Pick the one thing',
+    body: 'You bring a task from your own week. It gets cut down to something that can realistically finish inside the session.',
+  },
+  {
+    n: '2',
+    title: 'Build it, live',
+    body: 'You work in the tool while the session runs. Questions get answered when you hit the wall, not saved for the end.',
+  },
+  {
+    n: '3',
+    title: 'Check what it did',
+    body: 'The last stretch is review: where the model guessed, what you would not ship, and what to change before you use it on Monday.',
+  },
+];
+
+const audiences = [
+  {
+    title: 'You write code professionally',
+    body: 'Take Claude Code, Codex, or Copilot. Same 90 minutes, run against your own repo — you hand over a real ticket and review the diff.',
+    href: '/coders',
+    cta: 'See the coder track',
+  },
+  {
+    title: 'You build without writing code',
+    body: 'Take ChatGPT. You describe the job you do every week and leave with an assistant that does it, checked by you.',
+    href: '/vibe-coders',
+    cta: 'See the vibe coder track',
+  },
+  {
+    title: 'You run product, not the repo',
+    body: 'Take AI for PMs. A spec you are stuck on goes in; a clickable prototype your engineers can argue with comes out.',
+    href: '#pick',
+    cta: 'Pick AI for PMs',
+  },
+];
+
+const faq: FAQItem[] = [
+  {
+    q: 'Is it really free?',
+    a: 'Yes. All five workshops are free, 90 minutes, and complete on their own. There is a paid ladder above them and you will hear that it exists.',
+  },
+  {
+    q: 'How often does it run?',
+    a: 'Every other day, at 7:00 PM IST, live. The date at the top of this page is the next session; if it does not fit, take the one after it.',
+  },
+  {
+    q: 'Which of the five should I pick?',
+    a: 'The one running the tool you already have open. Claude Code, Codex, and Copilot assume you write software. ChatGPT and AI for PMs assume you do not. About ninety per cent of the session is the same either way.',
+  },
+  {
+    q: 'What do I need before the session?',
+    a: 'A laptop, an account in the tool, and one real task of your own. Setup is not part of the 90 minutes, so do the account bit beforehand.',
+  },
+  {
+    q: 'Is there a recording?',
+    a: 'Yes, sent afterwards. It is worth having, but you build during the session — watching later is not the same session.',
+  },
+  {
+    q: 'Where does the registration link go?',
+    a: 'To outskill.com, where the seat is booked. Per-workshop links are not live yet, so all five point at the same place for now.',
+  },
+];
+---
+
+<Base
+  title="Free 90-minute AI workshops — ChatGPT, Claude Code, Codex, Copilot, AI for PMs"
+  description="One live 90-minute session, five tools. You build one working thing while it runs. Free, every other day, 7:00 PM IST."
+  image="/gen/v2/workshop.webp"
+  cta={{ label: 'Reserve a seat', href: registerHref }}
+>
+  <!-- ==================== HERO ==================== -->
+  <section class="hero grain relative isolate overflow-hidden border-b border-line">
+    <div class="hero-art" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="wrap relative z-10 pt-12 pb-10 md:pt-24 md:pb-20">
+      <div class="max-w-[36rem] lg:max-w-[42rem]">
+        <p class="eyebrow">Free · 90 minutes · Live</p>
+        <h1 class="display-xl mt-3">Build one working thing before the 90 minutes are up.</h1>
+        <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">
+          Same session, five flavours. Pick the tool you already use.
+        </p>
+
+        <!-- Info blocks. "Next session" is an island because this page is
+             prerendered and a build-time date goes stale within days. -->
+        <div class="mt-7 md:hidden">
+          <dl class="grid grid-cols-3 gap-x-5 gap-y-4">
+            <div class="col-span-3">
+              <dt class="text-[0.8125rem] text-muted">Next session</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">
+                <NextSession client:idle fallback={nextSession} time={WORKSHOP_TIME} />
+              </dd>
+            </div>
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Duration</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">90 minutes</dd>
+            </div>
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Format</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">Live online</dd>
+            </div>
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Price</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">Free</dd>
+            </div>
+          </dl>
+          <a href={registerHref} class="btn btn-accent btn-block mt-5">Reserve a seat</a>
+          <a href="#pick" class="btn btn-ghost btn-block mt-2.5">Pick your tool</a>
+        </div>
+
+        <div class="mt-9 hidden items-center gap-6 md:flex">
+          <a href={registerHref} class="btn btn-accent shrink-0">Reserve a seat</a>
+          <dl class="flex flex-wrap gap-x-8 gap-y-4 border-l border-line-strong pl-5">
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Next session</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">
+                <NextSession client:idle fallback={nextSession} time={WORKSHOP_TIME} />
+              </dd>
+            </div>
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Duration</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">90 minutes</dd>
+            </div>
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Format</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">Live online</dd>
+            </div>
+            <div>
+              <dt class="text-[0.8125rem] text-muted">Price</dt>
+              <dd class="mt-0.5 text-[0.9375rem] font-semibold text-fg">Free</dd>
+            </div>
+          </dl>
+        </div>
+
+        <a
+          href="#pick"
+          class="mt-5 hidden text-[0.9375rem] text-muted underline-offset-4 hover:text-fg hover:underline md:inline-block"
+        >
+          Pick your tool →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SWITCHER ==================== -->
+  <Section
+    id="pick"
+    eyebrow="Step 0 · Five flavours"
+    class="scroll-mt-16"
+    title="Choose the tool, not the syllabus."
+    lead="About ninety per cent of the session is identical. What changes is what is on your screen — so pick the thing you already have open."
+  >
+    <WorkshopSwitcher client:idle variants={variants} />
+  </Section>
+
+  <!-- ==================== HOW IT RUNS ==================== -->
+  <Section
+    rule
+    eyebrow="How the 90 minutes run"
+    title="Scope it, build it, check what it did."
+    lead="There is no lecture block. You are working in the tool for most of the session."
+  >
+    <ol class="grid gap-4 md:grid-cols-3 md:gap-5">
+      {
+        steps.map((s) => (
+          <li class="card flex flex-col p-5 md:p-7">
+            <p class="label">Step {s.n}</p>
+            <h3 class="heading-sm mt-4">{s.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="card mt-4 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between md:mt-5 md:p-6">
+      <div>
+        <p class="label">Next session</p>
+        <p class="mt-1 text-[1.25rem]">
+          <NextSession client:visible fallback={nextSession} time={WORKSHOP_TIME} />
+        </p>
+      </div>
+      <p class="text-[0.9375rem] text-muted sm:max-w-sm">
+        Runs every other day. If that date does not fit your week, take the one after it — the session is the
+        same and the seat is still free.
+      </p>
+    </div>
+  </Section>
+
+  <!-- ==================== WHO IT IS FOR ==================== -->
+  <Section
+    rule
+    eyebrow="Who it is for"
+    title="Three kinds of people show up. All three build something."
+    lead="The tool you pick says more about your job than your skill level does."
+  >
+    <div class="grid gap-4 md:grid-cols-3 md:gap-5">
+      {
+        audiences.map((a) => (
+          <a href={a.href} class="card card-hover group flex flex-col p-5 md:p-7">
+            <h3 class="heading-sm">{a.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{a.body}</p>
+            <div class="flex-1" aria-hidden="true" />
+            <span class="mt-6 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-accent">
+              {a.cta}
+              <svg class="size-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you book" title="Straight answers.">
+    <FAQ items={faq} />
+  </Section>
+
+  <Newsletter />
+
+  <StickyCTA
+    label="90-minute workshop · live"
+    price="Free"
+    ctaLabel="Reserve a seat"
+    ctaHref={registerHref}
+  />
+</Base>
+
+<style>
+  .hero {
+    background-color: var(--color-bg);
+  }
+
+  /* v2 art first, V1 hero underneath as a fallback: a layer that 404s is
+     transparent, so the next one shows through. */
+  .hero-art {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: url('/gen/v2/workshop-m.webp'), url('/gen/v2/workshop.webp'), url('/gen/hero-hub.webp');
+    background-position: 55% 40%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 768px) {
+    .hero-art {
+      background-image: url('/gen/v2/workshop.webp'), url('/gen/hero-hub.webp');
+      background-position: right center;
+    }
+  }
+
+  /* The art is dark-left with a lit subject right; the scrim keeps the
+     headline and the info blocks above AA on both crops. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(100deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.7) 48%, rgba(10, 10, 10, 0.4) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.5) 45%, rgba(10, 10, 10, 0.88) 80%, var(--color-bg) 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, var(--color-bg) 0%, rgba(10, 10, 10, 0.92) 40%, rgba(10, 10, 10, 0.25) 70%, rgba(10, 10, 10, 0) 100%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0.5) 100%);
+    }
+  }
+</style>

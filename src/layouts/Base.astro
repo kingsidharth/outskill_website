@@ -12,9 +12,10 @@ interface Props {
   image?: string;
   /** Overrides the header button for this page. Falls back to site.primaryCta. */
   cta?: NavLink;
+  ctaKind?: 'buy' | 'apply' | 'free';
 }
 
-const { title, description, image, cta } = Astro.props;
+const { title, description, image, cta, ctaKind } = Astro.props;
 const siteUrl = Astro.site ?? 'https://outskill.com';
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = image ? new URL(image, siteUrl).href : undefined;
@@ -54,7 +55,7 @@ const ogImage = image ? new URL(image, siteUrl).href : undefined;
     >
       Skip to content
     </a>
-    <Nav cta={cta} />
+    <Nav cta={cta} ctaKind={ctaKind} />
     <main id="main">
       <slot />
     </main>

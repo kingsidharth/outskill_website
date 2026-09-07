@@ -47,17 +47,17 @@ export default function CurriculumExplorer({ levels }: Props) {
             tabIndex={active === i ? 0 : -1}
             onClick={() => setActive(i)}
             onKeyDown={(e) => onKeyDown(e, i)}
-            className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+            className={`btn btn-sm inline-flex items-center gap-2 border ${
               active === i
                 ? 'border-accent bg-accent text-accent-ink'
-                : 'border-line bg-surface text-fg hover:border-muted'
+                : 'border-line bg-surface text-fg hover:border-line-strong hover:bg-surface-2'
             }`}
           >
             Level {l.n}
             {l.later && (
               <span
-                className={`rounded-full px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide uppercase ${
-                  active === i ? 'bg-accent-ink/15 text-accent-ink' : 'bg-accent/15 text-accent'
+                className={`rounded-sm px-1.5 py-0.5 text-[0.75rem] font-semibold uppercase ${
+                  active === i ? 'bg-accent-ink/15 text-accent-ink' : 'bg-accent-dim text-accent'
                 }`}
               >
                 Later
@@ -71,27 +71,27 @@ export default function CurriculumExplorer({ levels }: Props) {
         role="tabpanel"
         id={`level-panel-${level.n}`}
         aria-labelledby={`level-tab-${level.n}`}
-        className="card mt-6 p-6 sm:p-10"
+        className="card mt-6 p-5 md:p-7"
       >
         <div className="flex flex-wrap items-center gap-3">
-          <h3 className="font-display text-2xl sm:text-3xl">{level.title}</h3>
+          <h3 className="display-md">{level.title}</h3>
           {level.later && (
-            <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-ink">
-              Later levels
+            <span className="rounded-sm bg-accent px-2 py-0.5 text-[0.8125rem] font-semibold text-accent-ink">
+              Later level
             </span>
           )}
         </div>
         {level.later && (
-          <p className="mt-2 text-sm text-muted">Arrives after you've shipped the fundamentals.</p>
+          <p className="mt-2 text-[0.9375rem] text-muted">Arrives after you've shipped the fundamentals.</p>
         )}
 
-        <div className="mt-8 grid gap-8 md:grid-cols-3">
+        <div className="mt-7 grid gap-7 md:grid-cols-3">
           {columns.map(([heading, items]) => (
             <div key={heading}>
-              <h4 className="font-label text-muted">{heading}</h4>
-              <ul className="mt-4 space-y-3">
+              <h4 className="label">{heading}</h4>
+              <ul className="mt-4 space-y-2.5">
                 {items.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm leading-relaxed sm:text-base">
+                  <li key={item} className="flex items-start gap-3 text-[0.9375rem] leading-relaxed md:text-base">
                     <svg
                       viewBox="0 0 16 16"
                       className="mt-1 size-3.5 shrink-0 text-accent"

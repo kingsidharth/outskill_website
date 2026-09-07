@@ -17,9 +17,12 @@ interface Props {
   note?: string;
   ctaLabel: string;
   ctaHref: string;
+  /** 'apply' renders a ghost button (apply-only rungs); default accent. */
+  kind?: 'buy' | 'apply' | 'free';
 }
 
-const { label, price, listPrice, note, ctaLabel, ctaHref } = Astro.props;
+const { label, price, listPrice, note, ctaLabel, ctaHref, kind = 'buy' } = Astro.props;
+const btnClass = kind === 'apply' ? 'btn btn-ghost btn-sm shrink-0' : 'btn btn-accent btn-sm shrink-0';
 ---
 
 <div class="h-[4.75rem] md:hidden" aria-hidden="true"></div>
@@ -37,6 +40,6 @@ const { label, price, listPrice, note, ctaLabel, ctaHref } = Astro.props;
         {!price && note && <span class="text-fg">{note}</span>}
       </p>
     </div>
-    <a href={ctaHref} class="btn btn-accent btn-sm shrink-0">{ctaLabel}</a>
+    <a href={ctaHref} class={btnClass}>{ctaLabel}</a>
   </div>
 </aside>

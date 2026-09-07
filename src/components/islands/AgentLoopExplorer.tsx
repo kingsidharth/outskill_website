@@ -164,10 +164,10 @@ export default function AgentLoopExplorer() {
             onClick={() => select(i)}
             onKeyDown={(e) => onNodeKeyDown(e, i)}
             aria-pressed={active === i}
-            className={`absolute flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border text-xs font-medium transition-colors sm:size-20 sm:text-sm ${
+            className={`absolute flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border text-[0.8125rem] font-semibold transition-colors sm:size-20 sm:text-[0.9375rem] ${
               active === i
                 ? 'border-accent bg-accent text-accent-ink'
-                : 'border-line bg-surface text-fg hover:border-muted'
+                : 'border-line bg-surface text-fg hover:border-line-strong hover:bg-surface-2'
             }`}
             style={{ left: `${POS[i][0] / 4}%`, top: `${POS[i][1] / 4}%` }}
           >
@@ -178,15 +178,15 @@ export default function AgentLoopExplorer() {
 
       {/* Panels */}
       <div className="space-y-4">
-        <div className="card p-6 sm:p-8">
-          <p className="eyebrow">{node.label} — what the Bootcamp teaches</p>
-          <p className="mt-3 text-base leading-relaxed text-fg sm:text-lg">{node.teach}</p>
+        <div className="card p-5 md:p-7">
+          <p className="eyebrow">{node.label}</p>
+          <p className="mt-3 text-[1.0625rem] leading-relaxed text-fg">{node.teach}</p>
         </div>
 
-        <div className="card p-6 sm:p-8" aria-live="polite">
+        <div className="card p-5 md:p-7" aria-live="polite">
           <div className="flex items-center justify-between gap-4">
-            <p className="font-label text-muted">Agent state — step {step + 1}</p>
-            <span className="flex items-center gap-2 text-xs text-muted">
+            <p className="label">Agent state — step {step + 1}</p>
+            <span className="flex items-center gap-2 text-[0.8125rem] text-muted">
               <span
                 className={`inline-block size-1.5 rounded-full ${playing ? 'bg-accent' : 'bg-muted'}`}
                 aria-hidden="true"
@@ -197,8 +197,8 @@ export default function AgentLoopExplorer() {
           <dl className="mt-4 space-y-2.5">
             {metrics.map(([label, value]) => (
               <div key={label} className="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2.5 last:border-0 last:pb-0">
-                <dt className="text-sm text-muted">{label}</dt>
-                <dd className="text-right font-mono text-sm text-fg">{value}</dd>
+                <dt className="text-[0.9375rem] text-muted">{label}</dt>
+                <dd className="num text-right text-[0.875rem] text-fg">{value}</dd>
               </div>
             ))}
           </dl>
@@ -209,11 +209,11 @@ export default function AgentLoopExplorer() {
             type="button"
             onClick={() => setPlaying((p) => !p)}
             aria-pressed={playing}
-            className="inline-flex items-center justify-center rounded-full border border-line px-5 py-2 text-sm font-medium text-fg transition-colors hover:border-fg"
+            className="btn btn-ghost btn-sm"
           >
             {playing ? 'Pause auto-step' : 'Resume auto-step'}
           </button>
-          <p className="text-xs text-muted">Steps through the loop every 2.5s, or click any node.</p>
+          <p className="text-[0.8125rem] text-muted">Steps through the loop every 2.5s, or click any node.</p>
         </div>
       </div>
     </div>

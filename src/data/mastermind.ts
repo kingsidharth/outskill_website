@@ -1,26 +1,91 @@
 import type { Program } from './types';
 
+/**
+ * The coupon that makes the listed ₹4,999 free. Not part of the V1 `Program`
+ * type (types.ts is shared), so it lives here as its own export.
+ */
+export const couponCode = 'WEEKEND-FREE';
+
+/**
+ * The cohort runs "almost every weekend" — Saturday 19:00 IST. Computed in UTC
+ * and shifted by +05:30 so the build machine's timezone never matters, exactly
+ * like nextWorkshopSession() in workshops.ts.
+ *
+ * 19:00 IST == 13:30 UTC the same calendar day.
+ *
+ * Both the prerendered page and Countdown.tsx call this, so a stale build and
+ * a live browser can never disagree about which weekend is next.
+ */
+export function nextCohortAfter(from: Date = new Date()): Date {
+  const IST = 5.5 * 60 * 60 * 1000;
+  const ist = new Date(from.getTime() + IST);
+  const slot = new Date(Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate(), 13, 30, 0));
+  // 6 = Saturday. Advance to the coming Saturday.
+  const days = (6 - slot.getUTCDay() + 7) % 7;
+  slot.setUTCDate(slot.getUTCDate() + days);
+  if (slot.getTime() <= from.getTime()) slot.setUTCDate(slot.getUTCDate() + 7);
+  return slot;
+}
+
+/**
+ * "Sat, 12 Sep 2026" — the human label beside the countdown. Assembled from
+ * parts rather than a format string because en-IN's short form comes back as
+ * "Sat, 12 Sept, 2026", and that second comma reads badly mid-sentence.
+ */
+export function formatCohortDate(d: Date): string {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'Asia/Kolkata',
+  }).formatToParts(d);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+  return `${get('weekday')}, ${get('day')} ${get('month')} ${get('year')}`;
+}
+
+/** Next Saturday 19:00 IST from today. Stored so the founder can pin it. */
+const COHORT_START = '2026-09-12T19:00:00+05:30';
+
 export const mastermind: Program = {
   slug: 'mastermind',
   name: '2-Day AI Engineering Mastermind',
-  eyebrow: '12 HOURS ◆ 3 LIVE EXPERT SESSIONS',
-  headline: 'One weekend. A new way to ship.',
-  subhead: 'See what agents actually do, then do it. Learn the loop from context and tools to review, and leave with working demos.',
-  ctaLabel: 'Register free',
+  eyebrow: 'Free · Live · This weekend',
+  headline: 'Ship three working agent demos by Sunday night.',
+  subhead: 'Two days, twelve hours, live. You build the agent loop yourself — context, tools, review — and leave with demos that run on your own machine.',
+  ctaLabel: 'Claim your free seat',
   ctaHref: '#register',
+  nextCohortStart: COHORT_START,
+  /** Simplest honest rule: the coupon dies the moment the cohort starts. */
+  couponExpiresAt: COHORT_START,
   stats: [
-    { label: 'Start date', value: '11 Sept 2026' },
+    { label: 'Start date', value: '12 Sept 2026' },
     { label: 'Start time', value: '7 PM IST' },
-    { label: 'Live training', value: '12 hours' },
-    { label: 'Sessions', value: '3' },
+    { label: 'Duration', value: '2 days · 12 hrs' },
+    { label: 'Format', value: 'Live online' },
   ],
-  price: { current: 'Free', original: '₹4,999', note: 'Live, limited-seat workshop' },
+  price: { current: 'Free with coupon', original: '₹4,999', note: 'Coupon holds until the cohort starts' },
   features: [
-    { title: 'Agentic coding', body: 'Hand Cursor or Claude Code a whole task, not one line of autocomplete.' },
-    { title: 'MCP', body: 'Connect GitHub, your database, Slack, and your own APIs to an AI workflow.' },
-    { title: 'Agent workflows', body: 'Give an agent a ticket; it plans, writes, tests, and opens the PR for review.' },
-    { title: 'Multi-agent systems', body: 'Coordinate role-based agents that work in parallel while you are away.' },
-    { title: 'The agent loop', body: 'Understand context, memory, tools, and review as engineering primitives.' },
+    {
+      title: 'Hand over a whole task, not one line',
+      body: 'Give Claude Code or Cursor a real ticket from your repo and watch it plan before it types.',
+    },
+    {
+      title: 'Plug an agent into your own systems',
+      body: 'Wire GitHub, a database, Slack, and one of your APIs to a running workflow using MCP.',
+    },
+    {
+      title: 'Get a pull request you can review',
+      body: 'The agent writes the code, runs the tests, and opens the PR. You read the diff and decide.',
+    },
+    {
+      title: 'Put several agents on it at once',
+      body: 'Split a build across role-based agents that work in parallel, then reconcile what they produced.',
+    },
+    {
+      title: 'Know why the loop breaks',
+      body: 'Context, memory, tools, and review as engineering primitives — so you can debug an agent, not guess at it.',
+    },
   ],
   sessions: [
     {
@@ -53,7 +118,7 @@ export const mastermind: Program = {
     { q: 'Will I receive recordings of the sessions?', a: 'Yes. Session recordings and supporting material are provided after the live sessions.' },
     { q: 'What makes this different from other AI workshops?', a: 'The focus is the complete engineering loop: models, tools, workflows, agents, and review—not prompt tips alone.' },
     { q: 'Will I be able to apply these skills immediately after the workshop?', a: 'Yes. You will leave with patterns you can apply to coding, automation, and internal tools.' },
-    { q: 'Is the Mastermind really free?', a: 'Yes. The workshop is free; the original listed price was ₹4,999.' },
+    { q: 'Is the Mastermind really free?', a: `Yes. The listed price is ₹4,999 and the coupon ${couponCode} takes it to zero. The coupon is valid until the cohort starts; when a weekend passes, a fresh one opens for the next one.` },
   ],
   seo: { title: '2-Day AI Engineering Mastermind', description: 'A free, live 12-hour AI Engineering Mastermind. Learn LLMs, tools, agent workflows, and multi-agent systems in three sessions.' },
 };

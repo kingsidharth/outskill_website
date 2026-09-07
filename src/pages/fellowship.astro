@@ -3,164 +3,317 @@ export const prerender = true;
 
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
-import Stat from '../components/Stat.astro';
+import LadderCard from '../components/LadderCard.astro';
 import FAQ from '../components/FAQ.astro';
-import CTA from '../components/CTA.astro';
+import Newsletter from '../components/Newsletter.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import InfoBlocks from '../components/InfoBlocks.astro';
 import CurriculumExplorer from '../components/islands/CurriculumExplorer';
 import { fellowship } from '../data/fellowship';
+import { ladderBySlug } from '../data/ladder';
+import type { InfoBlock } from '../data/types';
 
-const pillars = fellowship.features.slice(0, 4);
-const laterFeatures = fellowship.features.slice(4);
+const before = ladderBySlug['accelerator'];
+const lighter = ladderBySlug['bootcamp'];
+
+const info: InfoBlock[] = [
+  { label: 'Duration', value: '6 months' },
+  { label: 'Format', value: 'Weekends, live' },
+  { label: 'Next start', value: 'On selection' },
+  { label: 'Price', value: '₹2,00,000' },
+];
+
+const phases = [
+  {
+    label: 'Months 1–4',
+    title: 'Six levels of learning',
+    body: 'Foundations and maths, LLM theory, forward-deployed field skills, then implementation — retrieval, agents, and the infrastructure under them. Fine-tuning and architecture arrive last, once there is somewhere for them to land.',
+  },
+  {
+    label: 'Months 5–6',
+    title: 'One capstone, supervised',
+    body: 'Two months building a single system with review: scoped with a real user in mind, evaluated against what they needed, and defended in front of people who will push back.',
+  },
+];
+
+/* Metrics come from fellowship.ts — six levels, 4+2 month split, weekends. */
+const outcomeCards = [
+  {
+    metric: '1 capstone',
+    title: 'Built and defended',
+    body: 'Two supervised months on one system, ending in a review where you argue for every trade-off you made.',
+  },
+  {
+    metric: '6 levels',
+    title: 'Theory through field practice',
+    body: 'From the maths under model behaviour to shipping with a customer, in an order where each level makes the next one usable.',
+  },
+  {
+    metric: 'Weekends',
+    title: 'Your weekdays stay yours',
+    body: 'The whole six months runs on weekends, so this happens alongside the job rather than instead of it.',
+  },
+];
 ---
 
-<Base title={fellowship.seo.title} description={fellowship.seo.description} image="/gen/hero-fellowship.webp">
-  <!-- Hero -->
-  <header class="relative overflow-hidden border-b border-line">
-    <div class="absolute inset-0 bg-gradient-to-b from-surface-2 via-bg to-bg" aria-hidden="true"></div>
-    <img
-      src="/gen/hero-fellowship.webp"
-      alt=""
-      width="1600"
-      height="900"
-      fetchpriority="high"
-      decoding="async"
-      class="absolute inset-0 size-full object-cover opacity-40"
-      onerror="this.remove()"
-    />
-    <div class="absolute inset-0 bg-gradient-to-b from-bg/50 via-bg/60 to-bg" aria-hidden="true"></div>
-    <div class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-36">
-      <p class="eyebrow">{fellowship.eyebrow}</p>
-      <h1 class="mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">{fellowship.headline}</h1>
-      <p class="mt-6 max-w-2xl text-base text-muted sm:text-lg">{fellowship.subhead}</p>
-      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-        <a href={fellowship.ctaHref} class="btn-accent">{fellowship.ctaLabel}</a>
-        <p class="text-lg">
-          <span class="font-medium text-accent">{fellowship.price.current}</span>
-          {fellowship.price.note && <span class="ml-2 text-sm text-muted">{fellowship.price.note}</span>}
+<Base
+  title={fellowship.seo.title}
+  description={fellowship.seo.description}
+  image="/gen/v2/fellowship.webp"
+  cta={{ label: 'Apply now', href: '#apply' }}
+  ctaKind="apply"
+>
+  <!-- ==================== HERO ==================== -->
+  <section class="hero grain relative isolate overflow-hidden border-b border-line">
+    <div class="hero-art" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="wrap relative z-10 pt-12 pb-10 md:pt-24 md:pb-20">
+      <div class="max-w-[36rem] lg:max-w-[42rem]">
+        <p class="eyebrow">{fellowship.eyebrow}</p>
+        <h1 class="display-xl mt-3">{fellowship.headline}</h1>
+        <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">{fellowship.subhead}</p>
+
+        <div class="mt-7 md:hidden">
+          <InfoBlocks items={info} />
+          <a href="#apply" class="btn btn-ghost btn-block mt-5">Apply now</a>
+          <a href="#curriculum" class="btn btn-ghost btn-block mt-2.5">See the six levels</a>
+        </div>
+
+        <div class="mt-9 hidden items-center gap-6 md:flex">
+          <a href="#apply" class="btn btn-ghost shrink-0">Apply now</a>
+          <InfoBlocks items={info} variant="row" />
+        </div>
+
+        <p class="mt-5 hidden text-[0.9375rem] text-muted md:block">
+          ₹2,00,000. Application only — reviewed in 48 hours.
+          <a href="#curriculum" class="ml-2 underline-offset-4 hover:text-fg hover:underline">See the six levels →</a>
         </p>
-      </div>
-      <div class="mt-14 grid grid-cols-2 gap-8 border-t border-line/70 pt-8 sm:grid-cols-4">
-        {fellowship.stats.map((s) => <Stat stat={s} />)}
+
+        <dl class="mt-10 flex gap-6 border-t border-line pt-6 md:mt-12 md:gap-10">
+          {
+            [
+              { value: '6', label: 'Months, weekends' },
+              { value: '4+2', label: 'Learn, then capstone' },
+              { value: '6', label: 'Levels' },
+            ].map((s) => (
+              <div>
+                <dt class="sr-only">{s.label}</dt>
+                <dd>
+                  <span class="font-display block text-[1.75rem] font-bold leading-none md:text-[2.125rem]">{s.value}</span>
+                  <span class="mt-0.5 block text-[0.8125rem] text-muted">{s.label}</span>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- Four pillars -->
+  <!-- ==================== OUTCOMES ==================== -->
   <Section
-    eyebrow="The four pillars"
-    title="Foundations first, then the field."
-    lead="Six months structured around the four things an AI engineer actually needs."
+    eyebrow="What you leave with"
+    title="A system you built, and the depth to argue for it."
+    lead="Six months is long enough to stop copying patterns and start choosing between them."
   >
-    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid gap-4 md:grid-cols-3 md:gap-5">
       {
-        pillars.map((f, i) => (
-          <li class="card p-6">
-            <p class="font-label text-muted">Pillar {i + 1}</p>
-            <h3 class="mt-3 text-lg font-medium">{f.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
-          </li>
+        outcomeCards.map((o) => (
+          <article class="card flex flex-col p-5 md:p-7">
+            <p class="num text-[2rem] text-accent">{o.metric}</p>
+            <h3 class="heading-sm mt-2">{o.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{o.body}</p>
+          </article>
         ))
       }
-    </ul>
+    </div>
   </Section>
 
-  <!-- CurriculumExplorer island -->
+  <!-- ==================== CURRICULUM ISLAND ==================== -->
   <Section
-    eyebrow="Curriculum"
-    title="Six levels, explored."
-    lead="Tab through the levels to see the theory, skills, and build work in each."
-    class="border-y border-line bg-surface/30"
+    rule
+    id="curriculum"
+    eyebrow="The six levels"
+    title="Open a level to see the theory, the skills, and what you build."
+    lead="Levels 4 and 5 — fine-tuning and architecture — come after the earlier ones, because they are only useful once you have shipped without them."
   >
     <CurriculumExplorer client:visible levels={fellowship.levels ?? []} />
   </Section>
 
-  <!-- Later levels -->
+  <!-- ==================== PHASES ==================== -->
   <Section
-    eyebrow="Later levels"
-    title="Fine-tuning & architecture."
-    lead="These arrive after you've shipped the fundamentals — when the earlier levels give them somewhere to land."
+    rule
+    eyebrow="How the six months split"
+    title="Four months learning. Two months building."
+    lead="The second half is not a project week bolted on the end. It is a third of the programme."
   >
-    <ul class="grid gap-4 sm:grid-cols-2">
+    <div class="grid gap-4 md:grid-cols-2 md:gap-5">
       {
-        laterFeatures.map((f) => (
-          <li class="card p-6 sm:p-8">
-            <span class="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-ink">Later levels</span>
-            <h3 class="mt-4 font-display text-2xl">{f.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted sm:text-base">{f.body}</p>
-          </li>
+        phases.map((p) => (
+          <article class="card p-5 md:p-7">
+            <p class="label label-accent">{p.label}</p>
+            <h3 class="display-md mt-2">{p.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted md:text-base">{p.body}</p>
+          </article>
         ))
       }
-    </ul>
+    </div>
   </Section>
 
-  <!-- Outcomes + audience -->
+  <!-- ==================== FEATURES ==================== -->
   <Section
-    eyebrow="Outcomes"
-    title="What a fellow walks away with."
-    class="border-y border-line bg-surface/30"
+    rule
+    eyebrow="What the levels cover"
+    title="Foundations first, then the field."
+    lead="Each area exists because the capstone or the customer work needs it."
   >
-    <div class="grid gap-12 md:grid-cols-2">
-      <ul class="space-y-4">
-        {
-          fellowship.outcomes.map((o) => (
-            <li class="flex items-start gap-3 text-base">
-              <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
-                <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              {o}
-            </li>
-          ))
-        }
-      </ul>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
+      {
+        fellowship.features.map((f) => (
+          <article class="card p-5 md:p-7">
+            <h3 class="heading-xs">{f.title}</h3>
+            <p class="mt-2 text-[0.9375rem] leading-relaxed text-muted">{f.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ==================== AUDIENCE ==================== -->
+  <Section
+    rule
+    eyebrow="Who it's for"
+    title="People playing a longer game than one cohort."
+    lead="Programming experience is expected. A machine learning background is not — level 0 builds it."
+  >
+    <div class="grid gap-8 md:grid-cols-2 md:gap-12">
       <div>
-        <h3 class="font-label text-muted">Who it's for</h3>
-        <ul class="mt-5 space-y-3">
+        <p class="label">You will be able to</p>
+        <ul class="mt-4 space-y-3">
           {
-            fellowship.audience.map((a) => (
-              <li class="card px-5 py-4 text-sm text-fg/90">{a}</li>
+            fellowship.outcomes.map((o) => (
+              <li class="flex items-start gap-3 text-[0.9375rem] md:text-base">
+                <svg viewBox="0 0 16 16" class="mt-1 size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
+                  <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                {o}
+              </li>
             ))
           }
+        </ul>
+      </div>
+      <div>
+        <p class="label">This fits you if</p>
+        <ul class="mt-4 space-y-3">
+          {fellowship.audience.map((a) => <li class="card px-5 py-4 text-[0.9375rem]">{a}</li>)}
         </ul>
       </div>
     </div>
   </Section>
 
-  <!-- Apply -->
+  <!-- ==================== ADJACENT RUNGS ==================== -->
   <Section
-    id="register"
-    eyebrow="Apply"
-    title="Start your application."
-    lead="Leave your email and the team will share fit, schedule, and pricing details."
+    rule
+    eyebrow="If six months is too much"
+    title="This is the last step. The ones under it are shorter and cheaper."
+    lead="There is nothing above the Fellowship. If the commitment is wrong, trade down rather than wait."
   >
-    <form id="register-form" data-program={fellowship.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
-      <label for="register-email" class="sr-only">Email address</label>
-      <input
-        id="register-email"
-        name="email"
-        type="email"
-        required
-        autocomplete="email"
-        placeholder="you@company.com"
-        class="w-full flex-1 rounded-full border border-line bg-surface px-5 py-3 text-fg placeholder:text-muted focus:border-accent"
-      />
-      <button type="submit" class="btn-accent shrink-0">{fellowship.ctaLabel}</button>
-    </form>
-    <p id="register-msg" role="status" class="mt-4 min-h-5 text-sm text-accent"></p>
+    <div class="grid gap-4 md:grid-cols-2 md:gap-5">
+      <LadderCard rung={before} />
+      <LadderCard rung={lighter} />
+    </div>
   </Section>
 
-  <!-- FAQ -->
-  <Section eyebrow="FAQ" title="Straight answers.">
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you apply" title="Straight answers.">
     <FAQ items={fellowship.faq} />
   </Section>
 
-  <CTA
-    eyebrow={fellowship.eyebrow}
-    title="Six months. Six levels. One durable career."
-    body={fellowship.subhead}
-    ctaLabel={fellowship.ctaLabel}
-    ctaHref={fellowship.ctaHref}
+  <!-- ==================== APPLY ==================== -->
+  <Section
+    rule
+    id="apply"
+    eyebrow="Apply"
+    title="Start your application."
+    lead="Leave your email and the team comes back within 48 hours with fit, the weekend schedule, and the payment path."
+  >
+    <div class="card max-w-2xl p-5 md:p-7">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-line pb-5">
+        <span class="num text-[1.75rem] text-accent">₹2,00,000</span>
+        <span class="text-[0.9375rem] text-muted">application only — nothing is charged here</span>
+      </div>
+
+      <form id="register-form" data-program={fellowship.slug} class="mt-5 flex flex-col gap-3 sm:flex-row">
+        <label for="register-email" class="sr-only">Email address</label>
+        <input
+          id="register-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="you@company.com"
+          class="w-full flex-1 rounded-md border border-line bg-bg px-4 py-3 text-[1rem] text-fg placeholder:text-faint focus:border-accent focus:outline-none"
+        />
+        <button type="submit" class="btn btn-ghost shrink-0">Apply now</button>
+      </form>
+      <p id="register-msg" role="status" class="mt-3 min-h-6 text-[0.9375rem] text-accent"></p>
+      <p class="mt-1 text-[0.8125rem] text-muted">
+        Applications are reviewed in 48 hours. Nothing is charged from this form.
+      </p>
+    </div>
+  </Section>
+
+  <Newsletter />
+
+  <StickyCTA
+    kind=\"apply\"
+    label="6 months, weekends · Fellowship"
+    price="₹2,00,000"
+    ctaLabel="Apply now"
+    ctaHref="#apply"
   />
 </Base>
+
+<style>
+  .hero {
+    background-color: var(--color-bg);
+  }
+
+  .hero-art {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: url('/gen/v2/fellowship-m.webp'), url('/gen/v2/fellowship.webp'), url('/gen/hero-fellowship.webp');
+    background-position: 62% 38%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 768px) {
+    .hero-art {
+      background-image: url('/gen/v2/fellowship.webp'), url('/gen/hero-fellowship.webp');
+      background-position: right center;
+    }
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(100deg, rgba(10, 10, 10, 0.94) 0%, rgba(10, 10, 10, 0.78) 45%, rgba(10, 10, 10, 0.5) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.6) 45%, rgba(10, 10, 10, 0.92) 78%, var(--color-bg) 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, var(--color-bg) 0%, rgba(10, 10, 10, 0.92) 38%, rgba(10, 10, 10, 0.25) 68%, rgba(10, 10, 10, 0) 100%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0.55) 100%);
+    }
+  }
+</style>
 
 <script>
   document.addEventListener('astro:page-load', () => {
@@ -177,7 +330,7 @@ const laterFeatures = fellowship.features.slice(4);
           body: JSON.stringify({ email, program: form.dataset.program }),
         });
         if (!res.ok) throw new Error('register failed');
-        if (msg) msg.textContent = "Application started — we'll be in touch with the details.";
+        if (msg) msg.textContent = "Application started — we'll come back within 48 hours.";
         form.reset();
       } catch {
         if (msg) msg.textContent = 'Something went wrong. Please try again.';

@@ -5,9 +5,11 @@ import type { NavLink } from '../data/types';
 
 interface Props {
   cta?: NavLink;
+  ctaKind?: 'buy' | 'apply' | 'free';
 }
 
-const { cta } = Astro.props;
+const { cta, ctaKind = 'buy' } = Astro.props;
+const ctaBtn = ctaKind === 'apply' ? 'btn-ghost' : 'btn-accent';
 const primary = cta ?? site.primaryCta;
 const { name } = site;
 const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
@@ -77,12 +79,12 @@ const isActive = (href: string) => current === href;
         </div>
       </div>
 
-      <a href={primary.href} class="btn btn-accent btn-sm">{primary.label}</a>
+      <a href={primary.href} class={`btn ${ctaBtn} btn-sm`}>{primary.label}</a>
     </div>
 
     <!-- Mobile -->
     <div class="flex items-center gap-2 md:hidden">
-      <a href={primary.href} class="btn btn-accent btn-sm text-[0.8125rem]">{primary.label}</a>
+      <a href={primary.href} class={`btn ${ctaBtn} btn-sm text-[0.8125rem]`}>{primary.label}</a>
       <button
         id="nav-toggle"
         type="button"
@@ -122,7 +124,7 @@ const isActive = (href: string) => current === href;
     </ul>
     <div class="wrap flex flex-col gap-2.5 border-t border-line py-4">
       {flat.map((link) => <a href={link.href} class="py-1.5 text-[0.9375rem] text-muted">{link.label}</a>)}
-      <a href={primary.href} class="btn btn-accent btn-block mt-1">{primary.label}</a>
+      <a href={primary.href} class={`btn ${ctaBtn} btn-block mt-1`}>{primary.label}</a>
     </div>
   </div>
 </header>

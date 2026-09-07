@@ -3,93 +3,141 @@ export const prerender = true;
 
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
-import Stat from '../components/Stat.astro';
+import InfoBlocks from '../components/InfoBlocks.astro';
 import FAQ from '../components/FAQ.astro';
 import CTA from '../components/CTA.astro';
-import StickyBar from '../components/StickyBar.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Countdown from '../components/islands/Countdown';
 import AgentTerminal from '../components/islands/AgentTerminal';
 import TrapQuiz from '../components/islands/TrapQuiz';
-import { mastermind } from '../data/mastermind';
+import { mastermind, couponCode, formatCohortDate, nextCohortAfter } from '../data/mastermind';
 import { quiz } from '../data/quiz';
+
+// The stored date wins while it is still ahead of us; once that weekend has
+// passed, a rebuild rolls to the next Saturday 19:00 IST using the same helper
+// Countdown uses on the client. Every date on this page comes from `start`, so
+// the hero blocks, the schedule lead, the CTA and the clock cannot disagree.
+const stored = mastermind.nextCohortStart ? new Date(mastermind.nextCohortStart) : null;
+const start = stored && stored.getTime() > Date.now() ? stored : nextCohortAfter();
+const cohortStart = start.toISOString();
+const cohortDate = formatCohortDate(start);
+// "Sat, 12 Sept 2026" -> "12 Sept 2026" for the compact info block.
+const startDateShort = cohortDate.replace(/^[A-Za-z]+,\s*/, '');
+const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, value: startDateShort } : s));
 ---
 
-<Base title={mastermind.seo.title} description={mastermind.seo.description} image="/gen/hero-mastermind.webp">
-  <header class="relative overflow-hidden border-b border-line">
-    <div class="absolute inset-0 bg-gradient-to-b from-surface-2 via-bg to-bg" aria-hidden="true"></div>
-    <img
-      src="/gen/hero-mastermind.webp"
-      alt=""
-      width="1600"
-      height="900"
-      fetchpriority="high"
-      decoding="async"
-      class="absolute inset-0 size-full object-cover opacity-40"
-      onerror="this.remove()"
-    />
-    <div class="absolute inset-0 bg-gradient-to-b from-bg/50 via-bg/60 to-bg" aria-hidden="true"></div>
-    <div class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-36">
-      <p class="eyebrow">{mastermind.eyebrow}</p>
-      <h1 class="mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">{mastermind.headline}</h1>
-      <p class="mt-6 max-w-2xl text-base text-muted sm:text-lg">{mastermind.subhead}</p>
-      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-        <a href={mastermind.ctaHref} class="btn-accent">{mastermind.ctaLabel}</a>
-        <p class="text-lg">
-          {mastermind.price.original && <span class="mr-2 text-muted line-through">{mastermind.price.original}</span>}
-          <span class="font-medium text-accent">{mastermind.price.current}</span>
-          {mastermind.price.note && <span class="ml-2 text-sm text-muted">{mastermind.price.note}</span>}
-        </p>
-      </div>
-      <div class="mt-14 grid grid-cols-2 gap-8 border-t border-line/70 pt-8 sm:grid-cols-4">
-        {mastermind.stats.map((s) => <Stat stat={s} />)}
+<Base
+  title={mastermind.seo.title}
+  description={mastermind.seo.description}
+  image="/gen/v2/mastermind.webp"
+  cta={{ label: 'Claim free seat', href: '#register' }}
+>
+  <!-- ==================== HERO ==================== -->
+  <section class="hero grain relative isolate overflow-hidden border-b border-line">
+    <div class="hero-art" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="wrap relative z-10 pt-12 pb-10 md:pt-24 md:pb-20">
+      <div class="max-w-[36rem] lg:max-w-[42rem]">
+        <p class="eyebrow">Free · Live · This weekend</p>
+        <h1 class="display-xl mt-3">{mastermind.headline}</h1>
+        <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">{mastermind.subhead}</p>
+
+        <!-- Mobile: info blocks above a full-width button. -->
+        <div class="mt-7 md:hidden">
+          <InfoBlocks items={info} />
+          <a href="#register" class="btn btn-accent btn-block mt-5">{mastermind.ctaLabel}</a>
+          <a href="#schedule" class="btn btn-ghost btn-block mt-2.5">See the three sessions</a>
+        </div>
+
+        <!-- Desktop: button, vertical rule, info blocks alongside. -->
+        <div class="mt-9 hidden items-center gap-6 md:flex">
+          <a href="#register" class="btn btn-accent shrink-0">{mastermind.ctaLabel}</a>
+          <InfoBlocks items={info} variant="row" />
+        </div>
+
+        <a
+          href="#schedule"
+          class="mt-5 hidden text-[0.9375rem] text-muted underline-offset-4 hover:text-fg hover:underline md:inline-block"
+        >
+          See the three sessions →
+        </a>
       </div>
     </div>
-  </header>
+  </section>
 
+  <!-- ==================== PRICE + COUNTDOWN ==================== -->
+  <section aria-labelledby="price-heading" class="border-b border-line bg-bg-deep">
+    <div class="wrap py-10 md:py-14">
+      <div class="grid gap-6 md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] md:items-start md:gap-12">
+        <div>
+          <p class="label">What it costs</p>
+          <p id="price-heading" class="mt-2 flex flex-wrap items-baseline gap-3">
+            <span class="text-[1.375rem] text-faint line-through">{mastermind.price.original}</span>
+            <span class="display-md">Free with coupon</span>
+          </p>
+          <p class="mt-3 max-w-sm text-[0.9375rem] text-muted">
+            The seat is listed at {mastermind.price.original}. One coupon takes it to zero for this cohort, and it
+            stops working the moment the weekend starts.
+          </p>
+        </div>
+
+        <Countdown client:idle expiresAt={cohortStart} code={couponCode} fallbackDate={cohortDate} />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TOPICS ==================== -->
   <Section
-    eyebrow="What we'll cover"
-    title="Five things you'll actually use."
-    lead="Every topic ends with something running — not a slide deck."
+    eyebrow="What you leave with"
+    title="Five things that end in something running."
+    lead="Each block is a working result you keep, not a slide about it."
   >
-    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {
-        mastermind.features.map((f) => (
-          <li class="card p-6">
-            <h3 class="text-lg font-medium">{f.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
+        mastermind.features.map((f, i) => (
+          <li class="card flex flex-col p-5 md:p-7">
+            <p class="num text-[0.875rem] text-accent">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="heading-sm mt-2">{f.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{f.body}</p>
           </li>
         ))
       }
     </ul>
   </Section>
 
+  <!-- ==================== TERMINAL ==================== -->
   <Section
+    rule
     eyebrow="Show, don't tell"
-    title="Watch an agent ship a ticket"
-    lead="Ticket in, pull request out. This loop is what you'll take apart and rebuild across the weekend."
-    class="border-y border-line bg-surface/30"
+    title="Ticket in. Pull request out."
+    lead="This is the loop you take apart and rebuild across the weekend."
   >
     <AgentTerminal client:visible />
   </Section>
 
+  <!-- ==================== SCHEDULE ==================== -->
   <Section
-    eyebrow="The schedule"
+    id="schedule"
+    rule
+    eyebrow="The weekend"
     title="Three live sessions. Twelve hours."
-    lead="Live expert sessions across the weekend, each one hands-on."
+    lead={`Starts ${cohortDate}, 7 PM IST. Every session is hands-on, and recordings follow.`}
   >
-    <ol>
+    <ol class="border-t border-line">
       {
         mastermind.sessions?.map((s) => (
-          <li class="grid gap-3 border-t border-line py-6 first:border-t-0 first:pt-0 md:grid-cols-[180px_1fr] md:gap-10 md:py-8">
-            <div class="md:pt-1 md:text-right">
-              <p class="font-label text-accent">{s.when}</p>
-              <p class="font-label mt-1 text-muted">Session {s.n}</p>
+          <li class="grid gap-3 border-b border-line py-6 md:grid-cols-[11rem_1fr] md:gap-10 md:py-8">
+            <div>
+              <p class="num text-[0.9375rem] text-accent">{s.when}</p>
+              <p class="label mt-1">Session {s.n}</p>
             </div>
-            <div class="card p-5 sm:p-6">
-              <h3 class="font-display text-xl sm:text-2xl">{s.title}</h3>
-              <p class="mt-2 text-sm text-muted sm:text-base">{s.summary}</p>
+            <div>
+              <h3 class="heading-sm">{s.title}</h3>
+              <p class="mt-2 text-[0.9375rem] leading-relaxed text-muted">{s.summary}</p>
               <ul class="mt-4 flex flex-wrap gap-2">
                 {s.bullets.map((b) => (
-                  <li class="rounded-full border border-line px-3 py-1 text-xs text-muted">{b}</li>
+                  <li class="rounded-md border border-line px-2.5 py-1 text-[0.8125rem] text-muted">{b}</li>
                 ))}
               </ul>
             </div>
@@ -99,20 +147,28 @@ import { quiz } from '../data/quiz';
     </ol>
   </Section>
 
+  <!-- ==================== QUIZ ==================== -->
   <Section
-    eyebrow="Trap quiz"
-    title="Think you already get LLMs? Four questions."
-    lead="Four questions engineers get wrong. Answer honestly — the explanations are hidden until you submit."
-    class="border-y border-line bg-surface/30"
+    rule
+    eyebrow="Four questions"
+    title="Think you already get LLMs?"
+    lead="Four questions engineers get wrong. Answer honestly — the explanations stay hidden until you submit."
   >
-    <TrapQuiz client:visible questions={quiz} registerHref={mastermind.ctaHref} registerLabel={mastermind.ctaLabel} />
+    <TrapQuiz client:visible questions={quiz} registerHref="#register" registerLabel={mastermind.ctaLabel} />
   </Section>
 
+  <!-- ==================== FAQ ==================== -->
+  <Section rule eyebrow="Before you book" title="Straight answers.">
+    <FAQ items={mastermind.faq} />
+  </Section>
+
+  <!-- ==================== REGISTER ==================== -->
   <Section
     id="register"
+    rule
     eyebrow="Register"
     title="Save your seat."
-    lead="Free, live, and seat-limited. Leave your email and we'll send the schedule and joining links."
+    lead="Free with the coupon, live, and seat-limited. Leave your email and the schedule and joining links come to you."
   >
     <form id="register-form" data-program={mastermind.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
       <label for="register-email" class="sr-only">Email address</label>
@@ -123,27 +179,75 @@ import { quiz } from '../data/quiz';
         required
         autocomplete="email"
         placeholder="you@company.com"
-        class="w-full flex-1 rounded-full border border-line bg-surface px-5 py-3 text-fg placeholder:text-muted focus:border-accent"
+        class="w-full flex-1 rounded-md border border-line bg-surface px-4 py-3 text-[1rem] text-fg placeholder:text-muted focus:border-accent focus:outline-none"
       />
-      <button type="submit" class="btn-accent shrink-0">{mastermind.ctaLabel}</button>
+      <button type="submit" class="btn btn-accent shrink-0">{mastermind.ctaLabel}</button>
     </form>
-    <p id="register-msg" role="status" class="mt-4 min-h-5 text-sm text-accent"></p>
-  </Section>
+    <p id="register-msg" role="status" class="mt-4 min-h-5 text-[0.9375rem] text-accent"></p>
 
-  <Section eyebrow="FAQ" title="Straight answers.">
-    <FAQ items={mastermind.faq} />
+    <div class="mt-8 max-w-lg">
+      <InfoBlocks items={info} />
+    </div>
   </Section>
 
   <CTA
-    eyebrow={mastermind.eyebrow}
-    title={mastermind.headline}
-    body={mastermind.price.note}
+    eyebrow="One weekend"
+    title="Three demos you built, by Sunday night."
+    body={`Starts ${cohortDate} at 7 PM IST. Listed at ${mastermind.price.original}; free with the coupon until the cohort starts.`}
     ctaLabel={mastermind.ctaLabel}
-    ctaHref={mastermind.ctaHref}
+    ctaHref="#register"
   />
 
-  <StickyBar program={mastermind} />
+  <StickyCTA
+    label="2-day Mastermind"
+    price="Free"
+    listPrice="₹4,999"
+    ctaLabel="Claim free seat"
+    ctaHref="#register"
+  />
 </Base>
+
+<style>
+  .hero {
+    background-color: var(--color-bg);
+  }
+
+  /* v2 art first, mobile crop on top, V1 hero as the last fallback. A layer
+     that 404s is transparent, so the next one shows through. */
+  .hero-art {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: url('/gen/v2/mastermind-m.webp'), url('/gen/v2/mastermind.webp'), url('/gen/hero-mastermind.webp');
+    background-position: 62% 38%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 768px) {
+    .hero-art {
+      background-image: url('/gen/v2/mastermind.webp'), url('/gen/hero-mastermind.webp');
+      background-position: right center;
+    }
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(100deg, rgba(10, 10, 10, 0.96) 0%, rgba(10, 10, 10, 0.82) 45%, rgba(10, 10, 10, 0.58) 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.62) 45%, rgba(10, 10, 10, 0.92) 78%, var(--color-bg) 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, var(--color-bg) 0%, rgba(10, 10, 10, 0.92) 38%, rgba(10, 10, 10, 0.25) 68%, rgba(10, 10, 10, 0) 100%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0.55) 100%);
+    }
+  }
+</style>
 
 <script>
   document.addEventListener('astro:page-load', () => {

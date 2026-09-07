@@ -46,13 +46,13 @@ export default function TrapQuiz({
           return (
             <li key={q.id} className="border-b border-line py-8 first:pt-0">
               <fieldset>
-                <legend className="text-base font-medium sm:text-lg">
-                  <span className="font-label mr-3 text-muted">Q{qi + 1}</span>
+                <legend className="heading-xs">
+                  <span className="num mr-3 text-[0.875rem] text-accent">Q{qi + 1}</span>
                   {q.prompt}
                 </legend>
 
                 {q.context && (
-                  <p className="mt-3 rounded-lg border border-line bg-bg px-4 py-3 font-mono text-sm text-muted">
+                  <p className="mt-3 rounded-md border border-line bg-bg px-4 py-3 font-mono text-[0.875rem] text-muted">
                     {q.context}
                   </p>
                 )}
@@ -63,7 +63,7 @@ export default function TrapQuiz({
                     const isWrongPick = submitted && oi === chosen && oi !== q.correct;
                     const labelClass = submitted
                       ? isCorrect
-                        ? 'border-accent/60 bg-accent/10 text-fg'
+                        ? 'border-accent/50 bg-accent-dim/30 text-fg'
                         : isWrongPick
                           ? 'border-fg/30 text-fg'
                           : 'border-transparent text-muted'
@@ -74,7 +74,7 @@ export default function TrapQuiz({
                     return (
                       <label
                         key={oi}
-                        className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 text-sm transition-colors sm:text-base ${labelClass}`}
+                        className={`flex cursor-pointer items-start gap-3 rounded-md border px-4 py-3 text-[0.9375rem] transition-colors ${labelClass}`}
                       >
                         <input
                           type="radio"
@@ -95,7 +95,7 @@ export default function TrapQuiz({
               </fieldset>
 
               {submitted && (
-                <p className="mt-4 rounded-lg border border-line bg-surface-2 px-4 py-3 text-sm text-muted">
+                <p className="mt-4 rounded-md border border-line bg-surface-2 px-4 py-3 text-[0.9375rem] leading-relaxed text-muted">
                   <span className="font-medium text-accent">Why: </span>
                   {q.why}
                 </p>
@@ -111,36 +111,36 @@ export default function TrapQuiz({
             type="button"
             onClick={() => setSubmitted(true)}
             disabled={!allAnswered}
-            className="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 font-medium text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40"
+            className="btn btn-accent disabled:pointer-events-none disabled:opacity-40"
           >
             See my score
           </button>
-          <p className="text-sm text-muted" aria-live="polite">
+          <p className="text-[0.9375rem] text-muted" aria-live="polite">
             {answered} of {questions.length} answered
           </p>
         </div>
       ) : (
-        <div className="card mt-8 p-6 text-center sm:p-10">
-          <p className="font-label text-muted">Your score</p>
-          <p className="mt-2 font-display text-6xl leading-none">
+        <div className="card mt-8 p-5 text-center md:p-10">
+          <p className="label">Your score</p>
+          <p className="num mt-2 text-[3rem] leading-none text-accent md:text-[3.5rem]">
             {score}
-            <span className="text-muted"> / {questions.length}</span>
+            <span className="text-faint"> / {questions.length}</span>
           </p>
-          <p className="mx-auto mt-4 max-w-md text-base sm:text-lg">
+          <p className="mx-auto mt-4 max-w-md text-[1.0625rem]">
             {perfect ? "You're ready for the Accelerator." : 'Score low? Join the Mastermind to find out why.'}
           </p>
           <div className="mt-6">
             {perfect ? (
               <a
                 href={acceleratorHref}
-                className="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 font-medium text-accent-ink transition-colors hover:bg-accent-hover"
+                className="btn btn-ghost"
               >
                 Explore the Accelerator
               </a>
             ) : (
               <a
                 href={registerHref}
-                className="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 font-medium text-accent-ink transition-colors hover:bg-accent-hover"
+                className="btn btn-accent"
               >
                 {registerLabel}
               </a>

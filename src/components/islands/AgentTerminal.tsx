@@ -120,17 +120,17 @@ export default function AgentTerminal() {
   const visible = SCRIPT.slice(0, visibleCount);
 
   return (
-    <div className="overflow-hidden rounded-xl border border-line bg-surface">
+    <div className="card overflow-hidden">
       <div className="flex items-center gap-2 border-b border-line px-4 py-3">
         <span className="size-2.5 rounded-full bg-line" aria-hidden="true" />
         <span className="size-2.5 rounded-full bg-line" aria-hidden="true" />
         <span className="size-2.5 rounded-full bg-line" aria-hidden="true" />
-        <p className="ml-2 font-mono text-xs text-muted">outskill — agent</p>
+        <p className="num ml-2 text-[0.75rem] font-normal text-muted">outskill — agent</p>
         <button
           type="button"
           onClick={replay}
           disabled={!done}
-          className="font-label ml-auto rounded-full border border-line px-3 py-1 text-[11px] text-muted transition-colors hover:border-fg/40 hover:text-fg disabled:pointer-events-none disabled:opacity-40"
+          className="btn btn-ghost btn-sm ml-auto text-[0.8125rem] disabled:pointer-events-none disabled:opacity-40"
         >
           Replay
         </button>
@@ -139,7 +139,7 @@ export default function AgentTerminal() {
       <div
         role="img"
         aria-label="Terminal recording: an AI coding agent picks up ticket ENG-482, finds the root cause of a flaky test, patches it, runs the suite, and opens a pull request."
-        className="flex h-[26rem] flex-col justify-end overflow-hidden p-4 font-mono text-[13px] leading-relaxed sm:h-[30rem] sm:p-6 sm:text-sm"
+        className="flex h-[26rem] flex-col justify-end overflow-hidden p-4 font-mono text-[0.8125rem] leading-relaxed md:h-[30rem] md:p-6 md:text-[0.875rem]"
       >
         <div aria-hidden="true">
           {visible.map((line, i) => (

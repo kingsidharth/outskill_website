@@ -99,7 +99,7 @@ export const hero = {
   secondary: { label: 'See every option', href: '/#ladder' },
   /** The info blocks that sit next to the CTA. This pattern is load-bearing. */
   info: [
-    { label: 'Start date', value: '11 Sept 2026' },
+    { label: 'Start date', value: '12 Sept 2026' },
     { label: 'Start time', value: '7 PM IST' },
     { label: 'Duration', value: '2 days · 12 hrs' },
     { label: 'Format', value: 'Live online' },
