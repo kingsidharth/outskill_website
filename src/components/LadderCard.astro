@@ -1,4 +1,5 @@
 ---
+import { tierLabel } from '../data/ladder';
 /**
  * Value-ladder card. Reading order is fixed and non-negotiable:
  *   1. TIME   (display size, the first thing scanned)
@@ -31,12 +32,10 @@ const kindLabel = rung.cta.kind === 'apply' ? 'Application only' : rung.cta.kind
       <p class="mt-1 text-[0.9375rem] text-muted">{rung.format}</p>
     </div>
     <p class="shrink-0 text-right">
-      {rung.price.list && <span class="block text-[0.875rem] text-faint line-through">{rung.price.list}</span>}
-      <span class="num text-[1.375rem] text-accent">{rung.price.current}</span>
+      <span class="inline-block rounded-md border border-line px-2.5 py-1 text-[0.8125rem] font-semibold text-accent">{tierLabel(rung.cta.kind)}</span>
     </p>
   </div>
 
-  {rung.price.note && <p class="mt-2 text-[0.8125rem] text-muted">{rung.price.note}</p>}
 
   <p class="mt-5 text-[1.0625rem] leading-snug text-fg">{rung.outcome}</p>
 

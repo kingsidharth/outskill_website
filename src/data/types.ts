@@ -6,6 +6,8 @@ export type Level = { n: number; title: string; theory: string[]; skills: string
 export type FAQItem = { q: string; a: string };
 export type Price = { current: string; original?: string; note?: string };
 
+export type PricingBlock = { list?: string; current: string; includes: string[]; note?: string; ctaLabel: string; ctaHref: string; kind: CtaKind };
+
 export type Program = {
   slug: 'mastermind' | 'bootcamp' | 'accelerator' | 'fellowship';
   name: string;
@@ -24,6 +26,10 @@ export type Program = {
   audience: string[];
   faq: FAQItem[];
   seo: { title: string; description: string };
+  /** V3: amounts live ONLY here (BRIEF-V3 §2). */
+  pricing?: PricingBlock;
+  whatYouGet?: string[];
+  isThisForMe?: string[];
   /** ISO 8601 with the +05:30 offset, e.g. "2026-09-11T19:00:00+05:30". */
   nextCohortStart?: string;
   /** ISO 8601 with the +05:30 offset. Simplest honest rule: equals nextCohortStart. */

@@ -1,0 +1,49 @@
+---
+/**
+ * The ONLY place a rupee amount appears for a program (BRIEF-V3 §2).
+ * Props come from `program.pricing`. Apply-only rungs render a ghost button.
+ */
+import type { PricingBlock } from '../data/types';
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  pricing: PricingBlock;
+  programLabel: string;
+}
+
+const { id = 'pricing', eyebrow = 'Pricing', title = 'One number. Everything included.', pricing, programLabel } = Astro.props;
+const btn = pricing.kind === 'apply' ? 'btn btn-ghost' : 'btn btn-accent';
+---
+
+<section id={id} class="border-t border-line">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 md:py-20">
+    <p class="label text-accent">{eyebrow}</p>
+    <h2 class="display-lg mt-2 max-w-2xl">{title}</h2>
+
+    <div class="mt-8 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:gap-10">
+      <div class="card p-6 md:p-8">
+        <p class="label text-muted">{programLabel}</p>
+        <p class="mt-3">
+          {pricing.list && <span class="block text-[1.125rem] text-faint line-through">{pricing.list}</span>}
+          <span class="display-lg text-accent">{pricing.current}</span>
+        </p>
+        {pricing.note && <p class="mt-3 text-[0.9375rem] text-muted">{pricing.note}</p>}
+        <a href={pricing.ctaHref} class={`${btn} btn-block mt-6 sm:w-auto`}>{pricing.ctaLabel}</a>
+      </div>
+
+      <div>
+        <p class="label text-muted">What the price includes</p>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+          {pricing.includes.map((item) => (
+            <li class="flex items-start gap-3 text-[0.9375rem] leading-snug">
+              <span class="mt-[0.3rem] inline-block size-2 shrink-0 rounded-sm bg-accent" aria-hidden="true"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

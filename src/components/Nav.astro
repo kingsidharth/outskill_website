@@ -1,6 +1,6 @@
 ---
 import { site } from '../data/site';
-import { ladder } from '../data/ladder';
+import { ladder, tierLabel } from '../data/ladder';
 import type { NavLink } from '../data/types';
 
 interface Props {
@@ -65,8 +65,7 @@ const isActive = (href: string) => current === href;
                     <div class="flex items-baseline justify-between gap-4">
                       <span class="font-display text-[1.125rem] leading-none">{r.time}</span>
                       <span class="shrink-0 text-[0.9375rem] font-semibold text-accent">
-                        {r.price.list && <span class="mr-1.5 font-normal text-faint line-through">{r.price.list}</span>}
-                        {r.price.current}
+                        {tierLabel(r.cta.kind)}
                       </span>
                     </div>
                     <p class="mt-1.5 text-[0.875rem] leading-snug text-muted">{r.outcome}</p>
@@ -111,8 +110,7 @@ const isActive = (href: string) => current === href;
               <div class="flex items-baseline justify-between gap-3">
                 <span class="font-display text-[1.25rem] leading-none">{r.time}</span>
                 <span class="shrink-0 text-[0.9375rem] font-semibold text-accent">
-                  {r.price.list && <span class="mr-1.5 font-normal text-faint line-through">{r.price.list}</span>}
-                  {r.price.current}
+                  {tierLabel(r.cta.kind)}
                 </span>
               </div>
               <p class="mt-1.5 text-[0.875rem] leading-snug text-muted">{r.outcome}</p>

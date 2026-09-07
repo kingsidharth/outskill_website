@@ -1,0 +1,26 @@
+---
+/** Static ✓ checklist of deliverables (BRIEF-V3 §2). */
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  items: string[];
+}
+const { eyebrow = 'What you get', title = 'Everything on this list. Nothing off it.', items } = Astro.props;
+---
+
+<section class="border-t border-line">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 md:py-20">
+    <p class="label text-accent">{eyebrow}</p>
+    <h2 class="display-lg mt-2 max-w-2xl">{title}</h2>
+    <ul class="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((item) => (
+        <li class="flex items-start gap-3 border-b border-line py-3 text-[0.9375rem] leading-snug">
+          <svg viewBox="0 0 16 16" class="mt-[0.2rem] size-4 shrink-0 text-accent" fill="none" aria-hidden="true">
+            <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
