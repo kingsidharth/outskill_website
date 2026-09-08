@@ -122,7 +122,7 @@ const info: { label: string; value: string; live?: boolean }[] = [
     class="scroll-mt-16"
     eyebrow={w.icp}
     title="Things you can start using today."
-    lead="Five steps through the work you already do, the first three of them live in the session."
+    lead="Your work, in five steps. The first three run live."
   >
     <UseCaseLadder steps={w.steps} />
 
@@ -148,12 +148,12 @@ const info: { label: string; value: string; live?: boolean }[] = [
   }
 
   <!-- ==================== SOCIAL PROOF ==================== -->
-  <Section rule eyebrow="Who has done this" title="People who came out the other side.">
+  <Section rule eyebrow="Who has done this" title="Who has done this.">
     <SocialProof />
   </Section>
 
   <!-- ==================== MENTOR ==================== -->
-  <Section rule eyebrow="Who runs it" title="One person, live, for 90 minutes.">
+  <Section rule eyebrow="Who runs it" title="Who runs it.">
     <MentorCard mentor={mentor} />
   </Section>
 
@@ -163,7 +163,7 @@ const info: { label: string; value: string; live?: boolean }[] = [
     id="more"
     eyebrow="After the 90 minutes"
     title="Looking for something more serious?"
-    lead="The workshop is complete on its own; this is the order it goes in if you want more."
+    lead="The next steps, in order."
   >
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {nextRungs.map((r) => <LadderCard rung={r} featured={r.cta.kind === 'free'} />)}

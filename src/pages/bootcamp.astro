@@ -105,8 +105,8 @@ const outcomeCards = [
   <!-- ==================== OUTCOMES ==================== -->
   <Section
     eyebrow="What you leave with"
-    title="Two days later, something of yours is running."
-    lead="An agent you can start, hand a ticket, and watch work."
+    title="Two days later, your agent is running."
+    lead="Hand it a ticket. Watch it work."
   >
     <div class="grid gap-4 md:grid-cols-3 md:gap-5">
       {
@@ -125,9 +125,9 @@ const outcomeCards = [
   <Section
     rule
     id="loop"
-    eyebrow="The thing you are building"
-    title="The loop your agent runs on every task."
-    lead="Click a stage to see what it must get right, and what it carries."
+    eyebrow="What you build"
+    title="The loop your agent runs."
+    lead="Click a stage."
   >
     <AgentLoopExplorer client:visible />
   </Section>
@@ -138,7 +138,7 @@ const outcomeCards = [
     id="sessions"
     eyebrow="Two days, four sessions"
     title="One system layer per session."
-    lead="Each session ends with something runnable."
+    lead="Each session ends with something that runs."
   >
     <ol class="border-t border-line">
       {
@@ -175,7 +175,7 @@ const outcomeCards = [
     rule
     eyebrow="Who it's for"
     title="Build the tool. Don't wait for it."
-    lead="Programming experience and a repo you care about. No ML background assumed."
+    lead="You write code and have a repo you care about. No ML needed."
   >
     <div>
       <p class="label">You will be able to</p>
@@ -197,9 +197,8 @@ const outcomeCards = [
   <!-- ==================== ADJACENT RUNGS ==================== -->
   <Section
     rule
-    eyebrow="Not sure this is the right step"
-    title="One step down is free. One step up is longer."
-    lead="Trade down to test the water, or up to fourteen days of production practice."
+    eyebrow="Other steps"
+    title="One step down is free. One up is longer."
   >
     <div class="grid gap-4 md:grid-cols-2 md:gap-5">
       <LadderCard rung={before} featured />
@@ -245,7 +244,7 @@ const outcomeCards = [
     rule
     eyebrow="Scope"
     title="What we cover. What we don't."
-    lead="Two days buy depth in one place, not coverage everywhere."
+    lead="Depth in one place."
   >
     <div class="grid gap-8 md:grid-cols-2 md:gap-12">
       <div>
@@ -276,9 +275,8 @@ const outcomeCards = [
   <!-- ==================== IS THIS FOR ME ==================== -->
   <Section
     rule
-    eyebrow="Is this for me?"
-    title="Tick what is true. The answer updates."
-    lead="Nothing is stored. This is for you, not for us."
+    eyebrow="Fit"
+    title="Is this program right for you?"
   >
     <IsThisForMe
       client:visible
@@ -300,7 +298,7 @@ const outcomeCards = [
     id="register"
     eyebrow="Enrol"
     title="Take the seat."
-    lead="Leave your email. We send the schedule, the prerequisites, and the payment link."
+    lead="Leave your email. Schedule, prerequisites and payment link follow."
   >
     <div class="card max-w-2xl p-5 md:p-7">
       <form id="register-form" data-program={bootcamp.slug} class="flex flex-col gap-3 sm:flex-row">
@@ -318,7 +316,7 @@ const outcomeCards = [
       </form>
       <p id="register-msg" role="status" class="mt-3 min-h-6 text-[0.9375rem] text-accent"></p>
       <p class="mt-1 text-[0.8125rem] text-muted">
-        One email with the details. Nothing is charged from this form.
+        One email with details. Nothing is charged here.
       </p>
     </div>
   </Section>

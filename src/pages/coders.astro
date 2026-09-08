@@ -81,8 +81,7 @@ const info = mastermind.stats;
       <aside class="card flex flex-col justify-center border-dashed p-5 md:p-7">
         <p class="heading-sm">Not sure how far to go?</p>
         <p class="mt-2 text-[0.9375rem] text-muted">
-          Everyone starts at step 0 or 1. Both cost nothing, and nothing above them is worth paying for until an
-          agent has opened a diff you were willing to merge.
+          Start at step 0 or 1. Both are free.
         </p>
         <a href="/mastermind" class="btn btn-ghost btn-sm mt-5 self-start">Start with the free weekend</a>
       </aside>
@@ -109,7 +108,7 @@ const info = mastermind.stats;
   <Section rule eyebrow={codersWorkshops.eyebrow} title={codersWorkshops.title} lead={codersWorkshops.lead}>
     <ToolLogos slugs={coderWorkshops.map((w) => w.slug)} label="Tools the 90 min Workshop runs in for coders" />
     <p class="mt-6 text-[0.9375rem] text-muted">
-      Free, live, and recorded. Runs every other day — take the next one that fits your week.
+      Free, live, recorded. Every other day.
     </p>
     <a href="/workshops" class="btn btn-ghost mt-6">See the 90 min Workshop</a>
   </Section>
@@ -126,8 +125,7 @@ const info = mastermind.stats;
         <p class="eyebrow">{codersCta.eyebrow}</p>
         <h2 class="display-lg mt-3">{codersCta.title}</h2>
         <p class="mt-4 max-w-xl text-[1.0625rem] text-muted md:text-[1.125rem]">
-          Two days, twelve hours, live. Listed at {mastermind.price.original}; free with the coupon on the
-          Mastermind page until the cohort starts.
+          Two days, twelve hours, live. Free with the quiz coupon.
         </p>
         <div class="mt-8">
           <a href={codersCta.ctaHref} class="btn btn-accent w-full sm:w-auto">{codersCta.ctaLabel}</a>

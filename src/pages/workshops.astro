@@ -58,31 +58,27 @@ const steps: LadderStep[] = [
 const faq: FAQItem[] = [
   {
     q: 'Is it really free?',
-    a: 'Yes. Ninety minutes, live, nothing to pay. There is a paid ladder above it and you will hear that it exists.',
+    a: 'Yes. Ninety minutes, live, nothing to pay.',
   },
   {
     q: 'How often does it run?',
-    a: 'Every other day at 7:00 PM IST, live. The date at the top of this page is the next session; if it does not fit, take the one after it.',
+    a: 'Every other day, 7:00 PM IST. The date at the top is the next one.',
   },
   {
     q: 'Which tool do I pick?',
-    a: 'The one you already have open. You choose it when you book — about ninety per cent of the session is the same either way.',
+    a: 'The one you already have open. Ninety per cent of the session is the same.',
   },
   {
     q: 'I do not write code. Is this for me?',
-    a: 'Yes. The ChatGPT, AI for PMs, and AI for Founders flavours run entirely in a browser. Nothing to install, no terminal.',
+    a: 'Yes. ChatGPT, AI for PMs and AI for Founders run in a browser. No terminal.',
   },
   {
     q: 'What do I need before the session?',
-    a: 'A laptop, an account in the tool, and one real task of your own. Setup is not part of the 90 minutes, so do the account bit beforehand.',
+    a: 'A laptop, an account in the tool, one real task. Sign in beforehand.',
   },
   {
     q: 'Is there a recording?',
-    a: 'Yes, sent afterwards. You build during the session though — watching later is not the same session.',
-  },
-  {
-    q: 'Where does the registration link go?',
-    a: 'To outskill.com, where the seat is booked. Per-workshop links are not live yet, so they all point at the same place for now.',
+    a: 'Yes, sent afterwards. But you build during the session, so come live.',
   },
 ];
 ---
@@ -104,18 +100,18 @@ const faq: FAQItem[] = [
 
         <!--
           The audience list is set as type, not as a paragraph: a second
-          display line. Both lines are display classes (>= 1.75rem), which is
+          display line. Both lines are display classes (at least 1.75rem), which is
           the only place tracking is allowed to exist.
         -->
-        <h1 class="mt-3">
-          <span class="display-xl block">Unlock AI productivity for</span>
-          <span class="display-md mt-2 block text-muted"
-            >coders, SWEs, QA, SDEs, DevOps, data folks and PMs.</span
-          >
-        </h1>
+        <h1 class="display-xl mt-3">Unlock AI productivity.</h1>
+        <ul class="mt-4 flex flex-wrap gap-2" aria-label="Who this is for">
+          {['Coders', 'SWEs', 'QA', 'SDEs', 'DevOps', 'Data folks', 'PMs'].map((r) => (
+            <li class="rounded-md border border-line px-2.5 py-1 text-[0.875rem] font-semibold text-fg">{r}</li>
+          ))}
+        </ul>
 
         <p class="mt-4 max-w-[30rem] text-[1.0625rem] text-muted md:text-[1.25rem]">
-          You build one working thing before the 90 minutes are up.
+          Build one working thing before the 90 minutes are up.
         </p>
 
         <!-- Duration / When / Format / Price. "When" is an island because the
@@ -184,14 +180,14 @@ const faq: FAQItem[] = [
     id="pick"
     class="scroll-mt-16"
     eyebrow="Pick your tool"
-    title="Same 90 minutes, in the tool you already have open."
-    lead="You choose the flavour when you book — there is one session and one seat to reserve."
+    title="Same session. Your tool."
+    lead="Pick the flavour when you book."
   >
     <ToolLogos label="Tools the 90 min Workshop runs in" />
 
     <div class="mt-8 flex flex-col gap-4 border-t border-line pt-7 sm:flex-row sm:items-center sm:justify-between">
       <p class="max-w-xl text-[0.9375rem] text-muted">
-        Bring a laptop, an account in the tool, and one real task of your own.
+        Bring a laptop, an account in the tool, and one real task.
       </p>
       <a href={registerHref} class="btn btn-accent w-full shrink-0 sm:w-auto">Reserve a seat</a>
     </div>
@@ -204,18 +200,18 @@ const faq: FAQItem[] = [
     class="scroll-mt-16"
     eyebrow="A coder's day"
     title="Things you can start using today."
-    lead="Five steps through the work you already do, the first three of them live in the session."
+    lead="Your day, in five steps. The first three run live."
   >
     <UseCaseLadder steps={steps} />
   </Section>
 
   <!-- ==================== SOCIAL PROOF ==================== -->
-  <Section rule eyebrow="Who has done this" title="People who came out the other side.">
+  <Section rule eyebrow="Who has done this" title="Who has done this.">
     <SocialProof />
   </Section>
 
   <!-- ==================== MENTOR ==================== -->
-  <Section rule eyebrow="Who runs it" title="One person, live, for 90 minutes.">
+  <Section rule eyebrow="Who runs it" title="Who runs it.">
     <MentorCard mentor={mentor} />
   </Section>
 
@@ -225,7 +221,7 @@ const faq: FAQItem[] = [
     id="more"
     eyebrow="After the 90 minutes"
     title="Looking for something more serious?"
-    lead="The workshop is complete on its own; this is the order it goes in if you want more."
+    lead="The next steps, in order."
   >
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {nextRungs.map((r) => <LadderCard rung={r} featured={r.cta.kind === 'free'} />)}

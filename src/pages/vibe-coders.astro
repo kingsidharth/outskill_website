@@ -103,8 +103,8 @@ const nextSession = formatIST(nextWorkshopSession());
   <!-- ==================== OUTCOMES ==================== -->
   <Section
     eyebrow="What you leave with"
-    title="Three things, all of which run."
-    lead="Not notes, not a certificate. Something you can open on Monday and hand to somebody else."
+    title="Three things you leave with. All of them run."
+    lead="Open it Monday. Hand it to someone."
   >
     <div class="grid gap-4 md:grid-cols-3 md:gap-5">
       {
@@ -123,8 +123,8 @@ const nextSession = formatIST(nextWorkshopSession());
     id="ladder"
     rule
     eyebrow="Where to start"
-    title="Both free steps, then a weekend."
-    lead="You do not need to write code for any of these. Each one leads with the hours and the price, because that is the part you have to find first."
+    title="Two free steps, then a weekend."
+    lead="No code needed for any of these."
   >
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {vibeLadder.map((r) => <LadderCard rung={r} featured={r.price.current === 'Free'} />)}
@@ -132,8 +132,7 @@ const nextSession = formatIST(nextWorkshopSession());
       <aside class="card flex flex-col justify-center border-dashed p-5 md:p-7">
         <p class="heading-sm">When you are ready to write code</p>
         <p class="mt-2 text-[0.9375rem] text-muted">
-          The moment your prototype needs real data, payments, or other people depending on it, the ladder
-          keeps going — Bootcamp, Accelerator, Fellowship. Those assume you write software.
+          When your prototype needs real data, payments or users, the coder track continues: Bootcamp, Accelerator, Fellowship.
         </p>
         <a href="/coders" class="btn btn-ghost btn-sm mt-5 self-start">See the coder track</a>
       </aside>
@@ -144,8 +143,8 @@ const nextSession = formatIST(nextWorkshopSession());
   <Section
     rule
     eyebrow="What you need"
-    title="A laptop and an account. That is the whole list."
-    lead="Setup is not part of the 90 minutes, so the only thing to do beforehand is sign in."
+    title="A laptop and an account. That’s the list."
+    lead="Sign in before the session starts."
   >
     <ul class="max-w-3xl border-t border-line">
       {

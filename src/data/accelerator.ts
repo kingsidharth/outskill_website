@@ -35,7 +35,7 @@ export const accelerator: Program & AcceleratorExtras = {
   name: '14 days Accelerator',
   eyebrow: '14 days · daily · live',
   headline: 'Fourteen days. Seven apps. One in production.',
-  subhead: 'Build AI software end to end, then run one of them for real.',
+  subhead: 'Build seven AI apps end to end. Run one for real.',
   ctaLabel: 'Apply now',
   ctaHref: '#apply',
   stats: [{ label: 'Duration', value: '14 days' }, { label: 'Applications', value: '7+ built' }, { label: 'Training', value: '70+ hours' }, { label: 'Updates', value: '1 year live' }],
@@ -43,16 +43,16 @@ export const accelerator: Program & AcceleratorExtras = {
 
   /* ---------------------------------------------------------------- skills */
   skills: [
-    { title: 'Build ChatGPT / Perplexity-like apps.', body: 'Chat, search and multimodal interfaces, wired to more than one provider.' },
-    { title: 'Sophisticated apps & automations with AI.', body: 'End-to-end workflows that do real work, with an interface people can use.' },
-    { title: 'Customise AI with your data.', body: 'Documents, media and private records the model answers from.' },
-    { title: 'Demo to production.', body: 'How do you scale, monitor, measure and control this once it is live?' },
-    { title: 'Build your own Cursor / Claude Code.', body: 'An agent that reads, writes and changes code — and your own productivity around it.' },
-    { title: 'Build an AI team.', body: 'Specialist agents that hand work to each other and report what they did.' },
+    { title: 'Build ChatGPT / Perplexity-like apps.', body: 'Chat, search, multimodal. More than one provider.' },
+    { title: 'Sophisticated apps & automations with AI.', body: 'Workflows that do real work, with an interface people use.' },
+    { title: 'Customise AI with your data.', body: 'Your documents, media and records. The model answers from them.' },
+    { title: 'Demo to production.', body: 'Scale it, monitor it, measure it, control it.' },
+    { title: 'Build your own Cursor / Claude Code.', body: 'An agent that reads, writes and changes code for you.' },
+    { title: 'Build an AI team.', body: 'Specialist agents that hand work to each other and report back.' },
   ],
   hackathon: {
     title: 'Hackathon',
-    body: 'Steal the skills by putting them to use. You build with other people in the room.',
+    body: 'Steal the skills by using them. Build with the room.',
   },
   network: {
     title: 'Network',
@@ -61,11 +61,11 @@ export const accelerator: Program & AcceleratorExtras = {
 
   /* --------------------------------------------------- the stack, as benefits */
   stackBenefits: [
-    { title: 'AI as part of software', body: 'Where the model sits in a system that already has users, data and rules.' },
-    { title: 'Control & hallucination', body: 'How you constrain output, verify it, and make it useful rather than plausible.' },
-    { title: 'Deployment', body: 'Getting it off your laptop, and keeping it up once it is out there.' },
-    { title: 'Customisation', body: 'Making it answer from your data, in your format, with your guardrails.' },
-    { title: 'Cost prediction & control', body: 'Knowing the bill before it arrives, and holding it where you want it.' },
+    { title: 'AI as part of software', body: 'Where the model sits in a system with users, data and rules.' },
+    { title: 'Control & hallucination', body: 'Constrain output. Verify it. Make it useful, not plausible.' },
+    { title: 'Deployment', body: 'Off your laptop. Staying up.' },
+    { title: 'Customisation', body: 'Your data, your format, your guardrails.' },
+    { title: 'Cost prediction & control', body: 'Know the bill before it arrives. Hold it there.' },
   ],
 
   /* ------------------------------------------------------------- community */
@@ -80,7 +80,7 @@ export const accelerator: Program & AcceleratorExtras = {
   /* -------------------------------------------------------- python basecamp */
   pythonBasecamp: {
     title: 'Python Basecamp',
-    body: 'A fresher session plus resources, so day one does not start with syntax.',
+    body: 'A refresher session and resources, so day one is not about syntax.',
     helpsIf: [
       "You're not familiar with Python",
       "You haven't coded in a while",
@@ -145,45 +145,16 @@ export const accelerator: Program & AcceleratorExtras = {
   /* ------------------------------------------------------------ V3 pricing */
   pricing: {
     current: '₹1,25,000',
-    includes: [
-      '14 live days, back to back',
-      '70+ hours of core training',
-      '7+ applications built end to end',
-      'Capstone hackathon and deployment',
-      'Python Basecamp, before day one',
-      'Tool and workflow deep dives',
-      'Business foundations sessions',
-      'Monetisation modules',
-      'Weekly AI updates for a year',
-    ],
-    note: 'Applications reviewed in 48 hours. Nothing is charged on this page.',
+    includes: ['14 live days, back to back', '70+ hours of training', '7+ apps, capstone hackathon', 'Python Basecamp, free', 'Business and monetisation modules', 'Weekly AI updates for a year'],
+    note: 'Reviewed in 48 hours. Nothing is charged here.',
     ctaLabel: 'Apply now',
     ctaHref: '#apply',
     kind: 'apply',
   },
 
-  whatYouGet: [
-    'Seven or more applications built and deployed',
-    'One system taken to production, not to a demo',
-    'Evals you can point at when someone asks if it works',
-    'Cost limits and monitoring on live traffic',
-    'A retrieval system grounded in your own data',
-    'A coding agent you built yourself',
-    'A team of agents running a real workflow',
-    'Model choices you can defend on cost and latency',
-    'Python Basecamp access before the cohort starts',
-    'A year of live AI updates after it ends',
-  ],
+  whatYouGet: ['7+ apps built and deployed', 'One system in production', 'Evals, cost limits, monitoring on live traffic', 'A retrieval system on your own data', 'A coding agent and a team of agents, built by you', 'A year of live AI updates'],
 
-  isThisForMe: [
-    'I write code, or I can read it comfortably',
-    'I can clear fourteen days back to back',
-    'I have shipped something with an LLM already',
-    'My prototypes stall before they reach users',
-    'I need to justify model and cost decisions at work',
-    'I want to build agents, not just call an API',
-    'I would rather build in a room than watch recordings',
-  ],
+  isThisForMe: ['I write code, or read it comfortably', 'I can clear fourteen days', 'I have shipped something with an LLM', 'My prototypes stall before users', 'I want to build agents, not just call an API'],
 
   features: [
     { title: 'LLM applications', body: 'Build provider-aware chat and multimodal applications with production concerns in view.' },
@@ -204,17 +175,17 @@ export const accelerator: Program & AcceleratorExtras = {
     { n: 6, title: 'Multi-Agent AI Systems', days: 'Days 12–13', focus: 'Advanced agentic architecture', learn: ['Engineering agents', 'Project bots', 'Memory-enabled teams'], ship: 'A team of agents for a development workflow.', tools: ['Discord', 'Queues', 'Agent memory'] },
     { n: 7, title: 'Capstone Hackathon', days: 'Days 13–14', focus: 'Portfolio project', learn: ['Original product scope', 'Production deployment', 'Technical presentation'], ship: 'A real AI product that demonstrates your engineering.', tools: ['Your stack', 'CI/CD', 'Cloud deployment'] },
   ],
-  outcomes: ['Seven or more AI applications built and deployed, not sketched', 'One system taken to production with evals, cost limits, and monitoring', 'Applications that answer from your own documents and media', 'A team of agents that completes a real development workflow', 'Model choices you can defend with latency, cost, and eval evidence', 'A year of live updates so the work does not go stale'],
+  outcomes: ['7+ AI apps built and deployed', 'One system in production with evals and monitoring', 'Model choices you can defend'],
   audience: ['Engineers who want the full AI application stack', 'Developers moving from experiments to deployed systems', 'Technical founders building a portfolio of products', 'People who can clear fourteen days back-to-back for this'],
   faq: [
-    { q: 'What is the AI Engineering Accelerator?', a: 'Fourteen back-to-back days covering applications, automation, RAG, agents, multi-agent systems, and production deployment, ending in a capstone you deploy.' },
-    { q: 'Is coding background needed?', a: 'Yes. The program is built for engineers and assumes basic programming comfort. Python Basecamp is there if you are rusty.' },
-    { q: 'How much time do I need to dedicate?', a: 'All fourteen days, back to back. The 70+ hours of core training plus build time run at full-time intensity, so plan for it the way you would plan leave.' },
-    { q: 'Why apply instead of buying a seat?', a: 'Fourteen back-to-back days only works if the cohort is ready for it. Applications are reviewed in 48 hours.' },
-    { q: 'What if I am not a Python developer?', a: 'Python Basecamp is included and free: a fresher session and resources that get you to the level day one assumes.' },
-    { q: 'Will I receive a certificate upon completion?', a: 'Completion details and any certificate process are shared with participants once they are selected.' },
-    { q: 'What is the format of the learning?', a: 'Live sessions every day for fourteen days, with the build work happening between them, plus one year of AI updates afterwards.' },
-    { q: 'What are the add-on libraries?', a: 'The wider program includes tool and workflow deep dives, business foundations, monetization modules, and weekly AI updates.' },
+    { q: 'What is the Accelerator?', a: 'Fourteen days back to back: apps, automation, RAG, agents, multi-agent, production. Ends in a capstone you deploy.' },
+    { q: 'Do I need to code?', a: 'Yes. Basic programming comfort. Python Basecamp covers rust.' },
+    { q: 'How much time?', a: 'All fourteen days, full time. Plan it like leave.' },
+    { q: 'Why apply instead of buying?', a: 'Fourteen days only works if the cohort is ready. Reviewed in 48 hours.' },
+    { q: 'What if I am not a Python developer?', a: 'Python Basecamp is included, free, and gets you to day-one level.' },
+    { q: 'Is there a certificate?', a: 'Completion details are shared once you are selected.' },
+    { q: 'What is the format?', a: 'Live sessions daily, build work between them, one year of AI updates after.' },
+    { q: 'What else is included?', a: 'Tool and workflow deep dives, business foundations, monetisation modules, weekly AI updates.' },
   ],
   seo: { title: '14 days back-to-back — take one AI system to production', description: 'Seven or more applications built in fourteen back-to-back days, and one of them deployed with evals, cost controls, and monitoring. Application only.' },
 };

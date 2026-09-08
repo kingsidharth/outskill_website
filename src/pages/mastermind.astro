@@ -77,11 +77,11 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
             <span class="display-md">Free with coupon</span>
           </p>
           <p class="mt-3 max-w-sm text-[0.9375rem] text-muted">
-            One coupon takes it to zero, and it stops working the moment the weekend starts.
+            The coupon takes it to zero. It expires when the weekend starts.
           </p>
           <a href="/quiz" class="btn btn-ghost btn-block mt-5 sm:w-auto">Check your AI knowledge</a>
           <p class="mt-2.5 max-w-sm text-[0.8125rem] text-muted">
-            Pass the four questions, or don't — the coupon is on the result page.
+            Pass or fail, the coupon is on the result page.
           </p>
         </div>
 
@@ -93,8 +93,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
   <!-- ==================== TOPICS ==================== -->
   <Section
     eyebrow="What you leave with"
-    title="Five things that end in something running."
-    lead="Each block is a working result you keep, not a slide about it."
+    title="Five things you leave with. All running."
   >
     <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {
@@ -114,7 +113,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     rule
     eyebrow="Show, don't tell"
     title="Ticket in. Pull request out."
-    lead="This is the loop you take apart and rebuild across the weekend."
+    lead="The loop you rebuild over the weekend."
   >
     <AgentTerminal client:visible />
   </Section>
@@ -151,14 +150,13 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
   </Section>
 
   <!-- ==================== WHAT YOU GET ==================== -->
-  <WhatYouGet items={mastermind.whatYouGet ?? []} title="Twelve hours. This is what is in them." />
+  <WhatYouGet items={mastermind.whatYouGet ?? []} title="Twelve hours. What’s in them." />
 
   <!-- ==================== QUIZ ==================== -->
   <Section rule eyebrow="Four questions" title="Think you already get LLMs?">
     <div class="card max-w-2xl p-5 md:p-8">
       <p class="text-[1.0625rem] leading-relaxed md:text-[1.125rem]">
-        Four questions engineers get wrong, two minutes, nothing stored — and the coupon waits on the
-        result page whatever you score.
+        Four questions engineers get wrong. Two minutes. The coupon is on the result page.
       </p>
       <a href="/quiz" class="btn btn-accent btn-block mt-6 sm:w-auto">Check your AI knowledge</a>
     </div>
@@ -167,9 +165,8 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
   <!-- ==================== IS THIS FOR ME ==================== -->
   <Section
     rule
-    eyebrow="Is this for me?"
-    title="Tick what is true. The answer updates."
-    lead="Nothing is stored — this is for you, not for us."
+    eyebrow="Fit"
+    title="Is this program right for you?"
   >
     <IsThisForMe
       client:visible
@@ -193,7 +190,7 @@ const info = mastermind.stats.map((s) => (s.label === 'Start date' ? { ...s, val
     rule
     eyebrow="Register"
     title="Save your seat."
-    lead="Leave your email and the joining links follow."
+    lead="Leave your email. Joining links follow."
   >
     <form id="register-form" data-program={mastermind.slug} class="flex max-w-lg flex-col gap-3 sm:flex-row">
       <label for="register-email" class="sr-only">Email address</label>

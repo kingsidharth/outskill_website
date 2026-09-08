@@ -6,7 +6,7 @@ import type { FAQItem, InfoBlock, Program, Site } from './types';
 
 export const site: Site = {
   name: 'Outskill',
-  tagline: 'Learn AI engineering by shipping it.',
+  tagline: 'AI engineering. Taught by shipping.',
   /**
    * Nav per BRIEF-V2: businesses, newsletter, and an "Explore Courses" menu
    * that lists programs by time x cost x outcome (built from ladder.ts in
@@ -55,8 +55,8 @@ export const site: Site = {
   ],
   /** Retained for the V1 ProgramPicker island; the V2 homepage uses PathChooser. */
   hub: {
-    headline: 'Pick the program that matches where you are.',
-    subhead: 'Answer three questions. Get a practical next step for your AI engineering work.',
+    headline: 'Which program fits you?',
+    subhead: 'Three questions. One next step.',
     picker: [
       {
         question: 'How much coding experience do you have?',
@@ -94,9 +94,9 @@ export const programs: Program[] = [mastermind, bootcamp, accelerator, fellowshi
 
 export const hero = {
   headline: 'Ship something with AI this weekend.',
-  subhead: 'Two days, live, free. You leave with working demos — not notes.',
+  subhead: 'Two days. Live. Free. You leave with demos that run.',
   cta: { label: 'Claim your free seat', href: '/mastermind#register' },
-  secondary: { label: 'See every option', href: '/#ladder' },
+  secondary: { label: 'Compare programs', href: '/#ladder' },
   /** The info blocks that sit next to the CTA. This pattern is load-bearing. */
   info: [
     { label: 'Start date', value: '11 Sept 2026' },
@@ -112,8 +112,8 @@ export const hero = {
 };
 
 export const trust = {
-  line: 'Backed by 80+ angel investors, including the founders behind some of India’s largest consumer companies.',
-  logosNote: 'Tools you build with in the sessions',
+  line: 'Backed by 80+ angel investors, including founders of India’s largest consumer companies.',
+  logosNote: 'Tools you build with',
 };
 
 export const paths = [
@@ -121,8 +121,8 @@ export const paths = [
     slug: 'coders',
     kicker: 'You already write code',
     title: 'For Coders',
-    body: 'Move from autocomplete to handing an agent a whole ticket — and reviewing what it opens. Production practice: evals, cost, monitoring.',
-    points: ['Agentic coding in your own repo', 'MCP, tools, and multi-agent workflows', 'Evals, cost controls, and on-call reality'],
+    body: 'Hand an agent a whole ticket. Review the PR it opens.',
+    points: ['Agents in your own repo', 'MCP, tools, multi-agent', 'Evals, cost, monitoring'],
     href: '/coders',
     cta: 'See the coder track',
   },
@@ -130,8 +130,8 @@ export const paths = [
     slug: 'vibe-coders',
     kicker: 'You build with AI, not syntax',
     title: 'For Vibe Coders',
-    body: 'Turn an idea into something people can click, without learning a language first. Then learn just enough engineering to make it hold up.',
-    points: ['Prototype to clickable in one session', 'Wire real data and payments in', 'Know when to hand it to an engineer'],
+    body: 'Turn an idea into something people can click. No language to learn first.',
+    points: ['Clickable prototype in one session', 'Real data and payments', 'Know when to call an engineer'],
     href: '/vibe-coders',
     cta: 'See the vibe track',
   },
@@ -141,43 +141,43 @@ export const outcomes = [
   {
     metric: '3 demos',
     title: 'By Sunday night',
-    body: 'Mastermind attendees leave the weekend with three running agent demos they built themselves, plus the recording to rebuild them.',
+    body: 'You build all three over the weekend. Recording included.',
   },
   {
     metric: '1 agent',
-    title: 'Deployed, not slide-ware',
-    body: 'Bootcamp ends when your own coding agent plans a task, writes the code, runs the tests, and opens the pull request.',
+    title: 'Opens its own PR',
+    body: 'The Bootcamp ends when your agent plans, codes, tests, and opens the pull request.',
   },
   {
     metric: '1 system',
     title: 'In production',
-    body: 'Accelerator and Fellowship take one system past the demo line: evaluated, cost-bounded, monitored, and defended in review.',
+    body: 'Accelerator and Fellowship: evaluated, cost-capped, monitored, defended in review.',
   },
 ];
 
 export const homeFaq: FAQItem[] = [
   {
     q: 'What does it cost to start?',
-    a: 'Nothing. The 90-minute workshops are free and the Weekend Mastermind is free with the coupon that unlocks on its page. You only pay when you move up to the Bootcamp or beyond.',
+    a: 'Nothing. Workshops are free. The Mastermind is free with the coupon from the quiz. You pay from the Bootcamp up.',
   },
   {
     q: 'I cannot write code. Is this for me?',
-    a: 'Yes — take the vibe coder path. The ChatGPT and AI for PMs workshops assume no code, and the Mastermind is built so both audiences can follow along.',
+    a: 'Yes. Take the vibe coder path. The ChatGPT and AI for PMs workshops need no code.',
   },
   {
     q: 'I write code professionally. Will this be too basic?',
-    a: 'Start at the Claude Code, Codex, or Copilot workshop, then the 2-Day Bootcamp. Those assume you already ship software and spend the time on agent architecture, evals, and review instead of syntax.',
+    a: 'No. Start with the Claude Code, Codex or Copilot workshop, then the Bootcamp. Both assume you ship software already.',
   },
   {
     q: 'Is everything live, or can I watch recordings?',
-    a: 'Sessions are live so you can ask questions while you build. Recordings follow, but the value is in doing the work during the session.',
+    a: 'Live, with recordings after. You build during the session, so come live.',
   },
   {
     q: 'How much time do I actually need each week?',
-    a: '90 minutes for a workshop. One weekend for the Mastermind. The 2-Day Bootcamp is two days, four live sessions. The Fellowship is weekends only for six months, so you can keep your job.',
+    a: 'Workshop: 90 minutes. Mastermind: one weekend. Bootcamp: two days. Accelerator: 14 full days. Fellowship: weekends for six months.',
   },
   {
     q: 'What is the difference between the Accelerator and the Fellowship?',
-    a: 'The Accelerator is 14 back-to-back days at full-time intensity. The Fellowship spreads six months across weekends: four months of learning, then two months building a capstone. Both are application-only.',
+    a: 'Speed versus depth. Accelerator: 14 days back to back. Fellowship: six months of weekends, ending in a two-month capstone. Both by application.',
   },
 ];

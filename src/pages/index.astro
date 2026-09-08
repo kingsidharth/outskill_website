@@ -79,8 +79,8 @@ const nextSession = formatIST(nextWorkshopSession());
   <Section
     id="ladder"
     eyebrow="Pick by commitment"
-    title="Start with the time you actually have."
-    lead="Every step below leads with what it costs you in hours and rupees, and what you leave with. The name of the program is the least interesting part."
+    title="Start with the time you have."
+    lead="Hours, price, outcome. Pick a step."
   >
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {ladder.map((r) => <LadderCard rung={r} featured={r.price.current === 'Free'} />)}
@@ -88,8 +88,7 @@ const nextSession = formatIST(nextWorkshopSession());
       <aside class="card flex flex-col justify-center border-dashed p-5 md:p-7">
         <p class="heading-sm">Not sure how far to go?</p>
         <p class="mt-2 text-[0.9375rem] text-muted">
-          Everyone starts at step 0 or 1. Both are free, and nothing above them is worth paying for until you
-          have shipped something small.
+          Start at step 0 or 1. Both are free.
         </p>
         <a href="#paths" class="btn btn-ghost btn-sm mt-5 self-start">Choose a path instead</a>
       </aside>
@@ -101,8 +100,8 @@ const nextSession = formatIST(nextWorkshopSession());
     id="paths"
     rule
     eyebrow="Choose your path"
-    title="Two ways in. Pick the one that sounds like your week."
-    lead="Same ideas, different starting point. You can switch later — plenty do."
+    title="Two ways in."
+    lead="Pick the one that sounds like your week. Switch later if you like."
   >
     <PathSplit />
     <div class="mt-6">
@@ -115,8 +114,8 @@ const nextSession = formatIST(nextWorkshopSession());
     id="workshops"
     rule
     eyebrow="Step 0 · Free"
-    title="90 minutes, in the tool you already use."
-    lead="Same session, six flavours — you build one working thing while it runs."
+    title="90 minutes. Your tool. One working thing."
+    lead="Free, live, every other day."
   >
     <div class="card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between md:p-6">
       <div>
@@ -126,7 +125,7 @@ const nextSession = formatIST(nextWorkshopSession());
         </p>
       </div>
       <p class="text-[0.9375rem] text-muted sm:max-w-xs">
-        Runs every other day. Free, live, and recorded — take the next one that fits.
+        Every other day. Free, live, recorded.
       </p>
     </div>
 
@@ -144,7 +143,7 @@ const nextSession = formatIST(nextWorkshopSession());
     rule
     eyebrow="What you leave with"
     title="Every step ends in something that runs."
-    lead="Not a certificate, not a notebook of slides. A thing you can open, show, and keep working on."
+    lead="Not a certificate. Something you can open, show, and keep."
   >
     <div class="grid gap-4 md:grid-cols-3 md:gap-5">
       {

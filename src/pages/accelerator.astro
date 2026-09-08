@@ -88,9 +88,9 @@ const info: InfoBlock[] = [
   <!-- ==================== SKILLS ==================== -->
   <Section
     id="skills"
-    eyebrow="What you learn to build"
+    eyebrow="What you build"
     title="Six things you can build after."
-    lead="Not topics. Things that run, that someone else can open and use."
+    lead="Not topics. Things that run."
   >
     <SkillsList items={accelerator.skills} />
 
@@ -111,8 +111,8 @@ const info: InfoBlock[] = [
     rule
     id="curriculum"
     eyebrow="The fourteen days"
-    title="Open a day to see what it asks."
-    lead="Every block ends with something shippable. Tap one for the focus and what you walk out with."
+    title="Fourteen days, day by day."
+    lead="Tap a block."
   >
     <SprintTimeline client:visible sprints={accelerator.sprints} />
   </Section>
@@ -122,7 +122,7 @@ const info: InfoBlock[] = [
     rule
     eyebrow="The stack"
     title="Five questions the stack answers."
-    lead="Tools change every quarter. These questions do not."
+    lead="Tools change every quarter. These questions don’t."
   >
     <StackBenefits items={accelerator.stackBenefits} />
   </Section>
@@ -136,8 +136,8 @@ const info: InfoBlock[] = [
   <Section
     rule
     eyebrow="Before day one"
-    title="Rusty Python? Not a problem."
-    lead="Basecamp runs before the cohort. It is free and it is included either way."
+    title="Rusty Python? Fine."
+    lead="Basecamp runs before day one. Free, included."
   >
     <PythonBasecamp
       title={accelerator.pythonBasecamp.title}
@@ -151,7 +151,7 @@ const info: InfoBlock[] = [
     rule
     eyebrow="Scope"
     title="What we cover. What we don't."
-    lead="Fourteen days buys depth in one direction. Here is which one."
+    lead="Depth in one direction."
   >
     <CoverDontCover cover={accelerator.cover} dontCover={accelerator.dontCover} />
   </Section>
@@ -162,7 +162,7 @@ const info: InfoBlock[] = [
     id="still-unsure"
     eyebrow="Still unsure?"
     title="Six questions. Answer honestly."
-    lead="If most of these make you curious, this is your room. If not, we will say so."
+    lead="Curious about most of them? This is your room."
   >
     <StillUnsure
       client:visible
@@ -189,7 +189,7 @@ const info: InfoBlock[] = [
     rule
     eyebrow="How we solve for"
     title="The twelve problems in the way."
-    lead="Each one gets worked through on something you are building, not on a slide."
+    lead="Each one, worked through on something you build."
   >
     <SolveFor items={accelerator.solveFor} />
   </Section>
@@ -201,9 +201,8 @@ const info: InfoBlock[] = [
   <Section
     rule
     id="fit"
-    eyebrow="Is this for me?"
-    title="Tick what is true for you."
-    lead="Nothing is sent anywhere. It only changes the line at the bottom."
+    eyebrow="Fit"
+    title="Is this program right for you?"
   >
     <IsThisForMe
       client:visible
@@ -220,7 +219,7 @@ const info: InfoBlock[] = [
   <PricingSection
     pricing={accelerator.pricing}
     programLabel="14 days Accelerator"
-    title="One number. Applications reviewed in 48 hours."
+    title="One number."
   />
 
   <!-- ==================== APPLY ==================== -->
@@ -229,7 +228,7 @@ const info: InfoBlock[] = [
     id="apply"
     eyebrow="Apply"
     title="Start your application."
-    lead="Leave your email. We come back within 48 hours with fit, dates and next steps."
+    lead="Leave your email. Fit, dates and next steps within 48 hours."
   >
     <div class="card max-w-2xl p-5 md:p-7">
       <form id="register-form" data-program={accelerator.slug} class="flex flex-col gap-3 sm:flex-row">
