@@ -158,7 +158,7 @@ export const outcomes = [
 export const homeFaq: FAQItem[] = [
   {
     q: 'What does it cost to start?',
-    a: 'Nothing. Workshops are free. The Mastermind is free with the coupon from the quiz. You pay from the Bootcamp up.',
+    a: 'Nothing. Workshops are free. The Mastermind is free with a coupon you get from a two-minute quiz. You pay from the Bootcamp up.',
   },
   {
     q: 'I cannot write code. Is this for me?',

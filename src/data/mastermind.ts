@@ -72,7 +72,7 @@ export const mastermind: Program = {
     },
     {
       title: 'Plug an agent into your systems',
-      body: 'GitHub, a database, Slack and your API, wired in with MCP.',
+      body: 'GitHub, a database, Slack and your API, wired in with MCP, the standard plug for agent tools.',
     },
     {
       title: 'Get a PR you can review',
