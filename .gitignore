@@ -24,7 +24,7 @@ pnpm-debug.log*
 .idea/
 
 # registration data (written by /api/register)
-data/
+/data/
 
 # reference material (large; local only)
 ref/screens/
